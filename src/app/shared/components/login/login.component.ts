@@ -1,9 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NgForm, FormGroup } from "@angular/forms";
+import { Subscription } from "rxjs/Subscription"
 
 import { ModalService } from "../../../services/modal.service";
 import { ValidtorService } from "../../../services/validator.service";
 import { AuthService } from "../.../../../../services/auth.service";
+import { ResponseService } from '../../../services/response.service';
 
 import { ResetPaswordComponent } from "../reset-password/reset-password";
 
@@ -11,7 +13,7 @@ import { ResetPaswordComponent } from "../reset-password/reset-password";
   selector: "app-login",
   templateUrl: "./login.html"
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   public email;
   public password;
   public isEmailValid = true;
@@ -19,12 +21,41 @@ export class LoginComponent {
   public isFormValid = true;
   public showForgotPassword = false;
   public RememberMe = false;
+  public errorMessage = 'Molimo Vas da popunite sva polja';
+  public authStatusError;
+
+  private _subscriptions: Array<Subscription> = [];
 
   constructor(
     private _modalService: ModalService,
     private _validtorService: ValidtorService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _responseService: ResponseService
   ) {}
+
+  ngOnInit() {
+    this._listenForAuthActionResponseStatuses();
+  }
+
+  ngOnDestroy() {
+
+  }
+
+  private _listenForAuthActionResponseStatuses() {
+    this._subscriptions.push(
+      this._responseService.authActionResponseStatus$.subscribe(status => {
+        if (status['type'] === 'login success') {
+          this.close();
+
+          return;
+        }
+
+        this.errorMessage = status['title'];
+        this.authStatusError = status['body'];
+        this.isFormValid = false;
+      })
+    );
+  }
 
   public close() {
     this._modalService.closeModal();

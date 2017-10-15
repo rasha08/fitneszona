@@ -9,7 +9,9 @@ export class AuthService {
   private _user;
 
   private _authStatusChange = new Subject();
+
   public authStatusChange$ = this._authStatusChange.asObservable();
+
 
   constructor(
     private _userHTTPService: UserHTTPService,
@@ -21,9 +23,9 @@ export class AuthService {
   }
 
   public checkIfUserIsLoggedIn() {
-    if (localStorage.getItem("rememberUser")) {
-      let id = localStorage.getItem("rememberUser");
-      let data = {
+    if (localStorage.getItem('rememberUser')) {
+      const id = localStorage.getItem('RememberUser');
+      const data = {
         id
       };
 
@@ -48,25 +50,23 @@ export class AuthService {
 
   public login(data, rememberMe) {
     this._userHTTPService.getUserData(data).subscribe(response => {
-      console.log(response);
-      if (response.status === "not existing user") {
-        console.error("not existing user");
-        return;
-      } else if (response.status === "wrong password") {
-        console.error("wrong password");
+      if (response.status) {
+        this._responseService.handleResponse(response);
+
         return;
       }
 
       this._user = response;
       if (rememberMe) {
-        localStorage.setItem("rememberUser", this._user.id);
+        localStorage.setItem('rememberUser', this._user.id);
       }
       this._changeAuthStatus();
+      this._responseService.handleResponse({status: 'login success'});
     });
   }
 
   public resetPassword(email) {
-    let data = {
+    const data = {
       email
     };
 
