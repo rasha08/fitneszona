@@ -1,0 +1,114 @@
+body {
+  font-family: "Righteous", cursive;
+  min-height: 87vh;
+}
+
+body .light {
+  background-color: snow;
+}
+
+body .dark {
+  background-color: #000;
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.light .nav-extended {
+  background-color: #ab0002;
+}
+
+.dark .nav-extended {
+  background-color: #030606;
+}
+
+a.brand-logo {
+  padding-left: 5%;
+  font-size: calc(36px + 1vw);
+}
+
+.light a.brand-logo {
+  color: snow;
+}
+
+.dark a.brand-logo {
+  color: #ab0002;
+}
+
+#search {
+  width: 45vw;
+  min-width: 300px;
+}
+
+#search:focus {
+  border-bottom: 2px solid snow;
+  box-shadow: 3px 0px 5px gray;
+}
+
+#modal,
+.alert {
+  -webkit-transition: transform 0.8s ease-in-out !important;
+  -moz-transition: transform 0.8s ease-in-out !important;
+  transition: transform 0.8s ease-in-out !important;
+  z-index: 1005;
+  display: none;
+  opacity: 0;
+  top: 4%;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 3px, 7px, 20px #ab0002;
+  width: 60%;
+  transform: translate3d(35%, 10%, 0);
+  background-image: url(http://icons.iconarchive.com/icons/double-j-design/origami-colored-pencil/256/red-user-icon.png);
+  background-size: contain;
+  background-position-x: 130%;
+  background-repeat: no-repeat;
+}
+
+.alert {
+  background-image: url(http://www.fil.bg.ac.rs/mmd_27/mmd_2015/css/images/menu/photo.png);
+  background-size: contain;
+  background-position-x: 130%;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.lg {
+  min-height: 60vh;
+}
+
+.med {
+  min-height: 20vh;
+}
+
+.xs {
+  min-height: 10vh;
+}
+
+.modal-open {
+  z-index: 1005;
+  display: block;
+  opacity: 1;
+  transform: scaleX(1);
+  top: 10%;
+}
+
+.modal-closed {
+  z-index: 1005;
+  display: none;
+  opacity: 0;
+  transform: scaleX(0.7);
+  top: 4%;
+}
+
+.error {
+  color: firebrick;
+  box-shadow: 2px 3px snow;
+  font-weight: bolder;
+}
+
+.alert .flow-text {
+  padding: 5%;
+  background: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}

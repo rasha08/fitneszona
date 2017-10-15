@@ -1,0 +1,21 @@
+<div id="modal" class="modal bottom-sheet scale-out z-depth-5 alert" [ngClass]="isModalOpen">
+  <div class="modal-content">
+    <div class="row">
+      <div class="col s12">
+        <h4>
+          <blockquote class=" z-depth-5">
+            {{ title }}:
+          </blockquote>
+        </h4>
+        <div class="row">
+          <p class="flow-text">
+            {{ message }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-action modal-close waves-effect waves-green btn-flat pulse center-align" (click)="close()">OK</a>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<ul id="nav-mobile" class="right hide-on-med-and-down">
+  <app-search></app-search>
+  <li><a *ngIf="!user">Registracija</a></li>
+  <li><a *ngIf="!user" (click)="openLoginModal()">Prijavi se</a></li>
+  <li><a *ngIf="user">Moj Nalog</a></li>
+  <li><a *ngIf="user" (click)="logout()">Odjavi se</a></li>
+</ul>
+<ul class="side-nav" id="mobile-demo">
+  <li><a href="#">Registracija</a></li>
+  <li><a href="#">Prijavi se</a></li>
+  <li><a href="#">Moj Nalog</a></li>
+  <li><a href="#">Odjavi se</a></li>
+</ul>
