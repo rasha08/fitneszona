@@ -13,10 +13,10 @@ import { ModalService } from "./services/modal.service";
 import { ValidtorService } from "./services/validator.service";
 import { ResponseService } from "./services/response.service";
 import { AlertService } from "./services/alert.service";
-import { ArticlesHTTPService } from './services/atricles-http.service';
-import { UserDataService } from './services/user-data.service';
-import { UtilsService } from './services/utils.service';
-import { ArticlesService } from './services/articles.service';
+import { ArticlesHTTPService } from "./services/atricles-http.service";
+import { UserDataService } from "./services/user-data.service";
+import { UtilsService } from "./services/utils.service";
+import { ArticlesService } from "./services/articles.service";
 
 /* ENTRY COMPONENTS */
 import { LoginComponent } from "./shared/components/login/login.component";
@@ -35,7 +35,7 @@ import { AlertComponent } from "./shared/components/alert/alert";
     ResponseService,
     AlertService,
     ArticlesHTTPService,
-    UserDataService,
+    // UserDataService,
     UtilsService,
     ArticlesService
   ],

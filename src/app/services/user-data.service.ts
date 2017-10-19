@@ -36,8 +36,5 @@ export class UserDataService {
   }
 
   public predictTextsThatUserMightLike() {
-    const textIds = this.getUserVisitedTextsIds();
-
-
   }
 }
