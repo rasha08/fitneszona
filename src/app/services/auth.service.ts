@@ -3,6 +3,7 @@ import { Subject } from "rxjs/Subject";
 
 import { UserHTTPService } from "./user-http.service";
 import { ResponseService } from "./response.service";
+import { LocalStorageService } from "./local-storage.service";
 
 @Injectable()
 export class AuthService {
@@ -12,10 +13,10 @@ export class AuthService {
 
   public authStatusChange$ = this._authStatusChange.asObservable();
 
-
   constructor(
     private _userHTTPService: UserHTTPService,
-    private _responseService: ResponseService
+    private _responseService: ResponseService,
+    private _localStorageService: LocalStorageService
   ) {}
 
   public getUser() {
@@ -23,8 +24,8 @@ export class AuthService {
   }
 
   public checkIfUserIsLoggedIn() {
-    if (localStorage.getItem('rememberUser')) {
-      const id = localStorage.getItem('RememberUser');
+    if (this._localStorageService.getKeyIfExists("rememberUser")) {
+      const id = this._localStorageService.getKeyIfExists("RememberUser");
       const data = {
         id
       };
@@ -33,6 +34,7 @@ export class AuthService {
         response => {
           this._user = response;
           if (this._user) {
+            this._localStorageService.setUserLastVist();
             this._changeAuthStatus();
           }
 
@@ -51,6 +53,7 @@ export class AuthService {
   public login(data, rememberMe) {
     this._userHTTPService.getUserData(data).subscribe(response => {
       if (response.status) {
+        console.log("RESPONSE STATUS: ", response.status);
         this._responseService.handleResponse(response);
 
         return;
@@ -58,10 +61,11 @@ export class AuthService {
 
       this._user = response;
       if (rememberMe) {
-        localStorage.setItem('rememberUser', this._user.id);
+        localStorage.setItem("rememberUser", this._user.id);
       }
       this._changeAuthStatus();
-      this._responseService.handleResponse({status: 'login success'});
+      this._responseService.handleResponse({ status: "login success" });
+      this._localStorageService.setUserLastVist();
     });
   }
 

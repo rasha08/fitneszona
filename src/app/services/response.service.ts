@@ -6,7 +6,7 @@ import { AlertService } from "./alert.service";
 @Injectable()
 export class ResponseService {
   private _shouldEmitStatus = false;
-  private _authActionResponseStatus= new Subject();
+  private _authActionResponseStatus = new Subject();
 
   public authActionResponseStatus$ = this._authActionResponseStatus.asObservable();
 
@@ -15,46 +15,42 @@ export class ResponseService {
   public handleResponse(responseObject) {
     const status = responseObject.status;
     let message;
-    console.log('STATUS', status);
+    console.log("STATUS", status);
     switch (status) {
       case "registration success":
         message = this._constructResponseMessage(
-          'succes',
-          'Dobrodošli',
-          'Uspešno ste se registrovali.'
+          "succes",
+          "Dobrodošli",
+          "Uspešno ste se registrovali."
         );
         break;
       case "new password":
         message = this._constructResponseMessage(
-          'succes',
-          'Uspešno ste resetovali Lozinku',
-          'Poštovani, na Vašu email adresu je poslata nova lozinka. Radi zaštite vaše privatnosti, poželjno je da odmah nakon prijavljivanja promenite lozinku. Hvala.'
+          "succes",
+          "Uspešno ste resetovali Lozinku",
+          "Poštovani, na Vašu email adresu je poslata nova lozinka. Radi zaštite vaše privatnosti, poželjno je da odmah nakon prijavljivanja promenite lozinku. Hvala."
         );
         break;
       case "non existing user":
         message = this._constructResponseMessage(
-          'error',
-          'Nepostojeći korisnik',
-          'Žao nam je, ali u na sajtu ne postoji korisnik sa datim kredencijalima.'
+          "error",
+          "Nepostojeći korisnik",
+          "Žao nam je, ali u na sajtu ne postoji korisnik sa datim kredencijalima."
+        );
+
+        //this._shouldEmitStatus = true;
+        break;
+      case "wrong password":
+        message = this._constructResponseMessage(
+          "error",
+          "Pogrešna Lozinka",
+          "Žao nam je, uneli ste pogrešnu lozinku."
         );
 
         this._shouldEmitStatus = true;
         break;
-      case "wrong password": 
-        message = this._constructResponseMessage(
-          'error',
-          'Pogrešna Lozinka',
-          'Žao nam je, uneli ste pogrešnu lozinku.'
-        );
-
-        this._shouldEmitStatus = true;
-        break;
-      case "login success": 
-        message = this._constructResponseMessage(
-          'login success',
-          '',
-          ''
-        );
+      case "login success":
+        message = this._constructResponseMessage("login success", "", "");
 
         this._shouldEmitStatus = true;
         break;
