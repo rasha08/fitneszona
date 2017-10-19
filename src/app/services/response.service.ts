@@ -72,7 +72,7 @@ export class ResponseService {
     const data = {
       message
     };
-    console.log('should not be here');
+
     this._alertService.openAlert(data);
   }
 

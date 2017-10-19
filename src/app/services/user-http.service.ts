@@ -6,25 +6,26 @@ import "rxjs/add/operator/map";
 
 @Injectable()
 export class UserHTTPService {
+  private BASE_URL = 'https://fitneszona.rs';
   constructor(private _http: Http) {}
 
   public getUserData(data, isUserRemembered?) {
     if (isUserRemembered) {
       return this._http
-        .get(`https://fitneszona.rs/users/${data.id}`)
+        .get(`${this.BASE_URL}/users/${data.id}`)
         .map(result => result.json(), error => console.error(error));
     } else {
-      let dataString = JSON.stringify(data);
+      const dataString = JSON.stringify(data);
 
       return this._http
-        .post("https://fitneszona.rs/api/users/login", data)
+        .post(`${this.BASE_URL}/api/users/login`, data)
         .map(result => result.json(), error => console.error(error));
     }
   }
 
   public resetPassword(data) {
     return this._http
-      .post("https://fitneszona.rs/api/users/reset-password", data)
+      .post(`${this.BASE_URL}/api/users/reset-password`, data)
       .map(result => result.json(), error => console.error(error));
   }
 }
