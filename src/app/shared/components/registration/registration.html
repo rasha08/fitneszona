@@ -1,32 +1,44 @@
 <div id="modal" class="modal bottom-sheet z-depth-5 xlg">
   <div class="modal-content">
     <div class="row">
-      <form class="col s12">
+      <form class="col s12" #userRegistrationForm="ngForm">
         <div class="row">
           <div class="input-field col s6">
-            <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+            <i class="material-icons prefix" [ngClass]="{'error': !isFirstnameValid  }">Firstname</i>
+            <input placeholder="Firstname" id="first_name" type="text" class="validate"
+            [(ngModel)]="userObj.name" name="firstname" (blur)="validate('firstname')"
+            >
             <label for="first_name">First Name</label>
           </div>
           <div class="input-field col s6">
-            <input id="last_name" type="text" class="validate">
+            <i class="material-icons prefix" [ngClass]="{'error': !isLastnameValid  }">Lastname</i>
+            <input id="last_name" type="text" class="validate" placeholder="lastname"
+             [(ngModel)]="userObj.lastname" name="lastname" (blur)="validate('lastname')" >
             <label for="last_name">Last Name</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
+            
             <input disabled value="I am not editable" id="disabled" type="text" class="validate">
             <label for="disabled">Disabled</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="password" type="password" class="validate">
+            <i class="material-icons prefix" [ngClass]="{'error': !isPasswordValid  }">Password</i>
+            <input id="password" type="password" class="validate" placeholder="Password"
+              [(ngModel)]="userObj.password" name="password" (blur)="validate('password')"
+            >
             <label for="password">Password</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="email" type="email" class="validate">
+            <i class="material-icons prefix" [ngClass]="{'error': !isEmailValid  }">email</i>
+            <input id="email" type="email" class="validate" placeholder="Email"
+              [(ngModel)]="userObj.email" name="email" (blur)="validate('email')"
+            >
             <label for="email">Email</label>
           </div>
         </div>
@@ -43,6 +55,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" (click)="registerUser()" >Agree</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" (click)="closeModal()" >Close</a>
   </div>
 </div>

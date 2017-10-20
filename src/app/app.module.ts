@@ -15,7 +15,7 @@ import { RightSidebarModule } from "./shared/modules/right-sidebar/right-sidebar
 import { AuthService } from "./services/auth.service";
 import { UserHTTPService } from "./services/user-http.service";
 import { ModalService } from "./services/modal.service";
-import { ValidtorService } from "./services/validator.service";
+import { ValidatorService } from "./services/validator.service";
 import { ResponseService } from "./services/response.service";
 import { AlertService } from "./services/alert.service";
 import { ArticlesHTTPService } from "./services/atricles-http.service";
@@ -23,6 +23,8 @@ import { UserDataService } from "./services/user-data.service";
 import { UtilsService } from "./services/utils.service";
 import { ArticlesService } from "./services/articles.service";
 import { LocalStorageService } from "./services/local-storage.service";
+import { ConfigurationService } from "./services/configuration.service";
+import { ArticlesCounterService } from "./services/articles-counter.service";
 
 /* ENTRY COMPONENTS */
 import { LoginComponent } from "./shared/components/login/login.component";
@@ -45,14 +47,16 @@ import { AlertComponent } from "./shared/components/alert/alert";
     AuthService,
     UserHTTPService,
     ModalService,
-    ValidtorService,
+    ValidatorService,
     ResponseService,
     AlertService,
     ArticlesHTTPService,
     // UserDataService,
     UtilsService,
     ArticlesService,
-    LocalStorageService
+    LocalStorageService,
+    ConfigurationService,
+    ArticlesCounterService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

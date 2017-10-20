@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class LocalStorageService {
   constructor() {
-    this.setItem("lastVisit", JSON.stringify(new Date()));
+    this.setItem("lastVisit", JSON.stringify(new Date()));//logicki problem sa posetom ako se 
   }
 
   public setItem(key, value) {
@@ -22,7 +22,7 @@ export class LocalStorageService {
     return this.getKeyIfExists("userLastVisit");
   }
 
-  public getLastVisitFromBowser() {
+  public getLastVisitFromBrowser() {
     return this.getKeyIfExists("lastVisit");
   }
 }

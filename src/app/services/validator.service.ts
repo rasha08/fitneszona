@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 
 @Injectable()
-export class ValidtorService {
+export class ValidatorService {
   public isEmailValid(email) {
     const regEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 

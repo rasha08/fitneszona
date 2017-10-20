@@ -10,6 +10,7 @@ import { Subscription } from "rxjs/Subscription";
 
 import { AuthService } from "./services/auth.service";
 import { ModalService } from "./services/modal.service";
+import { ArticlesService } from "./services/articles.service";
 
 @Component({
   selector: "app-root",
@@ -18,6 +19,8 @@ import { ModalService } from "./services/modal.service";
 })
 export class AppComponent implements OnInit {
   @ViewChild("placeholder", { read: ViewContainerRef })
+  article:any;
+  subscription: Subscription;
   placeholder;
   private _componentRef;
 
@@ -25,13 +28,15 @@ export class AppComponent implements OnInit {
     private _authService: AuthService,
     private _changeDetectorRef: ChangeDetectorRef,
     private _componentFactoryResolver: ComponentFactoryResolver,
-    private _modalService: ModalService
+    private _modalService: ModalService,
+    private _articlesService: ArticlesService
   ) {
     this._authService.checkIfUserIsLoggedIn();
   }
 
   public ngOnInit() {
     this._listenForModalOpenCloseEvents();
+    
   }
 
   private _listenForModalOpenCloseEvents() {
@@ -47,6 +52,8 @@ export class AppComponent implements OnInit {
   }
 
   private _createModal(modalData) {
+
+    console.log('called create modal')
     let {
       component,
       data,
@@ -54,7 +61,7 @@ export class AppComponent implements OnInit {
       successCallback,
       errorCallback
     } = modalData;
-
+    console.log(component)
     if (hideOtherModals && this._componentRef) {
       this._closeModal();
     }
@@ -81,5 +88,24 @@ export class AppComponent implements OnInit {
 
   private _closeModal() {
     this._componentRef.destroy();
+  }
+
+  private testServices(){
+    this.subscription = this._articlesService.openArticle$.subscribe(
+      article => console.log(article),
+      error => console.log(error)
+    )
+  }
+
+  private testRestApi(){
+    this.testServices();
+    this._articlesService.getAllArticle();
+    this._articlesService.getArticle(28);
+    this._articlesService.getArticleCategoryAndTags(14);
+    this._articlesService.getArticlesForCategory('trening');
+    this._articlesService.getLatestArticles();
+    this._articlesService.getLatestArticlesForCategory('power'); //test za Rasu
+    this._articlesService.getTopArticles();
+    this._articlesService.getTopArticlesForCategory('power');
   }
 }

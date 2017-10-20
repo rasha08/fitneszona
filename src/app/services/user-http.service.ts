@@ -28,4 +28,10 @@ export class UserHTTPService {
       .post(`https://fitneszona.rs/api/users/reset-password`, data)
       .map(result => result.json(), error => console.error(error));
   }
+
+  public registerUser(userObj){
+    return this._http
+      .post(this.BASE_URL + 'something something dark side', userObj)
+      .map(response => response.json())
+  }
 }

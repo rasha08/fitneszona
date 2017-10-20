@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 import { ModalService } from "../../../services/modal.service";
-import { ValidtorService } from "../../../services/validator.service";
+import { ValidatorService } from "../../../services/validator.service";
 import { AuthService } from "../.../../../../services/auth.service";
 
 @Component({
@@ -14,7 +14,7 @@ export class ResetPaswordComponent {
 
   constructor(
     private _modalService: ModalService,
-    private _validtorService: ValidtorService,
+    private _validtorService: ValidatorService,
     private _authService: AuthService
   ) {}
 

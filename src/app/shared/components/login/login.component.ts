@@ -3,7 +3,7 @@ import { NgForm, FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs/Subscription"
 
 import { ModalService } from "../../../services/modal.service";
-import { ValidtorService } from "../../../services/validator.service";
+import { ValidatorService } from "../../../services/validator.service";
 import { AuthService } from "../.../../../../services/auth.service";
 import { ResponseService } from '../../../services/response.service';
 
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private _modalService: ModalService,
-    private _validtorService: ValidtorService,
+    private _validtorService: ValidatorService,
     private _authService: AuthService,
     private _responseService: ResponseService
   ) {}

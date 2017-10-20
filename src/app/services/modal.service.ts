@@ -19,6 +19,7 @@ export class ModalService {
     if (this._isOpen) {
       return;
     }
+
     this._isOpen = true;
     this._openModal.next(modalData);
     $("#modal").css({

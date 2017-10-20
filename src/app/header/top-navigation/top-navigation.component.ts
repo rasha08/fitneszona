@@ -34,8 +34,19 @@ export class TopNavigationComponent {
       component: LoginComponent
     });
   }
+
+  public openRegistrationModal(){
+    console.log('called function')
+    this._modalService.openModal({
+      component: RegistrationComponent
+    })
+  }
   
   public logout() {
     this._authService.logout();
+   }
+
+   public openRegisterModal(){
+
    }
 }
