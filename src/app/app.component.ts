@@ -19,10 +19,10 @@ import { ArticlesService } from "./services/articles.service";
 })
 export class AppComponent implements OnInit {
   @ViewChild("placeholder", { read: ViewContainerRef })
-  article:any;
-  subscription: Subscription;
   placeholder;
   private _componentRef;
+  public article:any;
+  private _subscription: Subscription;
 
   constructor(
     private _authService: AuthService,
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
 
   private _createModal(modalData) {
 
-    console.log('called create modal')
+    console.log('called create modal');
     let {
       component,
       data,
@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
       successCallback,
       errorCallback
     } = modalData;
-    console.log(component)
+
     if (hideOtherModals && this._componentRef) {
       this._closeModal();
     }
@@ -69,6 +69,8 @@ export class AppComponent implements OnInit {
     let factory = this._componentFactoryResolver.resolveComponentFactory(
       component
     );
+
+    console.log(this.placeholder);
     let componentRef = this.placeholder.createComponent(factory);
     this._componentRef = componentRef;
     componentRef.instance.modal = componentRef;
@@ -91,7 +93,7 @@ export class AppComponent implements OnInit {
   }
 
   private testServices(){
-    this.subscription = this._articlesService.openArticle$.subscribe(
+    this._subscription = this._articlesService.openArticle$.subscribe(
       article => console.log(article),
       error => console.log(error)
     )

@@ -25,6 +25,7 @@ import { ArticlesService } from "./services/articles.service";
 import { LocalStorageService } from "./services/local-storage.service";
 import { ConfigurationService } from "./services/configuration.service";
 import { ArticlesCounterService } from "./services/articles-counter.service";
+import { UserRegistrationService } from "./services/user-registration.service";
 
 /* ENTRY COMPONENTS */
 import { LoginComponent } from "./shared/components/login/login.component";
@@ -56,7 +57,8 @@ import { AlertComponent } from "./shared/components/alert/alert";
     ArticlesService,
     LocalStorageService,
     ConfigurationService,
-    ArticlesCounterService
+    ArticlesCounterService,
+    UserRegistrationService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
