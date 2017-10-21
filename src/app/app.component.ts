@@ -1,6 +1,7 @@
 import {
   Component,
   OnInit,
+  OnDestroy,
   ChangeDetectorRef,
   ComponentFactoryResolver,
   ViewChild,
@@ -10,6 +11,7 @@ import { Subscription } from "rxjs/Subscription";
 
 import { AuthService } from "./services/auth.service";
 import { ModalService } from "./services/modal.service";
+import { LocalStorageService } from "./services/local-storage.service";
 import { ArticlesService } from "./services/articles.service";
 
 @Component({
@@ -17,11 +19,11 @@ import { ArticlesService } from "./services/articles.service";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   @ViewChild("placeholder", { read: ViewContainerRef })
   placeholder;
   private _componentRef;
-  public article:any;
+  public article: any;
   private _subscription: Subscription;
 
   constructor(
@@ -29,6 +31,7 @@ export class AppComponent implements OnInit {
     private _changeDetectorRef: ChangeDetectorRef,
     private _componentFactoryResolver: ComponentFactoryResolver,
     private _modalService: ModalService,
+    private _localStorageService: LocalStorageService,
     private _articlesService: ArticlesService
   ) {
     this._authService.checkIfUserIsLoggedIn();
@@ -36,7 +39,10 @@ export class AppComponent implements OnInit {
 
   public ngOnInit() {
     this._listenForModalOpenCloseEvents();
-    
+  }
+
+  public ngOnDestroy() {
+    this._localStorageService.setLastVisitFromBrowser();
   }
 
   private _listenForModalOpenCloseEvents() {

@@ -34,7 +34,7 @@ export class AuthService {
         response => {
           this._user = response;
           if (this._user) {
-            this._localStorageService.setUserLastVist();
+            this._localStorageService.setUserLastVist(this._user);
             this._changeAuthStatus();
           }
 
@@ -46,6 +46,7 @@ export class AuthService {
   }
 
   public logout() {
+    this._localStorageService.setUserLastVist(this._user);
     this._user = null;
     this._changeAuthStatus();
   }
@@ -65,7 +66,7 @@ export class AuthService {
       }
       this._changeAuthStatus();
       this._responseService.handleResponse({ status: "login success" });
-      this._localStorageService.setUserLastVist();
+      this._localStorageService.setUserLastVist(this._user);
     });
   }
 

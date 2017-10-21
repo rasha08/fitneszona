@@ -45,6 +45,7 @@ import { AlertComponent } from "./shared/components/alert/alert";
     LeftSidebarModule
   ],
   providers: [
+    LocalStorageService,
     AuthService,
     UserHTTPService,
     ModalService,
@@ -55,7 +56,6 @@ import { AlertComponent } from "./shared/components/alert/alert";
     // UserDataService,
     UtilsService,
     ArticlesService,
-    LocalStorageService,
     ConfigurationService,
     ArticlesCounterService,
     UserRegistrationService
