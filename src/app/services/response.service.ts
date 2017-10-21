@@ -38,7 +38,7 @@ export class ResponseService {
           "Žao nam je, ali u na sajtu ne postoji korisnik sa datim kredencijalima."
         );
 
-        //this._shouldEmitStatus = true;
+        this._shouldEmitStatus = true;
         break;
       case "wrong password":
         message = this._constructResponseMessage(
@@ -52,6 +52,21 @@ export class ResponseService {
       case "login success":
         message = this._constructResponseMessage("login success", "", "");
 
+        this._shouldEmitStatus = true;
+        break;
+      case "registration success":
+        message = this._constructResponseMessage(
+          "registration success",
+          "Uspešno ste se registrovali!",
+          "Poštovani, Vaš zahtev za registraciju je odobren. Možete se prijaviti na svoj nalog.");
+
+        break;
+       case "user already registered":
+        message = this._constructResponseMessage(
+          "error",
+          "Nalog već postoji!",
+          "Poštovani, korisnik sa datom email adresom je već registrovan, molimo Vas proverite tačnost unete email adrese.");
+        
         this._shouldEmitStatus = true;
         break;
       default:

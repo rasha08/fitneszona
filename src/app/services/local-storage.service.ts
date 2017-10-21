@@ -1,9 +1,13 @@
 import { Injectable } from "@angular/core";
 
+import { UtilsService } from './utils.service';
+
 @Injectable()
 export class LocalStorageService {
-  constructor() {
-    this.setItem("lastVisit", JSON.stringify(new Date()));//logicki problem sa posetom ako se 
+  constructor(
+    private _utilsService: UtilsService
+  ) {
+    this.setItem("lastVisit", this._utilsService.getFormatedDateWithTimeZoneOffset());
   }
 
   public setItem(key, value) {
@@ -15,7 +19,7 @@ export class LocalStorageService {
   }
 
   public setUserLastVist() {
-    localStorage.setItem("userLastVisit", JSON.stringify(new Date()));
+    localStorage.setItem("userLastVisit", this._utilsService.getFormatedDateWithTimeZoneOffset());
   }
 
   public getUserLastVisit() {
