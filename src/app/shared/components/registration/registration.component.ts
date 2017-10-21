@@ -11,8 +11,8 @@ import { ModalService } from "../../../services/modal.service";
 export class RegistrationComponent {
   private _subscription: Subscription;
   private _userObj= {
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: ''
   }
@@ -49,13 +49,13 @@ export class RegistrationComponent {
     else this.errorMessage = 'Your input is invalid'
   }
 
-  public valid(param: string){
+  public validate(param: string){
     switch (param){
       case 'firstname':
-        this.isFirstnameValid = this._validatorService.isNameOrLastNameValid(this._userObj.firstname);
+        this.isFirstnameValid = this._validatorService.isNameOrLastNameValid(this._userObj.firstName);
         break;
       case 'lastname':
-        this.isLastnameValid = this._validatorService.isNameOrLastNameValid(this._userObj.lastname);
+        this.isLastnameValid = this._validatorService.isNameOrLastNameValid(this._userObj.lastName);
         break;
       case 'email':
         this.isEmailValid = this._validatorService.isEmailValid(this._userObj.email);
@@ -70,8 +70,8 @@ export class RegistrationComponent {
 
   checkIfUserInputIsValid(){
     let firstname, lastname, email, password;
-    firstname = this._validatorService.isNameOrLastNameValid(this._userObj.firstname);
-    lastname = this._validatorService.isNameOrLastNameValid(this._userObj.lastname);
+    firstname = this._validatorService.isNameOrLastNameValid(this._userObj.firstName);
+    lastname = this._validatorService.isNameOrLastNameValid(this._userObj.lastName);
     email = this._validatorService.isEmailValid(this._userObj.email);
     password = this._validatorService.isPasswordValid(this._userObj.password);
 

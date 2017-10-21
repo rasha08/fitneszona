@@ -36,7 +36,6 @@ export class TopNavigationComponent {
   }
 
   public openRegistrationModal(){
-    console.log('called function')
     this._modalService.openModal({
       component: RegistrationComponent
     })

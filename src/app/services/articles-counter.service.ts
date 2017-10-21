@@ -7,23 +7,23 @@ import { ConfigurationService } from "./configuration.service";
 @Injectable()
 
 export class ArticlesCounterService{
-    private _bottomHeader = new Subject();
-    public bottomHeader$ = this._bottomHeader.asObservable();
+    private _sendCategoriesToBottomHeader = new Subject();
+    public sendCategoriesToBottomHeader$ = this._sendCategoriesToBottomHeader.asObservable();
 
     constructor(
         private _articlesHTTPService: ArticlesHTTPService,
         private _configurationService: ConfigurationService
     ){ }
 
-    getNewAritlcesForEveryCategory(timestring: string){
-        this._configurationService.getNewArticleForEveryCategory(timestring).subscribe(
+    getCategories(timestring: string){
+        this._configurationService.getCategories(timestring).subscribe(
             response => this.sendNumberOfNewArticlesToHeader(response),
             error => console.log(error)
         )
     }
 
     sendNumberOfNewArticlesToHeader(data: object){
-        this._bottomHeader.next(data);
+        this._sendCategoriesToBottomHeader.next(data);
     }
 
     

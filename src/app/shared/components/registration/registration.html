@@ -1,57 +1,57 @@
-<div id="modal" class="modal bottom-sheet z-depth-5 xlg">
+<div id="modal" class="modal bottom-sheet z-depth-5 lg" [ngClass]="isModalOpen" >
   <div class="modal-content">
     <div class="row">
-      <form class="col s12" #userRegistrationForm="ngForm">
+      <div class="col s12" >
         <div class="row">
           <div class="input-field col s6">
             <i class="material-icons prefix" [ngClass]="{'error': !isFirstnameValid  }">Firstname</i>
-            <input placeholder="Firstname" id="first_name" type="text" class="validate"
-            [(ngModel)]="userObj.name" name="firstname" (blur)="validate('firstname')"
+            <input  id="first_name" type="text" class="validate" value="firstname"
+            [(ngModel)]="_userObj.firstName" (blur)="validate('firstname')"
             >
-            <label for="first_name">First Name</label>
+            <label for="first_name">
+                <span [ngClass]="{'error': !isEmailValid  }">
+                    {{ isFirstnameValid ? 'Vase Ime:' : 'Unesite Validno Ime!' }}
+                </span>
+            </label>
           </div>
           <div class="input-field col s6">
             <i class="material-icons prefix" [ngClass]="{'error': !isLastnameValid  }">Lastname</i>
-            <input id="last_name" type="text" class="validate" placeholder="lastname"
-             [(ngModel)]="userObj.lastname" name="lastname" (blur)="validate('lastname')" >
-            <label for="last_name">Last Name</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            
-            <input disabled value="I am not editable" id="disabled" type="text" class="validate">
-            <label for="disabled">Disabled</label>
+            <input id="last_name" type="text" class="validate" 
+             [(ngModel)]="_userObj.lastName" (blur)="validate('lastname')" >
+            <label for="last_name">
+              <span [ngClass]="{'error': !isEmailValid  }">
+                {{ isLastnameValid ? 'Vase Prezime:' : 'Unesite Validno Prezime!' }}
+            </span>
+          </label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix" [ngClass]="{'error': !isPasswordValid  }">Password</i>
-            <input id="password" type="password" class="validate" placeholder="Password"
-              [(ngModel)]="userObj.password" name="password" (blur)="validate('password')"
+            <input id="password" type="password" class="validate"
+              [(ngModel)]="_userObj.password"  (blur)="validate('password')"
             >
-            <label for="password">Password</label>
+            <label for="password">
+                <span [ngClass]="{'error': !isEmailValid  }">
+                    {{ isPasswordValid ? 'Vasa Sifra:' : 'Unesite Validnu Sifru!' }}
+                </span>
+            </label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix" [ngClass]="{'error': !isEmailValid  }">email</i>
-            <input id="email" type="email" class="validate" placeholder="Email"
-              [(ngModel)]="userObj.email" name="email" (blur)="validate('email')"
+            <input id="email" type="email" class="validate" 
+              [(ngModel)]="_userObj.email"  (blur)="validate('email')"
             >
-            <label for="email">Email</label>
+            <label for="email">
+              <span [ngClass]="{'error': !isEmailValid  }">
+                  {{ isEmailValid ? 'Vasa Email Adresa:' : 'Unesite Validnu Email Adresu!' }}
+              </span>
+            </label>
           </div>
         </div>
-        <div class="row">
-          <div class="col s12">
-            This is an inline input field:
-            <div class="input-field inline">
-              <input id="email" type="email" class="validate">
-              <label for="email" data-error="wrong" data-success="right">Email</label>
-            </div>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
   <div class="modal-footer">

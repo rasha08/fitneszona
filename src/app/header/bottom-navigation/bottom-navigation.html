@@ -1,61 +1,9 @@
 <div class="nav-content">
   <ul class="tabs tabs-transparent">
-    <li class="tab">
-      <a href="#test1">Najčitanije
-        <span class="new badge red darken-3">8</span>
+    <li class="tab" *ngFor="let category of userCategories">
+      <a href="#test1">{{category[0]}}
+        <span class="new badge red darken-3"> {{category[1]}} </span>
       </a>
     </li>
-    <li class="tab">
-      <a class="active">Najnovije
-        <span class="new badge red darken-3">4</span>
-      </a>
-    </li>
-    <li class="tab">
-      <a href="#test4">Trening
-        <span class="new badge red darken-3">84</span>
-      </a>
-    </li>
-    <li class="tab">
-      <a href="#test4">Ishrana
-        <span class="new badge red darken-3">54</span>
-      </a>
-    </li>
-    <li class="tab">
-      <a href="#test4">Saveti
-        <span class="new badge red darken-3">64</span>
-      </a>
-    </li>
-    <li class="tab">
-      <a href="#test4">Trčanje
-        <span class="new badge red darken-3">14</span>
-      </a>
-    </li>
-    <li class="tab">
-      <a href="#test4">Mršavljenje
-        <span class="new badge red darken-3">34</span>
-      </a>
-    </li>
-    <li class="tab">
-      <a href="#test4">Grupni Treninzi
-        <span class="new badge red darken-3">24</span>
-      </a>
-    </li>
-    <li class="tab">
-      <a href="#test4">Crossfit
-        <span class="new badge red darken-3">77</span>
-      </a>
-    </li>
-    <li class="tab">
-      <a href="#test4">Power Liftting
-        <span class="new badge red darken-3">13
-        </span>
-      </a>
-    </li>
-    <li class="tab">
-      <a href="#test4">Yoga
-        <span class="new badge red darken-3">2</span>
-      </a>
-    </li>
-    <!--<li *ngFor="let category of userCategories">{{category}}</li>-->
   </ul>
 </div>

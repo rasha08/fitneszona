@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
+import { Http, RequestOptions } from "@angular/http";
 import { Subject } from "rxjs/Subject";
 
 import { Observable } from "rxjs/Observable";
@@ -17,17 +17,11 @@ export class ConfigurationService {
         private _http: Http
     ){ }
 
-    getCategories(){
-        return this._http.get(`${this.BASE_URL}/api/1/categories`).map(
+    getCategories(timestring: string){
+        return this._http.post(`${this.BASE_URL}/api/articles/all/counter`,timestring).map(
             result => result.json(),
-            error => console.log(error)
+            error => console.log('Error:',error)
         )
     }
 
-    public getNewArticleForEveryCategory(timestring: string){
-        return this._http.post(`${this.BASE_URL}/`,timestring).map(
-          response => response.json(),
-          error => console.log(error)
-        )
-      }
 }

@@ -31,7 +31,7 @@ export class UserHTTPService {
 
   public registerUser(userObj){
     return this._http
-      .post(this.BASE_URL + 'something something dark side', userObj)
+      .post(`${this.BASE_URL}/users`, userObj)
       .map(response => response.json())
   }
 }

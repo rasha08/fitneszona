@@ -58,8 +58,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private _createModal(modalData) {
-
-    console.log('called create modal');
     let {
       component,
       data,
@@ -76,7 +74,6 @@ export class AppComponent implements OnInit, OnDestroy {
       component
     );
 
-    console.log(this.placeholder);
     let componentRef = this.placeholder.createComponent(factory);
     this._componentRef = componentRef;
     componentRef.instance.modal = componentRef;
