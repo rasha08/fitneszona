@@ -34,4 +34,5 @@ export class UserHTTPService {
       .post(`${this.BASE_URL}/users`, userObj)
       .map(response => response.json())
   }
+
 }

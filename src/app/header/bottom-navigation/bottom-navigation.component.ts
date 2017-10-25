@@ -10,10 +10,10 @@ import { ArticlesCounterService } from "../../services/articles-counter.service"
   templateUrl: "./bottom-navigation.html"
 })
 export class BottomNavigationComponent {
-  private _subscription: Subscription;
-  error;
-  public userCategories = [];
-
+  public error;
+  public activeCategories;
+  public countedCategories;
+  public headerData; 
   constructor(
     private _configurationService: ConfigurationService,
     private _localStorageService: LocalStorageService,
@@ -21,27 +21,45 @@ export class BottomNavigationComponent {
   ) {}
 
   ngOnInit(){
-    this.subscribeToUserCategories();
-    this.getCategories();
+    this.subscribeToActiveCategories();
+    this.subscribeToCategoriesWithNewArticles();
+    this.getHeaderData();
   }
 
-  getCategories(){
+  getHeaderData(){
+    let timestring = this.getTimeAndDate();
+    this._articleCounterService.getCategoriesWithNewArticles(timestring);
+    this._configurationService.getActiveCategories();
+  }
+
+  subscribeToActiveCategories(){
+    this._configurationService.openCategories$.subscribe(
+      activeCategories => {console.log(activeCategories)
+        this.activeCategories = activeCategories;
+      },
+      error => console.log(error)
+    );
+  }
+
+  subscribeToCategoriesWithNewArticles(){
+    this._articleCounterService.sendCategoriesToBottomHeader$.subscribe(
+        countedCategoriesObj => {console.log(countedCategoriesObj);
+          this.countedCategories = countedCategoriesObj;
+        },
+        error => console.log('Error at bottom-navigation:',error)
+    );
+  }
+
+  checkIfCategoryInArray(category, activeCategories){
+      if ( activeCategories.indexOf(category) !== -1) return true;
+      else return false;
+  }  
+
+  getTimeAndDate(){
     let dateAndTime = new Date();
     let date = dateAndTime.toLocaleDateString().replace(/\//g,'-');
     let time = dateAndTime.toTimeString().slice(0,8);
-    let timestring = date + ' ' + time;
-    this._articleCounterService.getCategories(timestring);
-  }
-
-  subscribeToUserCategories(){
-    this._subscription = this._articleCounterService.sendCategoriesToBottomHeader$.subscribe(
-      response => {
-        for (let key of Object.keys(response)){
-            this.userCategories.push([key,response[key]])
-        }
-      },
-      error => console.log(error)
-    )
+    return  date + ' ' + time;
   }
 
 }

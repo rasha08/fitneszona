@@ -9,6 +9,7 @@ export class ArticlesService {
   private _openArticle = new Subject();
   public openArticle$ = this._openArticle.asObservable(); // fali zagrada
 
+
   constructor(
     private _articlesHTTPService: ArticlesHTTPService
   ) {}
@@ -23,7 +24,7 @@ export class ArticlesService {
   public getAllArticle(){
     this._articlesHTTPService.getAllArticles().subscribe(
       articles => this.openArticle(articles),
-      error => console.log(error)
+      error => console.log('Error: ',error)
     )
   }
 
@@ -69,6 +70,21 @@ export class ArticlesService {
     )
   }
 
+  public getArticleByURLSlug(article_title_url_slug){
+    this._articlesHTTPService.getArticleByURLSlug(article_title_url_slug).subscribe(
+      article => this.openArticle(article),
+      error => console.log(error)
+    )
+  }
+
+  getTextsAndTitles(){
+   this._articlesHTTPService.getArticlesTextsAndTitles().subscribe(
+     response => console.log(response),
+     error => console.log(error)
+   )
+  }
+  
+  
   private openArticle(article) {
     this._openArticle.next(article);
   }

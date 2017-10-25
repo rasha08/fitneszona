@@ -3,7 +3,7 @@ import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 
 import { UserHTTPService } from "./user-http.service";
-
+import { ResponseStatusInterface } from "../models/registration-response";
 @Injectable()
 
 export class UserRegistrationService{ 
@@ -16,7 +16,7 @@ export class UserRegistrationService{
 
     registerUser(userObj){ 
         this._userHTTPService.registerUser(userObj).subscribe(
-            result => this.sendResponseToUserRegistration(result.json()),
+            result => this.sendResponseToUserRegistration(result),
             error => console.log(error)
         )
     }

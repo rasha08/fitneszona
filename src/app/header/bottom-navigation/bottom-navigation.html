@@ -1,8 +1,8 @@
 <div class="nav-content">
   <ul class="tabs tabs-transparent">
-    <li class="tab" *ngFor="let category of userCategories">
-      <a href="#test1">{{category[0]}}
-        <span class="new badge red darken-3"> {{category[1]}} </span>
+    <li class="tab" *ngFor="let category of activeCategories">
+      <a href="#test1">{{category}} 
+        <span class="new badge red darken-3"> {{countedCategory[category]}} </span>
       </a>
     </li>
   </ul>

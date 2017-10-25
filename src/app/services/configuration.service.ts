@@ -5,23 +5,38 @@ import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/map";
 
+import { ConfigurationHTTPService } from "./configuration-http.service";
+
 @Injectable()
 
 export class ConfigurationService {
-    private BASE_URL: string = 'http://fitneszona.rs';
+    public BASE_URL: string = 'http://fitneszona.rs';
 
     private _openCategories = new Subject();
     public openCategories$ = this._openCategories.asObservable();
-
+    
     constructor(
-        private _http: Http
+        private _configurationHTTPService: ConfigurationHTTPService
     ){ }
 
-    getCategories(timestring: string){
-        return this._http.post(`${this.BASE_URL}/api/articles/all/counter`,timestring).map(
-            result => result.json(),
-            error => console.log('Error:',error)
+    public getActiveCategories(){
+        this._configurationHTTPService.getActiveCategories().subscribe(
+            response => {this._sendActiveCategoriesObjectToHeader(response.activeCategories);console.log(response.activeCategories)},
+            error => console.log(error)
         )
+    }
+
+
+    public getUserConfiguration(id){
+        this._configurationHTTPService.getUserConfiguration(id).subscribe(
+            response => this._sendActiveCategoriesObjectToHeader(response),
+            error => console.log(error)
+        )
+        
+    }
+
+    private _sendActiveCategoriesObjectToHeader(categories){
+        this._openCategories.next(categories)
     }
 
 }

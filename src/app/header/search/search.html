@@ -1,5 +1,6 @@
 <li>
     <a class="row">
-        <input id="search" type="tel" class="validate" placeholder="pretraži...">
+        <input #searchBox id="search" type="tel" class="validate" placeholder="pretraži..." 
+            (keyup)="search(searchBox.value)" >
     </a>
 </li>

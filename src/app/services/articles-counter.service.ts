@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 
 
-import { ArticlesHTTPService } from "./atricles-http.service";
-import { ConfigurationService } from "./configuration.service";
+import { ArticleCounterHTTPService } from "./articles-counter-http.service";
+import { UserHTTPService } from "./user-http.service";
 @Injectable()
 
 export class ArticlesCounterService{
@@ -11,15 +11,15 @@ export class ArticlesCounterService{
     public sendCategoriesToBottomHeader$ = this._sendCategoriesToBottomHeader.asObservable();
 
     constructor(
-        private _articlesHTTPService: ArticlesHTTPService,
-        private _configurationService: ConfigurationService
+        private _articlesCounterHTTPService: ArticleCounterHTTPService,
+        private _userHTTPService: UserHTTPService
     ){ }
 
-    getCategories(timestring: string){
-        this._configurationService.getCategories(timestring).subscribe(
-            response => this.sendNumberOfNewArticlesToHeader(response),
+    getCategoriesWithNewArticles(timestring: string){
+        this._articlesCounterHTTPService.getCategoriesWithNewArticles(timestring).subscribe(
+            response => {this.sendNumberOfNewArticlesToHeader(response);console.log('Article: ',response)},
             error => console.log(error)
-        )
+        );
     }
 
     sendNumberOfNewArticlesToHeader(data: object){

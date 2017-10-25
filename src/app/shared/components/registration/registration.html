@@ -1,6 +1,7 @@
 <div id="modal" class="modal bottom-sheet z-depth-5 lg" [ngClass]="isModalOpen" >
   <div class="modal-content">
     <div class="row">
+      <h3 *ngIf="message"> {{message.status}} </h3>
       <div class="col s12" >
         <div class="row">
           <div class="input-field col s6">

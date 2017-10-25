@@ -39,6 +39,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this._listenForModalOpenCloseEvents();
+    //this.testRestApi();
   }
 
   public ngOnDestroy() {
@@ -112,5 +113,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this._articlesService.getLatestArticlesForCategory('power'); //test za Rasu
     this._articlesService.getTopArticles();
     this._articlesService.getTopArticlesForCategory('power');
+    this._articlesService.getArticleByURLSlug('crossfit');
   }
 }

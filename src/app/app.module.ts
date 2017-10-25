@@ -25,7 +25,10 @@ import { ArticlesService } from "./services/articles.service";
 import { LocalStorageService } from "./services/local-storage.service";
 import { ConfigurationService } from "./services/configuration.service";
 import { ArticlesCounterService } from "./services/articles-counter.service";
+import {ArticleCounterHTTPService} from "./services/articles-counter-http.service"
 import { UserRegistrationService } from "./services/user-registration.service";
+import { SearchService } from "./services/search.service";
+import { ConfigurationHTTPService } from "./services/configuration-http.service";
 
 /* ENTRY COMPONENTS */
 import { LoginComponent } from "./shared/components/login/login.component";
@@ -53,12 +56,15 @@ import { AlertComponent } from "./shared/components/alert/alert";
     ResponseService,
     AlertService,
     ArticlesHTTPService,
-    // UserDataService,
+    //UserDataService,
     UtilsService,
     ArticlesService,
     ConfigurationService,
     ArticlesCounterService,
-    UserRegistrationService
+    UserRegistrationService,
+    SearchService,
+    ConfigurationHTTPService,
+    ArticleCounterHTTPService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

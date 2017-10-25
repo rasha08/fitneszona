@@ -4,6 +4,8 @@ import { Subscription } from "rxjs/Subscription";
 import { UserRegistrationService } from "../../../services/user-registration.service";
 import { ValidatorService } from '../../../services/validator.service'
 import { ModalService } from "../../../services/modal.service";
+
+import { ResponseStatusInterface } from "../../../models/registration-response";
 @Component({
   selector: "app-registration",
   templateUrl: "./registration.html"
@@ -20,6 +22,7 @@ export class RegistrationComponent {
   public isLastnameValid: boolean = false;
   public isEmailValid: boolean = false;
   public isPasswordValid: boolean = false; 
+  public message;
   public successMessage;
   public errorMessage;
   public apiServiceRespone: Subscription;
@@ -33,7 +36,9 @@ export class RegistrationComponent {
 
   ngOnInit(){
     this._subscription = this._userRegistrationService.response$.subscribe(
-      response => this.successMessage = response,
+      response => {
+        this.message = response
+      },
       error => this.errorMessage = error
     )
   }
@@ -43,6 +48,7 @@ export class RegistrationComponent {
   }
 
   public registerUser(){
+    console.log('called register user');
     if (this.checkIfUserInputIsValid()) {
       this._userRegistrationService.registerUser(this._userObj);
     }
