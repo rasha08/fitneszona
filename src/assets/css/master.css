@@ -113,3 +113,69 @@ a.brand-logo {
   background: rgba(255, 255, 255, 0.8);
   text-align: center;
 }
+
+#left-sidebar .collection.open .category-button .material-icons {
+  -webkit-transition: transform 0.35 ease-in-out;
+  -moz-transition: transform 0.35 ease-in-out;
+  transition: transform 0.35 ease-in-out;
+}
+
+#left-sidebar .collection.open .category-button .material-icons {
+  transform: rotateZ(90deg);
+}
+
+#left-sidebar .collection .list-items {
+  height: 0px;
+  overflow: hidden;
+  -webkit-transition: height 0.35 ease-in-out;
+  -moz-transition: height 0.35 ease-in-out;
+  transition: height 0.35 ease-in-out;
+}
+
+#left-sidebar .collection.open .list-items {
+  height: auto;
+  overflow: visible;
+}
+
+#left-sidebar .collection .category-text.open .material-icons {
+  -webkit-transition: transform 0.35 ease-in-out;
+  -moz-transition: transform 0.35 ease-in-out;
+  transition: transform 0.35 ease-in-out;
+}
+
+#left-sidebar .collection .category-text.open .material-icons {
+  transform: rotateZ(90deg);
+}
+
+#left-sidebar .collection .category-text .list-items {
+  height: 0px !important;
+  overflow: hidden;
+}
+
+#left-sidebar .collection .list-items .category-text .text-details {
+  position: relative;
+  display: none;
+  width: 120%;
+  z-index: 9999999 !important;
+  transform: translateX(-10%) rotateX(90deg);
+  -webkit-transition: transform .35 ease-in-out .2;
+  -moz-transition: transform .35 ease-in-out .2;
+  transition: transform .35 ease-in-out .2;
+}
+
+#left-sidebar .collection.open .list-items .category-text.open .text-details {
+  display: block;
+  transform: translateX(-10%) rotateX(0deg);
+}
+
+.material-icons{
+  color: #ab0002;
+}
+
+.card-action a{
+  color: #ab0002 !important;
+}
+
+#left-sidebar {
+  box-shadow: 5px 10px 89px 
+}
