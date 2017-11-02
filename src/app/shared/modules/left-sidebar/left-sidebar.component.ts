@@ -4,8 +4,8 @@ import { Subscription } from "rxjs/Subscription";
 //services
 import { ConfigurationService } from "../../../services/configuration.service";
 import { AuthService } from "../../../services/auth.service";
-//Interface
-import { ConfigurationResponseInterface } from "../../../models/configuration-response.interface";
+import { ReplacmentListService } from './services/replacment-list.service';
+
 @Component({
   selector: "left-sidebar-component",
   templateUrl: "./left-sidebar.html"
@@ -23,7 +23,8 @@ export class LeftSidebarComponent implements OnInit{
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private _configurationService: ConfigurationService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _replacmentListService: ReplacmentListService    
   ) {}
 
   ngOnInit(){
@@ -79,4 +80,7 @@ export class LeftSidebarComponent implements OnInit{
     this._configurationService.getUserTags(id);
   }
 
+  toggleReplacmentList() {
+    this._replacmentListService.toggleReplacmentListState();
+  }
 }
