@@ -23,7 +23,8 @@ export class ReplacmentListComponent implements OnInit {
 
   private _listenForReplacmentListToggleState() {
     this._subscriptions.push(
-      this._replacmentListService.replacmentListStateChange$.subscribe(() => {
+      this._replacmentListService.replacmentListStateChange$.subscribe((tag) => {
+        console.log(tag);
         this.toggleStyle();
       })
     );

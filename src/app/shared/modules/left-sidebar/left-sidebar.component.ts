@@ -4,13 +4,13 @@ import { Subscription } from "rxjs/Subscription";
 //services
 import { ConfigurationService } from "../../../services/configuration.service";
 import { AuthService } from "../../../services/auth.service";
-import { ReplacmentListService } from './services/replacment-list.service';
+import { ReplacmentListService } from "./services/replacment-list.service";
 
 @Component({
   selector: "left-sidebar-component",
   templateUrl: "./left-sidebar.html"
 })
-export class LeftSidebarComponent implements OnInit{
+export class LeftSidebarComponent implements OnInit {
   public openCategory;
   public userCategories;
   public openText;
@@ -24,10 +24,10 @@ export class LeftSidebarComponent implements OnInit{
     private _changeDetectorRef: ChangeDetectorRef,
     private _configurationService: ConfigurationService,
     private _authService: AuthService,
-    private _replacmentListService: ReplacmentListService    
+    private _replacmentListService: ReplacmentListService
   ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.subscribeToUserConfiguration();
     this.getUserTags(1);
     this.getUserActiveCategories(1);
@@ -61,26 +61,27 @@ export class LeftSidebarComponent implements OnInit{
     return this.openText === text;
   }
 
-  subscribeToUserConfiguration(){
+  subscribeToUserConfiguration() {
     this.subscription = this._configurationService.openConfiguration$.subscribe(
-     response => {
-        if (response[0] === 'tags') {
+      response => {
+        if (response[0] === "tags") {
           this.userTags = response[1];
-        }else {
+        } else {
           this.userCategories = response;
         }
       },
       error => console.log(error)
     );
   }
-  getUserActiveCategories(id){
+  getUserActiveCategories(id) {
     this._configurationService.getUserActiveCategories(id);
   }
-  getUserTags(id){
+  getUserTags(id) {
     this._configurationService.getUserTags(id);
   }
 
-  toggleReplacmentList() {
-    this._replacmentListService.toggleReplacmentListState();
+  openReplacmentList(tag, event) {
+    event.stopPropagation();
+    this._replacmentListService.toggleReplacmentListState(tag);
   }
 }
