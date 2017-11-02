@@ -1,7 +1,7 @@
 <div id="left-sidebar">
     <ul class="collection with-header" *ngFor="let tag of userTags" [ngClass]="{open: isCategoryOpen('trening')}">
       <li class="collection-header category-button">
-        <h5 (click)="toggleCategory('trening')">opa
+        <h5 (click)="toggleCategory('trening')">{{tag}}
           <a class="secondary-content">
             <i class="material-icons">send</i>
           </a>
@@ -232,7 +232,7 @@
           <a class="secondary-content">
             <i class="material-icons">send</i>
           </a>
-          <div class="col s12 m12 text-details" [ngClass]="{open: areDetailsOpen(13)}" (click)="toggleDetails(13)">
+          <div class="col s12 m12 text-details">
             <div class="card horizontal">
               <div class="card-image">
                 <img src="https://lorempixel.com/100/190/nature/6">

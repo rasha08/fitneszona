@@ -33,6 +33,8 @@ export class ConfigurationService {
             error => console.log(error)
         );
     }
+    
+    
 
     public getUserTags(id){
         this._configurationHTTPService.getUserTags(id).subscribe(
