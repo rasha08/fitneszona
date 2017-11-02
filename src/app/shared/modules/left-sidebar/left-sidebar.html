@@ -1,6 +1,7 @@
 <div id="left-sidebar">
   <ul class="collection with-header" [ngClass]="{open: isCategoryOpen('trening')}">
     <li class="collection-header category-button">
+      <i class="material-icons circle" (click)="toggleReplacmentList()">folder</i>
       <h5 (click)="toggleCategory('trening')">Kategorija
         <a class="secondary-content">
           <i class="material-icons">send</i>
@@ -216,3 +217,4 @@
     </ul>
   </ul>
 </div>
+<replacment-list-component></replacment-list-component>

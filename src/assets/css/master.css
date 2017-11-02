@@ -158,9 +158,9 @@ a.brand-logo {
   width: 120%;
   z-index: 9999999 !important;
   transform: translateX(-10%) rotateX(90deg);
-  -webkit-transition: transform .35 ease-in-out .2;
-  -moz-transition: transform .35 ease-in-out .2;
-  transition: transform .35 ease-in-out .2;
+  -webkit-transition: transform .35s ease-in-out .2s;
+  -moz-transition: transform .35s ease-in-out .2s;
+  transition: transform .35s ease-in-out .2s;
 }
 
 #left-sidebar .collection.open .list-items .category-text.open .text-details {
@@ -176,6 +176,19 @@ a.brand-logo {
   color: #ab0002 !important;
 }
 
-#left-sidebar {
-  box-shadow: 5px 10px 89px 
+#left-sidebar, #replacment-list {
+  box-shadow: 5px 10px 89px
+}
+
+#replacment-list {
+  position: absolute;
+  z-index: 99999;
+  transform: translateX(-1500%) rotateX(184deg) rotateZ(4330deg);
+  -webkit-transition: transform .6s ease-in-out .2s;
+  -moz-transition: transform .6s ease-in-out .2s;
+  transition: transform .6s ease-in-out .2s;
+}
+
+#replacment-list.open {
+  transform: translateX(100%) rotateX(0deg) rotateZ(0deg);
 }

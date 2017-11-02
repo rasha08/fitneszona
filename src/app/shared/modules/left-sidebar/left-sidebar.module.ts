@@ -5,6 +5,9 @@ import { LeftSidebarComponent } from "./left-sidebar.component";
 import { CategoryListComponent } from "./components/category-list/category-list.component";
 import { CategoryItemsComponent } from "./components/category-list/components/category-items/category-items.component";
 import { CategoryItemDetailsComponent } from "./components/category-list/components/category-items/components/category-item-details/category-item-details.component";
+import { ReplacmentListComponent } from './components/replacment-list/replacment-list.component';
+
+import { ReplacmentListService } from './services/replacment-list.service';
 
 @NgModule({
   imports: [CommonModule],
@@ -12,9 +15,10 @@ import { CategoryItemDetailsComponent } from "./components/category-list/compone
     LeftSidebarComponent,
     CategoryListComponent,
     CategoryItemsComponent,
-    CategoryItemDetailsComponent
+    CategoryItemDetailsComponent,
+    ReplacmentListComponent
   ],
   exports: [LeftSidebarComponent],
-  providers: []
+  providers: [ReplacmentListService]
 })
 export class LeftSidebarModule {}
