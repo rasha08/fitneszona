@@ -39,9 +39,9 @@ export class SearchService {
         return articlesWithPhraseInTitle.concat(articlesWithPhraseInText); 
     }
 
-    public getTextsAndTitles(phrase){
-        return this._articlesHTTPService.getArticlesTextsAndTitles().map(
-            articles => this.filterArticles(phrase, articles)
+    public search(phrase){
+        return this._articlesHTTPService.search(phrase).map(
+            articles => articles
         )
     }
 

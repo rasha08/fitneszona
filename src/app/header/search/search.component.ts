@@ -28,17 +28,18 @@ export class SearchComponent {
     private _articlesService: ArticlesService
   ) { }
 
-  search(phrase){
+  search1(phrase){
     this._subscription = this._sendToSearchService
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .switchMap( phrase => this._searchService.getTextsAndTitles(phrase))
-      .catch(error => this.errorMessage)
       .subscribe(
         result => this.result = result,
         error => console.log(error)
       );
-      
+  }
+
+  search(phrase){
+    this._searchService.search(phrase).subscribe(
+      response => console.log(response)
+    )
   }
 
 }

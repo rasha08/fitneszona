@@ -1,4 +1,60 @@
 <div id="left-sidebar">
+    <ul class="collection with-header" *ngFor="let tag of userTags" [ngClass]="{open: isCategoryOpen('trening')}">
+      <li class="collection-header category-button">
+        <h5 (click)="toggleCategory('trening')">opa
+          <a class="secondary-content">
+            <i class="material-icons">send</i>
+          </a>
+        </h5>
+      </li>
+      <ul class="list-items">
+        <li class="collection-item category-text" [ngClass]="{open: isTextOpen(1)}" (click)="toggleText(1)">
+          <div>Tekst
+            <a class="secondary-content">
+              <i class="material-icons">send</i>
+            </a>
+            <div class="col s12 m12 text-details">
+              <div class="card horizontal">
+                <div class="card-image">
+                  <img src="https://lorempixel.com/100/190/nature/6">
+                </div>
+                <div class="card-stacked">
+                  <div class="card-content">
+                    <p>kratak opis teksta</p>
+                  </div>
+                  <div class="card-action">
+                    <a>otvori</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="collection-item category-text" [ngClass]="{open: isTextOpen(2)}" (click)="toggleText(2)">
+          <div>Tekst
+            <a class="secondary-content">
+              <i class="material-icons">send</i>
+            </a>
+          </div>
+        </li>
+        <li class="collection-item category-text" [ngClass]="{open: isTextOpen(3)}" (click)="toggleText(3)">
+          <div>Tekst
+            <a class="secondary-content">
+              <i class="material-icons">send</i>
+            </a>
+          </div>
+        </li>
+        <li class="collection-item category-text" [ngClass]="{open: isTextOpen(4)}" (click)="toggleText(4)">
+          <div>Tekst
+            <a class="secondary-content">
+              <i class="material-icons">send</i>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </ul>
+
+      <!--Rasa je dole radio-->
   <ul class="collection with-header" [ngClass]="{open: isCategoryOpen('trening')}">
     <li class="collection-header category-button">
       <h5 (click)="toggleCategory('trening')">Kategorija

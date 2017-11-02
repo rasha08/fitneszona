@@ -17,7 +17,7 @@ export class ArticlesCounterService{
 
     getCategoriesWithNewArticles(timestring: string){
         this._articlesCounterHTTPService.getCategoriesWithNewArticles(timestring).subscribe(
-            response => {this.sendNumberOfNewArticlesToHeader(response);console.log('Article: ',response)},
+            response => {this.sendNumberOfNewArticlesToHeader(response)},
             error => console.log(error)
         );
     }

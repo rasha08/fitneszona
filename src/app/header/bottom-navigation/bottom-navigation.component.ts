@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, NgZone } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 
 //Services
@@ -12,7 +12,7 @@ import { ArticlesCounterService } from "../../services/articles-counter.service"
 export class BottomNavigationComponent {
   public error;
   public activeCategories;
-  public countedCategories;
+  public categoriesWithNewArticles;
   public headerData; 
   constructor(
     private _configurationService: ConfigurationService,
@@ -29,12 +29,13 @@ export class BottomNavigationComponent {
   getHeaderData(){
     let timestring = this.getTimeAndDate();
     this._articleCounterService.getCategoriesWithNewArticles(timestring);
-    this._configurationService.getActiveCategories();
+    this._configurationService.getUserActiveCategories(1);
   }
 
   subscribeToActiveCategories(){
-    this._configurationService.openCategories$.subscribe(
-      activeCategories => {console.log(activeCategories)
+    this._configurationService.openConfiguration$.subscribe(
+      activeCategories => {
+        console.log(activeCategories);
         this.activeCategories = activeCategories;
       },
       error => console.log(error)
@@ -43,14 +44,15 @@ export class BottomNavigationComponent {
 
   subscribeToCategoriesWithNewArticles(){
     this._articleCounterService.sendCategoriesToBottomHeader$.subscribe(
-        countedCategoriesObj => {console.log(countedCategoriesObj);
-          this.countedCategories = countedCategoriesObj;
+        countedCategoriesObj => {
+          this.categoriesWithNewArticles = countedCategoriesObj;
         },
         error => console.log('Error at bottom-navigation:',error)
     );
   }
 
-  checkIfCategoryInArray(category, activeCategories){
+  checkIfCategoryInArray(category, categoryObj){
+    let activeCategories = Object.keys(categoryObj);
       if ( activeCategories.indexOf(category) !== -1) return true;
       else return false;
   }  
@@ -61,5 +63,6 @@ export class BottomNavigationComponent {
     let time = dateAndTime.toTimeString().slice(0,8);
     return  date + ' ' + time;
   }
+  
 
 }

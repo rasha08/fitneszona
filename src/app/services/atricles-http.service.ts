@@ -94,8 +94,9 @@ export class ArticlesHTTPService {
   }
 
 
-  public getArticlesTextsAndTitles(){
-    return this._http.get(`${this.BASE_URL}`).map( //ruta mora da se popravi
+  public search(phrase){
+    console.log('https://fitneszona.rs/api/search' == `${this.BASE_URL}/api/search`)
+    return this._http.post(`${this.BASE_URL}/api/search`,phrase).map( //ruta mora da se popravi
       result => result,
       error => console.log(error)
     )

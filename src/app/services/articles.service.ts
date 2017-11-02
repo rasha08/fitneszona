@@ -76,14 +76,6 @@ export class ArticlesService {
       error => console.log(error)
     )
   }
-
-  getTextsAndTitles(){
-   this._articlesHTTPService.getArticlesTextsAndTitles().subscribe(
-     response => console.log(response),
-     error => console.log(error)
-   )
-  }
-  
   
   private openArticle(article) {
     this._openArticle.next(article);

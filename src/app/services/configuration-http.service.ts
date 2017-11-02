@@ -15,11 +15,11 @@ export class ConfigurationHTTPService {
         private _ngZone: NgZone
     ) {}
 
-    public getActiveCategories() {
-        return this._http.get(`https://fitneszona.rs/api/configuration/1/categories`)
+    public getUserActiveCategories(id) {
+        return this._http.get(`${this.BASE_URL}/api/configuration/${id}/categories`)
             .map(
                 response => response.json(),
-                error => this._ngZone.runOutsideAngular(() => setTimeout(() => this.getActiveCategories(), 500))
+                error => this._ngZone.runOutsideAngular(() => setTimeout(() => this.getUserActiveCategories(id), 500))
             );
     }
 
@@ -30,4 +30,13 @@ export class ConfigurationHTTPService {
                 error => this._ngZone.runOutsideAngular(() => setTimeout(() => this.getUserConfiguration(id), 500))
             );
     }
+
+    public getUserTags(id){
+        return this._http.get(`${this.BASE_URL}/api/configuration/${id}/tags-priority-list`)
+            .map(
+                response => response.json(),
+                error => console.log(error)
+            )
+    }
+
 }
