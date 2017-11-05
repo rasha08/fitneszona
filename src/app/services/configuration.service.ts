@@ -11,6 +11,7 @@ import { ConfigurationHTTPService } from "./configuration-http.service";
 
 export class ConfigurationService {
     public BASE_URL: string = 'http://fitneszona.rs';
+    public configuration: object;
 
     private _openConfiguration = new Subject();
     public openConfiguration$ = this._openConfiguration.asObservable();
@@ -19,34 +20,22 @@ export class ConfigurationService {
         private _configurationHTTPService: ConfigurationHTTPService
     ){ }
 
-    public getUserActiveCategories(id){
-        this._configurationHTTPService.getUserActiveCategories(id).subscribe(
-            response => this._sendConfiguration(response.activeCategories.slice(1)),//ne vracamo latest_articles
-            error => console.log(error)
-        );
-    }
-
-
-    public getUserConfiguration(id){
-        this._configurationHTTPService.getUserConfiguration(id).subscribe(
-            response => this._sendConfiguration(response),
-            error => console.log(error)
-        );
-    }
-    
-    
-
-    public getUserTags(id){
-        this._configurationHTTPService.getUserTags(id).subscribe(
-            response => {
-                this._sendConfiguration(['tags',response.tagsPriorityList]);
+    public getConfiguration(){
+        this._configurationHTTPService.getConfiguration().subscribe(
+            configuration => {
+                this.configuration = configuration;
+                this._sendNotification(true)
             },
-            error => console.log('Error:',error)
+            error => console.log(error)
         );
     }
 
-    private _sendConfiguration(categories){
-        this._openConfiguration.next(categories);
+    public getParam(param){
+        return this.configuration[param];
+    }
+    
+    private _sendNotification(value){
+        this._openConfiguration.next(value);
     }
 
 }

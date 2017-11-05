@@ -5,6 +5,7 @@ import { LoginComponent } from '../../shared/components/login/login.component';
 import { RegistrationComponent } from '../../shared/components/registration/registration.component';
 import { AuthService } from "../../services/auth.service";
 import { ModalService } from "../../services/modal.service"
+import { ConfigurationService } from "../../services/configuration.service";
 
 @Component({
   selector: "app-top-navigation",
@@ -12,9 +13,14 @@ import { ModalService } from "../../services/modal.service"
 })
 export class TopNavigationComponent {
   public user;
+  public showLogIn;
   private _subscriptions: Array<Subscription> = [];
 
-  constructor(private _authService: AuthService, private _modalService: ModalService) {}
+  constructor(
+      private _authService: AuthService, 
+      private _modalService: ModalService,
+      private _configurationService: ConfigurationService
+    ) {}
 
   ngOnInit() {
     this._listenForUserStatusChange();
@@ -25,7 +31,13 @@ export class TopNavigationComponent {
       this._authService.authStatusChange$.subscribe(() => {
         console.log("USER LOGGEDIN", this._authService.getUser());
         this.user = this._authService.getUser();
-      })
+      }),
+      this._configurationService.openConfiguration$.subscribe(
+        notification => {
+          this.showLogIn = this._configurationService.getParam('is_login_enabled');
+        },
+        error => console.log(error)
+      )
     );
   }
 

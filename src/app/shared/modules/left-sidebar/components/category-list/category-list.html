@@ -1,0 +1,13 @@
+<ul class="collection with-header" [ngClass]="{open: isCategoryOpen('trening')}">
+    <li class="collection-header category-button">
+      <h5 (click)="toggleCategory('trening')">{{tag.name}}
+        <a class="secondary-content">
+          <i class="material-icons">send</i>
+        </a>
+      </h5>
+    </li>
+    <ul class="list-items">
+    <category-items-component [texts]="tag.texts.slice(0,numOfArticles)" ></category-items-component><!--odje ide tekst-->
+    </ul>
+  </ul>
+ 

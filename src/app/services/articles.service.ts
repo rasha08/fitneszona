@@ -5,11 +5,12 @@ import { ArticlesHTTPService } from './atricles-http.service';
 
 @Injectable()
 export class ArticlesService {
-  allArticles: any;
+  public allArticles;
   private _openArticle = new Subject();
-  public openArticle$ = this._openArticle.asObservable(); // fali zagrada
-
-
+  public openArticle$ = this._openArticle.asObservable();
+  private _notify = new Subject();
+  public notify$ = this._notify.asObservable();
+  
   constructor(
     private _articlesHTTPService: ArticlesHTTPService
   ) {}
@@ -23,7 +24,10 @@ export class ArticlesService {
 
   public getAllArticle(){
     this._articlesHTTPService.getAllArticles().subscribe(
-      articles => this.openArticle(articles),
+      articles => {
+        this.allArticles = articles;
+        this.notifyOfArticles('allArticles');
+      },
       error => console.log('Error: ',error)
     )
   }
@@ -79,5 +83,9 @@ export class ArticlesService {
   
   private openArticle(article) {
     this._openArticle.next(article);
+  }
+
+  private notifyOfArticles(param){
+    this._notify.next(param)
   }
 }

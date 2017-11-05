@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, NgZone } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 
 import { UserHTTPService } from "./user-http.service";
@@ -16,7 +16,8 @@ export class AuthService {
   constructor(
     private _userHTTPService: UserHTTPService,
     private _responseService: ResponseService,
-    private _localStorageService: LocalStorageService
+    private _localStorageService: LocalStorageService,
+    private _ngZone: NgZone
   ) {}
 
   public getUser() {

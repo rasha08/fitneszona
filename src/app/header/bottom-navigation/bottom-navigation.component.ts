@@ -14,6 +14,7 @@ export class BottomNavigationComponent {
   public activeCategories;
   public categoriesWithNewArticles;
   public headerData; 
+
   constructor(
     private _configurationService: ConfigurationService,
     private _localStorageService: LocalStorageService,
@@ -21,7 +22,7 @@ export class BottomNavigationComponent {
   ) {}
 
   ngOnInit(){
-    this.subscribeToActiveCategories();
+    this.subscribeToConfiguration();
     this.subscribeToCategoriesWithNewArticles();
     this.getHeaderData();
   }
@@ -29,14 +30,15 @@ export class BottomNavigationComponent {
   getHeaderData(){
     let timestring = this.getTimeAndDate();
     this._articleCounterService.getCategoriesWithNewArticles(timestring);
-    this._configurationService.getUserActiveCategories(1);
+    this._configurationService.getConfiguration();
   }
 
-  subscribeToActiveCategories(){
+  subscribeToConfiguration(){
     this._configurationService.openConfiguration$.subscribe(
-      activeCategories => {
-        console.log(activeCategories);
-        this.activeCategories = activeCategories;
+      notification => {
+        console.log('Called for categories');
+        this.activeCategories = this._configurationService.getParam('active_categories');
+        console.log('Actie categories:',this.activeCategories);
       },
       error => console.log(error)
     );
