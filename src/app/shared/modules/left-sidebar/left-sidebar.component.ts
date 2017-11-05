@@ -57,6 +57,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
 
   private _populateSidebar() {
     this._tagsPriorityList.map(tag => {
+<<<<<<< HEAD
       this.tags.push({
         name: tag,
         texts: this._articlesService.orderByTimeOfUpdate(
@@ -65,6 +66,18 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
             .filter(article => this._isArticleAlreadyAssigned(article.id))
         )
       });
+=======
+      this.tags.push(
+        {
+          name: tag,
+          texts: this._articlesService.orderByTimeOfUpdate(
+            this._articlesService.getArticlesByTagName(tag, 15)
+              .filter(article => this._isArticleAlreadyAssigned(article.id))
+          )
+        }
+
+      );
+>>>>>>> Added cosmetic changes to left-sidebar.component
     });
 
     this.tagsInSidebar = this.tags.splice(0, 6);
@@ -72,8 +85,13 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
 
   private _isArticleAlreadyAssigned(id) {
     if (this._filteredArticles.indexOf(id) !== -1) {
+<<<<<<< HEAD
       return false;
     }
+=======
+       return false;
+      }
+>>>>>>> Added cosmetic changes to left-sidebar.component
     this._filteredArticles.push(id);
 
     return true;
