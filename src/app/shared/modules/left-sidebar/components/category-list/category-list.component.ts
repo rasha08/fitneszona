@@ -1,10 +1,12 @@
 import { Component, Input, ChangeDetectorRef, OnInit } from "@angular/core";
 
+import { ReplacmentListService } from '../../services/replacment-list.service';
+
 @Component({
   selector: "category-list-component",
   templateUrl: "./category-list.html"
 })
-export class CategoryListComponent implements OnInit{
+export class CategoryListComponent implements OnInit {
   public openCategory;
   public openText;
   @Input() numOfArticles;
@@ -12,14 +14,14 @@ export class CategoryListComponent implements OnInit{
   public texts;
 
   constructor(
-    public _changeDetectorRef: ChangeDetectorRef
+    private _replacmentListService: ReplacmentListService,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {}
 
-  ngOnInit(){
-  }
-  
+  ngOnInit() {}
+
   isCategoryOpen(category) {
-      return this.openCategory === category;
+    return this.openCategory === category;
   }
 
   toggleCategory(category) {
@@ -31,4 +33,8 @@ export class CategoryListComponent implements OnInit{
     this._changeDetectorRef.detectChanges();
   }
 
+  openReplacmentList(tag, event) {
+    event.stopPropagation();
+    this._replacmentListService.toggleReplacmentListState(tag);
+  }
 }

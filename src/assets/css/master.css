@@ -185,7 +185,7 @@ a.brand-logo {
   position: absolute;
   z-index: 99999;
   transform: translateX(-200%) rotateX(184deg) rotateZ(4330deg);
-  top: 25vh;
+  top: 18vh;
   -webkit-transition: transform 0.5s ease-in-out;
   -moz-transition: transform 0.5s ease-in-out;
   transition: transform 0.5s ease-in-out;
@@ -196,13 +196,16 @@ a.brand-logo {
 }
 
 .explore {
-  transform: translateX(-39%);
-  padding-right: 20px;
-  font-size: 160%;
+  transform: translateY(10%);
+  padding-right: 200px;
+  position: absolute;
+  font-size: 300% !important;
 }
 
+.swap {
+  font-size: 300% !important;
+}
 #left-sidebar h5 {
   text-transform: uppercase;
-  padding-left: 10%;
+  padding-left: 15%;
 }
-
