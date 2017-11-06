@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 
 import { LoginComponent } from '../../shared/components/login/login.component';
@@ -11,15 +11,16 @@ import { ConfigurationService } from "../../services/configuration.service";
   selector: "app-top-navigation",
   templateUrl: "./top-navigation.html"
 })
-export class TopNavigationComponent {
+export class TopNavigationComponent implements OnInit {
   public user;
   public showLogIn;
   private _subscriptions: Array<Subscription> = [];
 
   constructor(
-      private _authService: AuthService, 
+      private _authService: AuthService,
       private _modalService: ModalService,
-      private _configurationService: ConfigurationService
+      private _configurationService: ConfigurationService,
+      private _changeDetectorRef: ChangeDetectorRef
     ) {}
 
   ngOnInit() {
@@ -31,10 +32,13 @@ export class TopNavigationComponent {
       this._authService.authStatusChange$.subscribe(() => {
         console.log("USER LOGGEDIN", this._authService.getUser());
         this.user = this._authService.getUser();
+        this._changeDetectorRef.detectChanges();
       }),
-      this._configurationService.openConfiguration$.subscribe(
+      this._configurationService.configurationStatusChange$.subscribe(
         notification => {
           this.showLogIn = this._configurationService.getParam('is_login_enabled');
+          console.log(this.showLogIn);
+          this._changeDetectorRef.detectChanges();
         },
         error => console.log(error)
       )
@@ -52,7 +56,7 @@ export class TopNavigationComponent {
       component: RegistrationComponent
     })
   }
-  
+
   public logout() {
     this._authService.logout();
    }

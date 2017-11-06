@@ -9,8 +9,8 @@ import { ReplacmentListService } from '../../services/replacment-list.service';
 export class CategoryListComponent implements OnInit {
   public openCategory;
   public openText;
-  @Input() numOfArticles;
-  @Input() public tag;
+  @Input() numberOfArticlesByTag;
+  @Input() public tags;
   public texts;
 
   constructor(
@@ -36,5 +36,9 @@ export class CategoryListComponent implements OnInit {
   openReplacmentList(tag, event) {
     event.stopPropagation();
     this._replacmentListService.toggleReplacmentListState(tag);
+  }
+
+  public getTagTexts(tag: any) {
+    return (this.numberOfArticlesByTag > tag.texts.length) ? tag.texts : tag.texts.slice(0, this.numberOfArticlesByTag);
   }
 }

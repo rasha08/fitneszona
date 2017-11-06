@@ -13,7 +13,7 @@ export class BottomNavigationComponent {
   public error;
   public activeCategories;
   public categoriesWithNewArticles;
-  public headerData; 
+  public headerData;
 
   constructor(
     private _configurationService: ConfigurationService,
@@ -34,7 +34,7 @@ export class BottomNavigationComponent {
   }
 
   subscribeToConfiguration(){
-    this._configurationService.openConfiguration$.subscribe(
+    this._configurationService.configurationStatusChange$.subscribe(
       notification => {
         console.log('Called for categories');
         this.activeCategories = this._configurationService.getParam('active_categories');
@@ -57,7 +57,7 @@ export class BottomNavigationComponent {
     let activeCategories = Object.keys(categoryObj);
       if ( activeCategories.indexOf(category) !== -1) return true;
       else return false;
-  }  
+  }
 
   getTimeAndDate(){
     let dateAndTime = new Date();
@@ -65,6 +65,6 @@ export class BottomNavigationComponent {
     let time = dateAndTime.toTimeString().slice(0,8);
     return  date + ' ' + time;
   }
-  
+
 
 }

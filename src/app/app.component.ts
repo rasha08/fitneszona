@@ -13,6 +13,7 @@ import { AuthService } from "./services/auth.service";
 import { ModalService } from "./services/modal.service";
 import { LocalStorageService } from "./services/local-storage.service";
 import { ArticlesService } from "./services/articles.service";
+import { ConfigurationService } from './services/configuration.service';
 
 @Component({
   selector: "app-root",
@@ -22,6 +23,7 @@ import { ArticlesService } from "./services/articles.service";
 export class AppComponent implements OnInit, OnDestroy {
   @ViewChild("placeholder", { read: ViewContainerRef })
   placeholder;
+
   private _componentRef;
   public article: any;
   private _subscription: Subscription;
@@ -32,14 +34,15 @@ export class AppComponent implements OnInit, OnDestroy {
     private _componentFactoryResolver: ComponentFactoryResolver,
     private _modalService: ModalService,
     private _localStorageService: LocalStorageService,
-    private _articlesService: ArticlesService
+    private _articlesService: ArticlesService,
+    private _configurationService: ConfigurationService
   ) {
+    this._configurationService.getConfiguration();
     this._authService.checkIfUserIsLoggedIn();
   }
 
   public ngOnInit() {
     this._listenForModalOpenCloseEvents();
-    //this.testRestApi();
   }
 
   public ngOnDestroy() {
@@ -59,7 +62,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private _createModal(modalData) {
-    let {
+    const {
       component,
       data,
       hideOtherModals,
@@ -71,11 +74,11 @@ export class AppComponent implements OnInit, OnDestroy {
       this._closeModal();
     }
 
-    let factory = this._componentFactoryResolver.resolveComponentFactory(
+    const factory = this._componentFactoryResolver.resolveComponentFactory(
       component
     );
 
-    let componentRef = this.placeholder.createComponent(factory);
+    const componentRef = this.placeholder.createComponent(factory);
     this._componentRef = componentRef;
     componentRef.instance.modal = componentRef;
 
@@ -96,23 +99,4 @@ export class AppComponent implements OnInit, OnDestroy {
     this._componentRef.destroy();
   }
 
-  private testServices(){
-    this._subscription = this._articlesService.openArticle$.subscribe(
-      article => console.log(article),
-      error => console.log(error)
-    )
-  }
-
-  private testRestApi(){
-    this.testServices();
-    this._articlesService.getAllArticle();
-    this._articlesService.getArticle(28);
-    this._articlesService.getArticleCategoryAndTags(14);
-    this._articlesService.getArticlesForCategory('trening');
-    this._articlesService.getLatestArticles();
-    this._articlesService.getLatestArticlesForCategory('power'); //test za Rasu
-    this._articlesService.getTopArticles();
-    this._articlesService.getTopArticlesForCategory('power');
-    this._articlesService.getArticleByURLSlug('crossfit');
-  }
 }

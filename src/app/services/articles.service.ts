@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 import { ArticlesHTTPService } from './atricles-http.service';
@@ -8,12 +8,16 @@ export class ArticlesService {
   public allArticles;
   private _openArticle = new Subject();
   public openArticle$ = this._openArticle.asObservable();
-  private _notify = new Subject();
-  public notify$ = this._notify.asObservable();
-  
+
+  private _allArticlesFetched = new Subject();
+  public allArticlesStateChange$ = this._allArticlesFetched.asObservable();
+
   constructor(
-    private _articlesHTTPService: ArticlesHTTPService
-  ) {}
+    private _articlesHTTPService: ArticlesHTTPService,
+    private _ngZone: NgZone
+  ) {
+    this._ngZone.runOutsideAngular(() => this.getAllArticles());
+  }
 
   public getArticle(id) {
     this._articlesHTTPService.getArticle(id).subscribe(
@@ -22,11 +26,11 @@ export class ArticlesService {
     );
   }
 
-  public getAllArticle(){
+  public getAllArticles() {
     this._articlesHTTPService.getAllArticles().subscribe(
       articles => {
         this.allArticles = articles;
-        this.notifyOfArticles('allArticles');
+        this.allArticlesStateChange(true);
       },
       error => console.log('Error: ',error)
     )
@@ -80,12 +84,28 @@ export class ArticlesService {
       error => console.log(error)
     )
   }
-  
+
   private openArticle(article) {
     this._openArticle.next(article);
   }
 
-  private notifyOfArticles(param){
-    this._notify.next(param)
+  private allArticlesStateChange(param) {
+    this._allArticlesFetched.next(param);
+  }
+
+  public getArticlesByTagName(tag, limit = 200) {
+    let numOfArticlesReturned = 0;
+    return this.allArticles.filter(article => {
+      if (article.tags.indexOf(tag) !== -1 && numOfArticlesReturned < limit) {
+        numOfArticlesReturned += 1;
+        return true;
+      }
+
+      return false;
+    });
+  }
+
+  public orderByTimeOfUpdate(articles = []) {
+    return articles.sort((a, b) => -((new Date(a.updated_at).getTime()) - (new Date(b.updated_at).getTime())));
   }
 }

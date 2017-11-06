@@ -1,7 +1,7 @@
-import { Component, ChangeDetectorRef, OnInit } from "@angular/core";
+import { Component, ChangeDetectorRef, OnInit, OnDestroy } from "@angular/core";
 
 import { Subscription } from "rxjs/Subscription";
-//services
+
 import { ConfigurationService } from "../../../services/configuration.service";
 import { AuthService } from "../../../services/auth.service";
 import { ArticlesService } from "../../../services/articles.service";
@@ -10,122 +10,80 @@ import { ArticlesService } from "../../../services/articles.service";
   selector: "left-sidebar-component",
   templateUrl: "./left-sidebar.html"
 })
-export class LeftSidebarComponent implements OnInit {
-  public allArticles;
-  public openCategory;
-  public openText;
-  public isUserLogedIn;
-  public configuration;
-  public subscription: Subscription[] = [];
-  public user;
+export class LeftSidebarComponent implements OnInit, OnDestroy {
+
+
+  private _subscriptions: Array<Subscription> = [];
   public tags = [];
-  public numOfArticles;
+  public tagsInSidebar;
+  public numberOfArticlesByTag = 0;
+  private _tagsPriorityList = [];
+  private _filteredArticles = [];
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private _configurationService: ConfigurationService,
     private _authService: AuthService,
-    private _articleService: ArticlesService
+    private _articlesService: ArticlesService
   ) {}
 
   ngOnInit() {
-    this.subscribeToUserConfigurationAndArticles();
-    this.getAllArticles();
+    this._subscribeToConfigurationFetchEvent();
+    this._subscribeToAllArticlesFetchEvent();
+  }
+
+  ngOnDestroy() {
+    this._subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   getAllArticles() {
-    this._articleService.getAllArticle();
+    this._articlesService.getAllArticles();
   }
 
-  toggleCategory(category) {
-    if (this.openCategory === category) {
-      this.openCategory = null;
-    } else {
-      this.openCategory = category;
-    }
-
-    this._changeDetectorRef.detectChanges();
-  }
-
-  isCategoryOpen(category) {
-    return this.openCategory === category;
-  }
-
-  toggleText(text) {
-    if (this.openText === text) {
-      this.openText = null;
-    } else {
-      this.openText = text;
-    }
-
-    this._changeDetectorRef.detectChanges();
-  }
-
-  isTextOpen(text) {
-    return this.openText === text;
-  }
-
-  subscribeToUserConfigurationAndArticles() {
-    this.subscription.push(
-      this._configurationService.openConfiguration$.subscribe(
-        notification => {
-          let number = this._configurationService.getParam(
-            "number_of_articles_in_sidebar"
-          );
-          this.numOfArticles = number;
-          let tags = this._configurationService.getParam("tags_priority_list");
-          for (var i = 0; i < number; i++) {
-            this.tags.push({
-              name: tags[i],
-              texts: []
-            });
-          }
-          if (this.allArticles !== undefined) {
-            this.filterTexts();
-          }
-        },
-        error => console.log(error)
-      )
-    );
-    this.subscription.push(
-      this._articleService.notify$.subscribe(param => {
-        if (param === "allArticles") {
-          this.allArticles = this._articleService.allArticles;
-        }
-        if (this.tags !== undefined) {
-          this.filterTexts();
-        }
+  private _subscribeToConfigurationFetchEvent() {
+    this._subscriptions.push(
+      this._configurationService.configurationStatusChange$.subscribe(() => {
+        this._getConfigurationParametars();
       })
     );
   }
 
-  filterTexts() {
-    for (let tag of this.tags) {
-      for (let article of this.allArticles) {
-        let articleTags = article.tags;
-        if (
-          articleTags.indexOf(tag.name) !== -1 &&
-          !this.isArticleAssinged(article)
-        ) {
-          tag.texts.push(article);
-        }
-      }
-      //console.log('Before sorting:',tag.texts);
-      tag.texts.sort(function(article1, article2) {
-        let diff =
-          article1.tags.indexOf(tag.name) - article2.tags.indexOf(tag.name);
-        return diff;
-      });
-      //console.log('After sorting',tag.texts);
-    }
+  private _subscribeToAllArticlesFetchEvent() {
+    this._subscriptions.push(
+      this._articlesService.allArticlesStateChange$.subscribe(() => {
+        this._populateSidebar();
+        this._changeDetectorRef.detectChanges();
+      })
+    );
   }
 
-  isArticleAssinged(article) {
-    for (let tag of this.tags) {
-      if (tag.texts.indexOf(article) !== -1) {
-        return true;
-      }
+  private _populateSidebar() {
+    this._tagsPriorityList.map(tag => {
+      this.tags.push(
+        {
+          name: tag,
+          texts: this._articlesService.orderByTimeOfUpdate(
+            this._articlesService.getArticlesByTagName(tag, 15)
+              .filter(article => this._isArticleAlreadyAssigned(article.id))
+          )
+        }
+      );
+    });
+
+    this.tagsInSidebar = this.tags.splice(0, 6);
+  }
+
+  private _isArticleAlreadyAssigned(id) {
+    if (this._filteredArticles.indexOf(id) !== -1) {
+       return false;
     }
-    return false;
+    this._filteredArticles.push(id);
+
+    return true;
+  }
+
+  private _getConfigurationParametars() {
+    this.numberOfArticlesByTag = this._configurationService.getParam('number_of_articles_in_sidebar');
+    this._tagsPriorityList = this._configurationService.getParam('tags_priority_list');
   }
 }

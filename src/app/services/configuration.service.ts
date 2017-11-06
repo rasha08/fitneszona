@@ -14,17 +14,17 @@ export class ConfigurationService {
     public configuration: object;
 
     private _openConfiguration = new Subject();
-    public openConfiguration$ = this._openConfiguration.asObservable();
-    
+    public configurationStatusChange$ = this._openConfiguration.asObservable();
+
     constructor(
         private _configurationHTTPService: ConfigurationHTTPService
-    ){ }
+    ) { }
 
-    public getConfiguration(){
+    public getConfiguration() {
         this._configurationHTTPService.getConfiguration().subscribe(
             configuration => {
                 this.configuration = configuration;
-                this._sendNotification(true)
+                this._sendNotification(true);
             },
             error => console.log(error)
         );
@@ -33,7 +33,7 @@ export class ConfigurationService {
     public getParam(param){
         return this.configuration[param];
     }
-    
+
     private _sendNotification(value){
         this._openConfiguration.next(value);
     }

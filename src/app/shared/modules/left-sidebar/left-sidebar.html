@@ -1,6 +1,6 @@
 <div id="left-sidebar">
-    <category-list-component  *ngFor="let tag of tags" [tag]="tag"
-      [numOfArticles]="numOfArticles"
+    <category-list-component  [tags]="tagsInSidebar"
+      [numberOfArticlesByTag]="numberOfArticlesByTag"
     ></category-list-component>
 
 <replacment-list-component></replacment-list-component>

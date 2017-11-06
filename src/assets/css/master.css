@@ -196,8 +196,7 @@ a.brand-logo {
 }
 
 .explore {
-  transform: translateY(10%);
-  padding-right: 200px;
+  transform: translateY(10%) translateX(-15%);
   position: absolute;
   font-size: 300% !important;
 }
