@@ -1,13 +1,13 @@
-import { Component, OnInit, NgZone } from "@angular/core";
-import { Subscription } from "rxjs/Subscription";
+import { Component, OnInit, NgZone } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 //Services
-import { ConfigurationService } from "../../services/configuration.service";
-import { LocalStorageService } from "../../services/local-storage.service";
-import { ArticlesCounterService } from "../../services/articles-counter.service";
+import { ConfigurationService } from '../../services/configuration.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { ArticlesCounterService } from '../../services/articles-counter.service';
 @Component({
-  selector: "app-bottom-navigation",
-  templateUrl: "./bottom-navigation.html"
+  selector: 'app-bottom-navigation',
+  templateUrl: './bottom-navigation.html'
 })
 export class BottomNavigationComponent {
   public error;
@@ -21,50 +21,49 @@ export class BottomNavigationComponent {
     private _articleCounterService: ArticlesCounterService
   ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.subscribeToConfiguration();
     this.subscribeToCategoriesWithNewArticles();
     this.getHeaderData();
   }
 
-  getHeaderData(){
+  getHeaderData() {
     let timestring = this.getTimeAndDate();
     this._articleCounterService.getCategoriesWithNewArticles(timestring);
-    this._configurationService.getConfiguration();
   }
 
-  subscribeToConfiguration(){
+  subscribeToConfiguration() {
     this._configurationService.configurationStatusChange$.subscribe(
       notification => {
         console.log('Called for categories');
-        this.activeCategories = this._configurationService.getParam('active_categories');
-        console.log('Actie categories:',this.activeCategories);
+        this.activeCategories = this._configurationService.getParam(
+          'active_categories'
+        );
+        console.log('Actie categories:', this.activeCategories);
       },
       error => console.log(error)
     );
   }
 
-  subscribeToCategoriesWithNewArticles(){
+  subscribeToCategoriesWithNewArticles() {
     this._articleCounterService.sendCategoriesToBottomHeader$.subscribe(
-        countedCategoriesObj => {
-          this.categoriesWithNewArticles = countedCategoriesObj;
-        },
-        error => console.log('Error at bottom-navigation:',error)
+      countedCategoriesObj => {
+        this.categoriesWithNewArticles = countedCategoriesObj;
+      },
+      error => console.log('Error at bottom-navigation:', error)
     );
   }
 
-  checkIfCategoryInArray(category, categoryObj){
+  checkIfCategoryInArray(category, categoryObj) {
     let activeCategories = Object.keys(categoryObj);
-      if ( activeCategories.indexOf(category) !== -1) return true;
-      else return false;
+    if (activeCategories.indexOf(category) !== -1) return true;
+    else return false;
   }
 
-  getTimeAndDate(){
+  getTimeAndDate() {
     let dateAndTime = new Date();
-    let date = dateAndTime.toLocaleDateString().replace(/\//g,'-');
-    let time = dateAndTime.toTimeString().slice(0,8);
-    return  date + ' ' + time;
+    let date = dateAndTime.toLocaleDateString().replace(/\//g, '-');
+    let time = dateAndTime.toTimeString().slice(0, 8);
+    return date + ' ' + time;
   }
-
-
 }
