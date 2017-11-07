@@ -35,4 +35,25 @@ export class UserHTTPService {
       .map(response => response.json())
   }
 
+  public initilaiseUserTagsInLeftSidebar(id,tags){
+    let action = {
+      action: 'leftSidebarInitialization',
+      options: tags
+    };
+    return this._http
+        .post(`${this.BASE_URL}/users/${id}`, action)
+        .map(response => response.json());
+  }
+
+  public replaceUserTagInSidebar(id,tag, index){
+    let action = {
+      action: 'leftSidebarChange',
+      optionName: tag,
+      optionIndex: index
+    };
+    return this._http
+        .post(`${this.BASE_URL}/users/${id}`, action)
+        .map(response => response.json());
+  }
+
 }

@@ -1,43 +1,8 @@
 <div id="replacment-list" class="col s3">
   <ul class="collection">
-    <li class="collection-item avatar">
+    <li class="collection-item avatar" *ngFor="let tag of tags" (click)="replaceTag(tag)">
       <i class="material-icons circle apply">done_all</i>
-      <span class="title">Naslov Taga</span>
-      <a href="#!" class="secondary-content">
-        <i class="material-icons swap">swap_horiz</i>
-      </a>
-    </li>
-    <li class="collection-item avatar">
-      <i class="material-icons circle apply">done_all</i>
-      <span class="title">Naslov Taga</span>
-      <a href="#!" class="secondary-content">
-        <i class="material-icons swap">swap_horiz</i>
-      </a>
-    </li>
-    <li class="collection-item avatar">
-      <i class="material-icons circle apply">done_all</i>
-      <span class="title">Naslov Taga</span>
-      <a href="#!" class="secondary-content">
-        <i class="material-icons swap">swap_horiz</i>
-      </a>
-    </li>
-    <li class="collection-item avatar">
-      <i class="material-icons circle apply">done_all</i>
-      <span class="title">Naslov Taga</span>
-      <a href="#!" class="secondary-content">
-        <i class="material-icons swap">swap_horiz</i>
-      </a>
-    </li>
-    <li class="collection-item avatar">
-      <i class="material-icons circle apply">done_all</i>
-      <span class="title">Naslov Taga</span>
-      <a href="#!" class="secondary-content">
-        <i class="material-icons swap">swap_horiz</i>
-      </a>
-    </li>
-    <li class="collection-item avatar">
-      <i class="material-icons circle apply">done_all</i>
-      <span class="title">Naslov Taga</span>
+      <span class="title">{{tag}}</span>
       <a href="#!" class="secondary-content">
         <i class="material-icons swap">swap_horiz</i>
       </a>

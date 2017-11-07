@@ -37,6 +37,5 @@ export class UserDataService {
 
   public predictTextsThatUserMightLike() {
   }
-
   
 }

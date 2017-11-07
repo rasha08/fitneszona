@@ -35,11 +35,15 @@ export class BottomNavigationComponent {
   subscribeToConfiguration() {
     this._configurationService.configurationStatusChange$.subscribe(
       notification => {
+<<<<<<< HEAD
         console.log('Called for categories');
         this.activeCategories = this._configurationService.getParam(
           'active_categories'
         );
         console.log('Actie categories:', this.activeCategories);
+=======
+        this.activeCategories = this._configurationService.getParam('active_categories');
+>>>>>>> Irrelevant changes
       },
       error => console.log(error)
     );
