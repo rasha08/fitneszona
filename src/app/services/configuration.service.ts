@@ -44,12 +44,12 @@ export class ConfigurationService {
   private _subscribeToConfigurationChanges() {
     this._notifyService
       .subscribeToConfigurationChanges(1)
-      .on('value', update => {
+      /*.on('value', update => {
         this._updateCouner += 1;
         if (this._shouldFetchNewConfiguration()) {
           this.getConfiguration();
         }
-      });
+      });*/
   }
 
   private _shouldFetchNewConfiguration() {

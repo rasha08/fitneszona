@@ -33,12 +33,16 @@ export class CategoryListComponent implements OnInit {
     this._changeDetectorRef.detectChanges();
   }
 
-  openReplacmentList(tag, event) {
+  openReplacmentList(tag, index, event) {
     event.stopPropagation();
-    this._replacmentListService.toggleReplacmentListState(tag);
+    this._replacmentListService.toggleReplacmentListState(tag, index);
   }
 
   public getTagTexts(tag: any) {
     return (this.numberOfArticlesByTag > tag.texts.length) ? tag.texts : tag.texts.slice(0, this.numberOfArticlesByTag);
+  }
+
+  public getTagIndex(tag){
+    return this.tags.indexOf(tag);
   }
 }

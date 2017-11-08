@@ -14,8 +14,8 @@ export class ReplacmentListService {
     private _userHTTPService: UserHTTPService
   ) {}
 
-  public toggleReplacmentListState(tag) {
-    this._replacmentListStateChange.next(tag);
+  public toggleReplacmentListState(tag, index) {
+    this._replacmentListStateChange.next([tag, index]);
   }
 
   public initialiseUserTagsInLeftSidebar(id, tags){

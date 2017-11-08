@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, Input, Output, EventEmitter } fro
 import { Subscription } from 'rxjs/Subscription';
 import { ReplacmentListService } from '../../services/replacment-list.service';
 import { ConfigurationService } from "../../../../../services/configuration.service";
+import { AuthService } from "../../../../../services/auth.service";
 
 declare const $: any;
 
@@ -12,13 +13,15 @@ declare const $: any;
 export class ReplacmentListComponent implements OnInit {
   private _isReplacmentListOpen = false;
   private _subscriptions: Array<Subscription> = [];
+  public currentTag;
   @Input() public tags;
   @Output() public newTag: EventEmitter<string> = new EventEmitter();
   public replacmentsTags = [];
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private _replacmentListService: ReplacmentListService,
-    private _configurationService: ConfigurationService
+    private _configurationService: ConfigurationService,
+    private _authService: AuthService
   ) {}
 
   public ngOnInit() {
@@ -26,8 +29,9 @@ export class ReplacmentListComponent implements OnInit {
   }
 
   public replaceTag(tag){
-    
-    
+    let userId = this._authService.getUser().id;
+    let replacmentTagIndex = this.currentTag[1];
+    this._replacmentListService.replaceUserTagInSidebar(userId, tag, replacmentTagIndex )
   }
 
   public initialiseUserTagsInLeftSidebar(id){
@@ -39,8 +43,9 @@ export class ReplacmentListComponent implements OnInit {
 
   private _listenForReplacmentListToggleState() {
     this._subscriptions.push(
-      this._replacmentListService.replacmentListStateChange$.subscribe((tag) => {
-        console.log(tag);
+      this._replacmentListService.replacmentListStateChange$.subscribe((replacmentTag) => {
+        console.log(replacmentTag[0],replacmentTag[1]);
+        this.currentTag = replacmentTag;
         this.toggleStyle();
       })
     );
