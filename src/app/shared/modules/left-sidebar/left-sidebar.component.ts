@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ConfigurationService } from '../../../services/configuration.service';
 import { AuthService } from '../../../services/auth.service';
 import { ArticlesService } from '../../../services/articles.service';
+import { ReplacmentListService } from "./services/replacment-list.service";
 
 @Component({
   selector: 'left-sidebar-component',
@@ -13,8 +14,8 @@ import { ArticlesService } from '../../../services/articles.service';
 export class LeftSidebarComponent implements OnInit, OnDestroy {
   private _subscriptions: Array<Subscription> = [];
   public tags = [];
-  public unusedTags;
-  public tagsInSidebar;
+  public tagsInReplacmentList = [];
+  public tagsInSidebar = [];
   public numberOfArticlesByTag = 0;
   private _tagsPriorityList = [];
   private _filteredArticles = [];
@@ -23,12 +24,14 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     private _changeDetectorRef: ChangeDetectorRef,
     private _configurationService: ConfigurationService,
     private _authService: AuthService,
-    private _articlesService: ArticlesService
+    private _articlesService: ArticlesService,
+    private _replacmentListService: ReplacmentListService
   ) {}
 
   ngOnInit() {
     this._subscribeToConfigurationFetchEvent();
     this._subscribeToAllArticlesFetchEvent();
+    this._subscribeToTagReplacmentEvent();
   }
 
   ngOnDestroy() {
@@ -56,8 +59,24 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     );
   }
 
+  private _subscribeToTagReplacmentEvent(){
+    this._subscriptions.push(
+      this._replacmentListService.replaceTagListNotification$.subscribe(
+        (replacmentTag) => {
+          let newTag = replacmentTag[0];
+          let newTagIndex = this.tagsInReplacmentList.indexOf(newTag);
+          let oldTagIndex = replacmentTag[1];
+          let oldTag = this.tagsInSidebar[oldTagIndex];
+          this.tagsInSidebar[oldTagIndex] = newTag;
+          this.tagsInReplacmentList[newTagIndex] = oldTag;
+          this._changeDetectorRef.detectChanges();
+        }
+      )
+    )
+  }
+
   private _populateSidebar() {
-    this._tagsPriorityList.map(tag => {
+    this._tagsPriorityList.map(tag => {//console.log(tag);
       this.tags.push(
         {
           name: tag,
@@ -67,11 +86,10 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
           )
         }
 
-      );
+      );//console.log(this.tags[this.tags.length-1]);
     });
-
     this.tagsInSidebar = this.tags.splice(0, 6);
-    this.unusedTags = this.tags.slice(6);
+    this.tagsInReplacmentList = this.tags.splice(0,this.tags.length);
   }
 
   private _isArticleAlreadyAssigned(id) {
@@ -91,4 +109,6 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       'tags_priority_list'
     );
   }
+
+
 }

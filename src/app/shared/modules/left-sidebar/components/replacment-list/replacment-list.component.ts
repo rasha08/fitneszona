@@ -13,9 +13,8 @@ declare const $: any;
 export class ReplacmentListComponent implements OnInit {
   private _isReplacmentListOpen = false;
   private _subscriptions: Array<Subscription> = [];
-  public currentTag;
+  public replacmentTag;
   @Input() public tags;
-  @Output() public newTag: EventEmitter<string> = new EventEmitter();
   public replacmentsTags = [];
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -28,10 +27,12 @@ export class ReplacmentListComponent implements OnInit {
     this._listenForReplacmentListToggleState();
   }
 
-  public replaceTag(tag){
-    let userId = this._authService.getUser().id;
-    let replacmentTagIndex = this.currentTag[1];
-    this._replacmentListService.replaceUserTagInSidebar(userId, tag, replacmentTagIndex )
+  public replaceTag(newTag){
+    //let userId = this._authService.getUser().id || 1;
+    let oldTagIndex = this.replacmentTag[1];
+    let oldTag = this.replacmentTag[0];
+    //this._replacmentListService.replaceUserTagInSidebar(userId, newTag, oldTagIndex);
+    this._replacmentListService.notifyTagReplacment(newTag,oldTagIndex);
   }
 
   public initialiseUserTagsInLeftSidebar(id){
@@ -44,8 +45,7 @@ export class ReplacmentListComponent implements OnInit {
   private _listenForReplacmentListToggleState() {
     this._subscriptions.push(
       this._replacmentListService.replacmentListStateChange$.subscribe((replacmentTag) => {
-        console.log(replacmentTag[0],replacmentTag[1]);
-        this.currentTag = replacmentTag;
+        this.replacmentTag = replacmentTag;
         this.toggleStyle();
       })
     );

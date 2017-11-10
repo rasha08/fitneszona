@@ -1,6 +1,6 @@
 <div id="replacment-list" class="col s3">
   <ul class="collection">
-    <li class="collection-item avatar" *ngFor="let tag of tags" (click)="replaceTag(tag.name)">
+    <li class="collection-item avatar" *ngFor="let tag of tags" (click)="replaceTag(tag)">
       <i class="material-icons circle apply">done_all</i>
       <span class="title">{{tag.name}}</span>
       <a href="#!" class="secondary-content">

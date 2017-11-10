@@ -50,10 +50,13 @@ export class BottomNavigationComponent {
     );
   }
 
-  checkIfCategoryInArray(category, categoryObj) {
-    let activeCategories = Object.keys(categoryObj);
-    if (activeCategories.indexOf(category) !== -1) return true;
-    else return false;
+  checkIfCategoryInArray(category, newArticlesInCategory) {
+    let activeCategories = Object.keys(newArticlesInCategory);
+    if (activeCategories.indexOf(category) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getTimeAndDate() {
@@ -62,4 +65,5 @@ export class BottomNavigationComponent {
     let time = dateAndTime.toTimeString().slice(0, 8);
     return date + ' ' + time;
   }
+
 }

@@ -8,6 +8,8 @@ import { UserHTTPService } from "../../../../services/user-http.service";
 export class ReplacmentListService {
   private _replacmentListStateChange = new Subject();
   public replacmentListStateChange$ = this._replacmentListStateChange.asObservable();
+  private _replaceTagListNotification = new Subject();
+  public replaceTagListNotification$ = this._replaceTagListNotification.asObservable();
   
   constructor(
     private _http: Http,
@@ -30,6 +32,10 @@ export class ReplacmentListService {
       response => console.log(response),
       error => console.log(error)
     );
+  }
+
+  public notifyTagReplacment(newTag, oldTagIndex){
+    this._replaceTagListNotification.next([newTag, oldTagIndex]);
   }
 
   public setUser

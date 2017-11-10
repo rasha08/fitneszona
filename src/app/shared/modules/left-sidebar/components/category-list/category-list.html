@@ -1,7 +1,7 @@
 <ul class="collection with-header" [ngClass]="{open: isCategoryOpen(tag)}" *ngFor="let tag of tags">
   <li class="collection-header category-button">
     <i class="material-icons explore" 
-    (click)="openReplacmentList(tag.name,getTagIndex(tag), $event)">swap_horiz</i>
+    (click)="openReplacmentList(tag,getTagIndex(tag), $event)">swap_horiz</i>
     <h5 (click)="toggleCategory(tag)">{{tag.name}}
       <a class="secondary-content">
         <i class="material-icons rotator">send</i>
@@ -10,6 +10,5 @@
   </li>
   <ul class="list-items">
     <category-items-component [texts]="getTagTexts(tag)"></category-items-component>
-    <!--odje ide tekst-->
   </ul>
 </ul>
