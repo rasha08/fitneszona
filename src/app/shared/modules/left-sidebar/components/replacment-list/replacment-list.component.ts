@@ -1,20 +1,18 @@
-import { Component, OnInit, ChangeDetectorRef, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { ReplacmentListService } from '../../services/replacment-list.service';
-import { ConfigurationService } from "../../../../../services/configuration.service";
-import { AuthService } from "../../../../../services/auth.service";
-
-declare const $: any;
+import { ConfigurationService } from '../../../../../services/configuration.service';
+import { AuthService } from '../../../../../services/auth.service';
 
 @Component({
-  selector: "replacment-list-component",
-  templateUrl: "./replacment-list.html"
+  selector: 'replacment-list-component',
+  templateUrl: './replacment-list.html'
 })
 export class ReplacmentListComponent implements OnInit {
-  private _isReplacmentListOpen = false;
+  @Input() public tags;
+
   private _subscriptions: Array<Subscription> = [];
   public replacmentTag;
-  @Input() public tags;
   public replacmentsTags = [];
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -27,40 +25,30 @@ export class ReplacmentListComponent implements OnInit {
     this._listenForReplacmentListToggleState();
   }
 
-  public replaceTag(newTag){
+  public replaceTag(newTag) {
     //let userId = this._authService.getUser().id || 1;
     let oldTagIndex = this.replacmentTag[1];
     let oldTag = this.replacmentTag[0];
     //this._replacmentListService.replaceUserTagInSidebar(userId, newTag, oldTagIndex);
-    this._replacmentListService.notifyTagReplacment(newTag,oldTagIndex);
+    this._replacmentListService.notifyTagReplacment(newTag, oldTagIndex);
   }
 
-  public initialiseUserTagsInLeftSidebar(id){
-    this._replacmentListService.initialiseUserTagsInLeftSidebar(id,this.replacmentsTags);
+  public initialiseUserTagsInLeftSidebar(id) {
+    this._replacmentListService.initialiseUserTagsInLeftSidebar(
+      id,
+      this.replacmentsTags
+    );
   }
-  public replaceUserTagInSidebar(id){
-
-  }
+  public replaceUserTagInSidebar(id) {}
 
   private _listenForReplacmentListToggleState() {
     this._subscriptions.push(
-      this._replacmentListService.replacmentListStateChange$.subscribe((replacmentTag) => {
-        this.replacmentTag = replacmentTag;
-        this.toggleStyle();
-      })
+      this._replacmentListService.replacmentListStateChange$.subscribe(
+        replacmentTag => {
+          this.replacmentTag = replacmentTag;
+          this._changeDetectorRef.detectChanges();
+        }
+      )
     );
-  }
-
-  private toggleStyle() {
-    if (this._isReplacmentListOpen) {
-      $('#replacment-list').removeClass('open');
-
-
-    } else {
-      $('#replacment-list').addClass('open');
-    }
-
-    this._isReplacmentListOpen = !this._isReplacmentListOpen;
-    this._changeDetectorRef.detectChanges();
   }
 }

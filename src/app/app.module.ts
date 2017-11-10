@@ -38,7 +38,7 @@ import { ResetPaswordComponent } from './shared/components/reset-password/reset-
 import { AlertComponent } from './shared/components/alert/alert';
 
 /* FIREBASE */
-//import { initializeApp } from 'firebase';
+import { initializeApp } from 'firebase';
 import { firebaseConfig } from './firebase.config';
 
 @NgModule({
@@ -82,6 +82,6 @@ import { firebaseConfig } from './firebase.config';
 })
 export class AppModule {
   constructor() {
-  //  initializeApp(firebaseConfig);
+    initializeApp(firebaseConfig);
   }
 }

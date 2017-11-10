@@ -1,10 +1,10 @@
 <div class="nav-content">
   <div class="tabs tabs-transparent">
     <li class="tab" *ngFor="let category of activeCategories">
-      <a> {{category.name}}
+      <a> {{ category.name }}
         <span class="new badge red darken-3"
-        *ngIf="checkIfCategoryInArray(category.category,categoriesWithNewArticles)" >
-        {{categoriesWithNewArticles[category.category]}}
+        *ngIf="category.count" >
+        {{ category.count }}
       </span> 
       </a>
     </li>

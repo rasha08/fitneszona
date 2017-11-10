@@ -1,5 +1,5 @@
 body {
-  font-family: "Righteous", cursive;
+  font-family: 'Righteous', cursive;
   min-height: 87vh;
 }
 
@@ -114,6 +114,10 @@ a.brand-logo {
   text-align: center;
 }
 
+body {
+  position: relative;
+}
+
 #left-sidebar .collection.open .category-button .material-icons.rotator {
   -webkit-transition: transform 0.35 ease-in-out;
   -moz-transition: transform 0.35 ease-in-out;
@@ -184,11 +188,13 @@ a.brand-logo {
 #replacment-list {
   position: absolute;
   z-index: 99999;
-  transform: translateX(-200%) rotateX(184deg) rotateZ(4330deg);
+  transform: translateX(-140%) rotateX(184deg) rotateZ(4330deg);
   top: 18vh;
   -webkit-transition: transform 0.5s ease-in-out;
   -moz-transition: transform 0.5s ease-in-out;
   transition: transform 0.5s ease-in-out;
+  height: 60vh;
+  overflow-y: scroll;
 }
 
 #replacment-list.open {
@@ -207,4 +213,14 @@ a.brand-logo {
 #left-sidebar h5 {
   text-transform: uppercase;
   padding-left: 15%;
+  padding-bottom: 20%;
+  font-size: 18px;
+}
+
+li.collection-header.category-button {
+  height: 70px;
+}
+
+li b {
+  font-size: 14px;
 }
