@@ -76,7 +76,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   private _populateSidebar() {
-    this._tagsPriorityList.map(tag => {//console.log(tag);
+    this._tagsPriorityList.map(tag => {
       this.tags.push(
         {
           name: tag,
@@ -86,8 +86,9 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
           )
         }
 
-      );//console.log(this.tags[this.tags.length-1]);
+      );
     });
+    console.log(this.tagsInSidebar,this.tagsInReplacmentList);
     this.tagsInSidebar = this.tags.splice(0, 6);
     this.tagsInReplacmentList = this.tags.splice(0,this.tags.length);
   }
