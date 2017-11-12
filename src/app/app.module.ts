@@ -42,7 +42,6 @@ import { AlertComponent } from './shared/components/alert/alert';
 import { initializeApp } from 'firebase';
 import { firebaseConfig } from './firebase.config';
 
-
 /*ROUTING */
 import { appRoutes } from './app.routing';
 
@@ -51,9 +50,7 @@ import { appRoutes } from './app.routing';
   imports: [
     BrowserModule,
     HttpModule,
-    RouterModule.forRoot(
-      appRoutes
-    ),
+    RouterModule.forRoot(appRoutes),
     SharedComponentsModule,
     HeaderModule,
     BottomMenuModule,

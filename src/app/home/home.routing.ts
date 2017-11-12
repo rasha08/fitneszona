@@ -6,25 +6,40 @@ import { HomeIndexComponent } from './components/index/home-index.component';
 import { SingleArticleComponent } from './components/single-article/single-article.component';
 import { SpecificCategoriesComponent } from './components/specific-categories/specific-categories.component';
 
+import { CategoryResolver } from './resolvers/category.resolver';
+import { SpecificCategoryResolver } from './resolvers/specific-category.resolver';
+
 export const homeRoutes: Routes = [
   {
     path: '',
     component: HomeIndexComponent
-  }, {
+  },
+  {
     path: 'tekstovi/svi-tekstovi',
-    component: AllArticlesComponent,
-  }, {
+    component: AllArticlesComponent
+  },
+  {
     path: 'tekstovi/najcitaniji-tekstovi',
     component: SpecificCategoriesComponent,
-    data: { type: 'top' }
-  }, {
+    data: { type: 'top' },
+    resolve: {
+      category: SpecificCategoryResolver
+    }
+  },
+  {
     path: 'tekstovi/najnoviji-tekstovi',
     component: SpecificCategoriesComponent,
-    data: { type: 'latest' }
+    data: { type: 'latest' },
+    resolve: {
+      category: SpecificCategoryResolver
+    }
   },
   {
     path: 'tekstovi/:category',
-    component: CategoryComponent
+    component: CategoryComponent,
+    resolve: {
+      category: CategoryResolver
+    }
   },
   {
     path: 'tekstovi/:category/:text',

@@ -12,6 +12,12 @@ export class ArticlesService {
   private _allArticlesFetched = new Subject();
   public allArticlesStateChange$ = this._allArticlesFetched.asObservable();
 
+  private _fetchedCategoryArticles = new Subject();
+  public fetchedCategoryArticles$ = this._fetchedCategoryArticles.asObservable();
+
+  private _specificCategoryArticlesFetched = new Subject();
+  public specificCategoryArticlesFetched$ = this._specificCategoryArticlesFetched.asObservable();
+
   constructor(
     private _articlesHTTPService: ArticlesHTTPService,
     private _ngZone: NgZone
@@ -20,10 +26,12 @@ export class ArticlesService {
   }
 
   public getArticle(id) {
-    this._articlesHTTPService.getArticle(id).subscribe(
-      article => this.openArticle(article),
-      error => console.error(error)
-    );
+    this._articlesHTTPService
+      .getArticle(id)
+      .subscribe(
+        article => this.openArticle(article),
+        error => console.error(error)
+      );
   }
 
   public getAllArticles() {
@@ -32,57 +40,57 @@ export class ArticlesService {
         this.allArticles = articles;
         this.allArticlesStateChange(true);
       },
-      error => console.log('Error: ',error)
-    )
+      error => console.log('Error: ', error)
+    );
   }
 
-  public getTopArticles(){
-    this._articlesHTTPService.getTopArticles().subscribe(
-      articles => this.openArticle(articles),
-      error => console.log(error)
-    )
+  public getTopArticles() {
+    return this._articlesHTTPService.getTopArticles();
   }
 
-  public getLatestArticles(){
-    this._articlesHTTPService.getLatestArticles().subscribe(
-      articles => this.openArticle(articles),
-      error => console.log(error)
-    )
+  public getLatestArticles() {
+    return this._articlesHTTPService.getLatestArticles();
   }
 
-  public getArticlesForCategory(category){
-    this._articlesHTTPService.getArticlesForCategory(category).subscribe(
-      articles => this.openArticle(articles),
-      error => console.log(error)
-    )
+  public getArticlesForCategory(category) {
+    return this._articlesHTTPService.getArticlesForCategory(category);
   }
 
-  public getTopArticlesForCategory(category){
-    this._articlesHTTPService.getTopArticlesForCategory(category).subscribe(
-      articles => this.openArticle(articles),
-      error => console.log(error)
-    )
+  public getTopArticlesForCategory(category) {
+    this._articlesHTTPService
+      .getTopArticlesForCategory(category)
+      .subscribe(
+        articles => this.openArticle(articles),
+        error => console.log(error)
+      );
   }
 
-  public getLatestArticlesForCategory(category){
-    this._articlesHTTPService.getLatestArticlesForCategory(category).subscribe(
-      articles => this.openArticle(articles),
-      error => console.log(error)
-    )
+  public getLatestArticlesForCategory(category) {
+    this._articlesHTTPService
+      .getLatestArticlesForCategory(category)
+      .subscribe(
+        articles => this.openArticle(articles),
+        error => console.log(error)
+      );
   }
 
-  public getArticleCategoryAndTags(id){ //greska sa json token at position 1 sa id = 13 -ko bi rekao
-    this._articlesHTTPService.getArticleCategoryAndTags(id).subscribe(
-      articles => this.openArticle(articles),
-      error => console.log(error)
-    )
+  public getArticleCategoryAndTags(id) {
+    //greska sa json token at position 1 sa id = 13 -ko bi rekao
+    this._articlesHTTPService
+      .getArticleCategoryAndTags(id)
+      .subscribe(
+        articles => this.openArticle(articles),
+        error => console.log(error)
+      );
   }
 
-  public getArticleByURLSlug(article_title_url_slug){
-    this._articlesHTTPService.getArticleByURLSlug(article_title_url_slug).subscribe(
-      article => this.openArticle(article),
-      error => console.log(error)
-    )
+  public getArticleByURLSlug(article_title_url_slug) {
+    this._articlesHTTPService
+      .getArticleByURLSlug(article_title_url_slug)
+      .subscribe(
+        article => this.openArticle(article),
+        error => console.log(error)
+      );
   }
 
   private openArticle(article) {
@@ -106,6 +114,17 @@ export class ArticlesService {
   }
 
   public orderByTimeOfUpdate(articles = []) {
-    return articles.sort((a, b) => -((new Date(a.updated_at).getTime()) - (new Date(b.updated_at).getTime())));
+    return articles.sort(
+      (a, b) =>
+        -(new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime())
+    );
+  }
+
+  public ariclesFetchedForCategory(articles) {
+    this._fetchedCategoryArticles.next(articles);
+  }
+
+  public articlesFetchedForSpecificCategory(articles) {
+    this._specificCategoryArticlesFetched.next(articles);
   }
 }

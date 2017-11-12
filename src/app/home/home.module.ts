@@ -10,6 +10,10 @@ import { HomeIndexComponent } from './components/index/home-index.component';
 import { SingleArticleComponent } from './components/single-article/single-article.component';
 import { SpecificCategoriesComponent } from './components/specific-categories/specific-categories.component';
 
+/* RESOLVERS */
+import { CategoryResolver } from './resolvers/category.resolver';
+import { SpecificCategoryResolver } from './resolvers/specific-category.resolver';
+
 @NgModule({
   imports: [CommonModule, RouterModule, LeftSidebarModule],
   declarations: [
@@ -21,6 +25,6 @@ import { SpecificCategoriesComponent } from './components/specific-categories/sp
     HomeIndexComponent
   ],
   exports: [HomeComponent],
-  providers: []
+  providers: [CategoryResolver, SpecificCategoryResolver]
 })
 export class HomeModule {}
