@@ -280,3 +280,19 @@ h1 span i {
   color: snow !important;
   font-size: 35px;
 }
+
+.comments .comment {
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 2%;
+}
+
+.comments .comment .user, .comments .comment .time {
+  color: #ab0002;
+  text-shadow: 2px 1px 5px gray
+}
+
+.tags .tag {
+  margin-left: 2%;
+  padding:1%
+}
