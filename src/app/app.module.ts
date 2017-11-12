@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
@@ -41,11 +42,18 @@ import { AlertComponent } from './shared/components/alert/alert';
 import { initializeApp } from 'firebase';
 import { firebaseConfig } from './firebase.config';
 
+
+/*ROUTING */
+import { appRoutes } from './app.routing';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpModule,
+    RouterModule.forRoot(
+      appRoutes
+    ),
     SharedComponentsModule,
     HeaderModule,
     BottomMenuModule,

@@ -1,6 +1,7 @@
 body {
   font-family: 'Righteous', cursive;
   min-height: 87vh;
+  overflow-x: hidden;
 }
 
 body .light {
@@ -178,17 +179,22 @@ body {
 
 .card-action a {
   color: #ab0002 !important;
+  text-transform: lowercase !important;
+  font-size: 10px;
 }
 
 #left-sidebar,
-#replacment-list {
+#replacment-list,
+.card,
+.collapsible,
+.collapsible.popout li {
   box-shadow: 5px 10px 89px;
 }
 
 #replacment-list {
   position: absolute;
   z-index: 99999;
-  transform: translateX(-140%) rotateX(184deg) rotateZ(4330deg);
+  transform: translateX(-240%) rotateX(184deg) rotateZ(4330deg);
   top: 18vh;
   -webkit-transition: transform 0.5s ease-in-out;
   -moz-transition: transform 0.5s ease-in-out;
@@ -223,4 +229,54 @@ li.collection-header.category-button {
 
 li b {
   font-size: 14px;
+}
+
+li.tab a.selected {
+  box-shadow: inset 2px 3px 20px rgba(255, 255, 255, 0.6);
+}
+
+.card.horizontal .card-stacked .card-content p {
+  max-height: calc(10vh - 10px);
+  overflow-y: hidden;
+  font-size: 12px;
+}
+
+.row.horisontal-scroll {
+  width: 100%;
+  height: 325px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+h1 span small,
+h1 span i {
+  font-size: 21px;
+  color: #ab0002;
+  text-shadow: 2px 3px 5px gray;
+}
+
+.flow-text {
+  text-shadow: 2px 3px 5px gray;
+}
+
+.text-button-action {
+  transform: translateY(0.5vh) translateX(-3vw)
+}
+
+#bottom-menu {
+  width: 100vw;
+  position: absolute;
+  background-color: rgba(171, 0, 2, 0.8);
+  z-index: 9999999;
+}
+
+
+.fixed-action-btn.toolbar {
+  position: fixed;
+  left: 20px;
+}
+
+.fixed-action-btn.toolbar a i{
+  color: snow !important;
+  font-size: 35px;
 }

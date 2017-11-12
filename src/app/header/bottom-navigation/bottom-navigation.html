@@ -1,11 +1,10 @@
 <div class="nav-content">
   <div class="tabs tabs-transparent">
     <li class="tab" *ngFor="let category of activeCategories">
-      <a> {{ category.name }}
-        <span class="new badge red darken-3"
-        *ngIf="category.count" >
-        {{ category.count }}
-      </span> 
+      <a routerLink="tekstovi/{{category.urlSlug}}" routerLinkActive="selected"> {{ category.name }}
+        <span class="new badge red darken-3" *ngIf="category.count">
+          {{ category.count }}
+        </span>
       </a>
     </li>
   </div>
