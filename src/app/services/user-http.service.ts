@@ -37,22 +37,25 @@ export class UserHTTPService {
 
   public initilaiseUserTagsInLeftSidebar(id,tags){
     let action = {
-      action: 'leftSidebarInitialization',
-      options: tags
+      'action': 'leftSidebarInitialization',
+      'options': tags
     };
+    console.log(action);
     return this._http
-        .post(`${this.BASE_URL}/users/${id}`, action)
+        .post(`${this.BASE_URL}/api/users/action/${id}`, action)
         .map(response => response.json());
   }
 
   public replaceUserTagInSidebar(id,tag, index){
+    console.log(id,tag,index);
     let action = {
-      action: 'leftSidebarChange',
-      optionName: tag,
-      optionIndex: index
+      'action': 'leftSidebarChange',
+      'optionName': tag,
+      'optionIndex': index
     };
+    console.log(action);
     return this._http
-        .post(`${this.BASE_URL}/users/${id}`, action)
+        .post(`${this.BASE_URL}/api/users/action/${id}`, action)
         .map(response => response.json());
   }
 

@@ -26,20 +26,10 @@ export class ReplacmentListComponent implements OnInit {
   }
 
   public replaceTag(newTag) {
-    //let userId = this._authService.getUser().id || 1;
     let oldTagIndex = this.replacmentTag[1];
     let oldTag = this.replacmentTag[0];
-    //this._replacmentListService.replaceUserTagInSidebar(userId, newTag, oldTagIndex);
     this._replacmentListService.notifyTagReplacment(newTag, oldTagIndex);
   }
-
-  public initialiseUserTagsInLeftSidebar(id) {
-    this._replacmentListService.initialiseUserTagsInLeftSidebar(
-      id,
-      this.replacmentsTags
-    );
-  }
-  public replaceUserTagInSidebar(id) {}
 
   private _listenForReplacmentListToggleState() {
     this._subscriptions.push(

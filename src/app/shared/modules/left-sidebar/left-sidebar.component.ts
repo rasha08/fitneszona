@@ -67,12 +67,40 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
           let newTagIndex = this.tagsInReplacmentList.indexOf(newTag);
           let oldTagIndex = replacmentTag[1];
           let oldTag = this.tagsInSidebar[oldTagIndex];
-          this.tagsInSidebar[oldTagIndex] = newTag;
-          this.tagsInReplacmentList[newTagIndex] = oldTag;
+          let newTagName = newTag.name;
+          this.replaceUserTagInSidebar(newTag, oldTagIndex);
+          this.setUserFavoriteTags(newTagName, oldTagIndex);
+          
           this._changeDetectorRef.detectChanges();
         }
       )
-    )
+    );
+  }
+
+  public replaceUserTagInSidebar(newTag, oldTagIndex){
+    let newTagIndex = this.tagsInReplacmentList.indexOf(newTag);
+    let oldTag = this.tagsInSidebar[oldTagIndex];
+    this.tagsInSidebar[oldTagIndex] = newTag;
+    this.tagsInReplacmentList[newTagIndex] = oldTag;
+    this._changeDetectorRef.detectChanges();
+  }
+
+  public setUserFavoriteTags(tag, index){
+    if (this.getUser()){
+      let id = this.getUserId();
+      if (this.getUserFavoriteTags() === false) {
+        let tagNames = this.getNamesOfTagsInSidebar(); 
+        this.initialiseUserTagsInLeftSidebar(id, tagNames);
+      } 
+      else {
+        console.log('Skipped if user has favorite tags');
+        console.log(this.getUserFavoriteTags());
+        this._replacmentListService.replaceUserTagInSidebar(id, tag, index);
+      }
+    }
+    else {
+      console.log('User not loged in');
+    }
   }
 
   private _populateSidebar() {
@@ -88,7 +116,6 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
 
       );
     });
-    console.log(this.tagsInSidebar,this.tagsInReplacmentList);
     this.tagsInSidebar = this.tags.splice(0, 6);
     this.tagsInReplacmentList = this.tags.splice(0,this.tags.length);
   }
@@ -109,6 +136,36 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     this._tagsPriorityList = this._configurationService.getParam(
       'tags_priority_list'
     );
+  }
+
+  public initialiseUserTagsInLeftSidebar(id, tags) {
+    this._replacmentListService.initialiseUserTagsInLeftSidebar(
+      id,
+      tags
+    );
+}
+
+  getUserFavoriteTags(){
+    return this._authService.getUser().favorite_tags || false;
+  }
+
+  getUserId(){
+    if (this._authService.getUser()){
+      return this._authService.getUser().id;
+    }
+    else return false;
+  }
+
+  getUser(){
+    return this._authService.getUser();
+  }
+
+  getNamesOfTagsInSidebar(){
+    let names = [];
+    for (let tag of this.tagsInSidebar){
+      names.push(tag.name);
+    }
+    return names;
   }
 
 
