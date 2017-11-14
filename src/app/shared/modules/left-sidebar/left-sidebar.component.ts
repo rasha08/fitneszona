@@ -32,6 +32,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     this._subscribeToConfigurationFetchEvent();
     this._subscribeToAllArticlesFetchEvent();
     this._subscribeToTagReplacmentEvent();
+    this._subscribeToUserLogInEvent();
   }
 
   ngOnDestroy() {
@@ -64,11 +65,13 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       this._replacmentListService.replaceTagListNotification$.subscribe(
         (replacmentTag) => {
           let newTag = replacmentTag[0];
-          let newTagIndex = this.tagsInReplacmentList.indexOf(newTag);
+          let newTagIndex = this.tagsInReplacmentList.findIndex(tag => tag.name === newTag.name);
           let oldTagIndex = replacmentTag[1];
           let oldTag = this.tagsInSidebar[oldTagIndex];
           let newTagName = newTag.name;
-          this.replaceUserTagInSidebar(newTag, oldTagIndex);
+          this.switchTagsInLists(
+            newTag, newTagIndex, oldTag, oldTagIndex, this.tagsInSidebar, this.tagsInReplacmentList
+          );
           this.setUserFavoriteTags(newTagName, oldTagIndex);
           
           this._changeDetectorRef.detectChanges();
@@ -77,11 +80,43 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     );
   }
 
-  public replaceUserTagInSidebar(newTag, oldTagIndex){
-    let newTagIndex = this.tagsInReplacmentList.indexOf(newTag);
-    let oldTag = this.tagsInSidebar[oldTagIndex];
-    this.tagsInSidebar[oldTagIndex] = newTag;
-    this.tagsInReplacmentList[newTagIndex] = oldTag;
+  private _subscribeToUserLogInEvent(){
+    this._subscriptions.push(
+      this._authService.authStatusChange$.subscribe(
+        () => {
+          this.tags = this.tagsInSidebar.concat(this.tagsInReplacmentList);
+          let userFavTags = this.getUserFavoriteTags().split('|');
+          this.tagsInSidebar = [];
+          this.tagsInReplacmentList = [];
+          this._tagsPriorityList.map( tag => {
+            let tagIndex = this.tags.findIndex( tagObj =>  tagObj.name === tag);
+              if (userFavTags.indexOf(tag) === -1) {
+                this.tagsInReplacmentList.push(this.tags[tagIndex]);
+              } else {
+                this.tagsInSidebar.push(this.tags[tagIndex]);
+              }
+            }
+          );
+
+          /*userFavTags.map( userTag => {
+            let tagIndex = this.tags.findIndex(tag => tag.name === userTag);
+            this.tagsInSidebar.push(this.tags[tagIndex]);
+            this.tags.splice(tagIndex, 1);
+          });
+          let confiqTags = this._configurationService.getParam('tags_priority_list');
+          this.tagsInReplacmentList.push(
+            
+          )
+          this.tagsInReplacmentList = this.tags;*/
+          this._changeDetectorRef.detectChanges();
+        }
+      )
+    )
+  }
+
+  public switchTagsInLists(newTag, newTagIndex, oldTag, oldTagIndex, array1, array2){
+    array1[oldTagIndex] = newTag;
+    array2[newTagIndex] = oldTag;
     this._changeDetectorRef.detectChanges();
   }
 
@@ -89,12 +124,10 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     if (this.getUser()){
       let id = this.getUserId();
       if (this.getUserFavoriteTags() === false) {
-        let tagNames = this.getNamesOfTagsInSidebar(); 
+        let tagNames = this.getNamesOfTagsInTagsList(this.tagsInSidebar); 
         this.initialiseUserTagsInLeftSidebar(id, tagNames);
       } 
       else {
-        console.log('Skipped if user has favorite tags');
-        console.log(this.getUserFavoriteTags());
         this._replacmentListService.replaceUserTagInSidebar(id, tag, index);
       }
     }
@@ -150,19 +183,16 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   getUserId(){
-    if (this._authService.getUser()){
-      return this._authService.getUser().id;
-    }
-    else return false;
+    return this._authService.getUser().id;
   }
 
   getUser(){
     return this._authService.getUser();
   }
 
-  getNamesOfTagsInSidebar(){
+  getNamesOfTagsInTagsList(tagList){
     let names = [];
-    for (let tag of this.tagsInSidebar){
+    for (let tag of tagList){
       names.push(tag.name);
     }
     return names;

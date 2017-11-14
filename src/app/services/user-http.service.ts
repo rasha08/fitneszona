@@ -47,13 +47,11 @@ export class UserHTTPService {
   }
 
   public replaceUserTagInSidebar(id,tag, index){
-    console.log(id,tag,index);
     let action = {
       'action': 'leftSidebarChange',
       'optionName': tag,
       'optionIndex': index
     };
-    console.log(action);
     return this._http
         .post(`${this.BASE_URL}/api/users/action/${id}`, action)
         .map(response => response.json());
