@@ -98,16 +98,6 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
             }
           );
 
-          /*userFavTags.map( userTag => {
-            let tagIndex = this.tags.findIndex(tag => tag.name === userTag);
-            this.tagsInSidebar.push(this.tags[tagIndex]);
-            this.tags.splice(tagIndex, 1);
-          });
-          let confiqTags = this._configurationService.getParam('tags_priority_list');
-          this.tagsInReplacmentList.push(
-            
-          )
-          this.tagsInReplacmentList = this.tags;*/
           this._changeDetectorRef.detectChanges();
         }
       )
