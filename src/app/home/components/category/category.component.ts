@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ArticlesService } from '../../../services/articles.service';
 import { NotifyService } from '../../../services/notify.service';
+import { LoaderService } from '../../../services/loader.service'
 
 declare const $;
 
@@ -22,7 +23,8 @@ export class CategoryComponent implements AfterViewInit, OnInit, OnDestroy {
   constructor(
     private _articlesService: ArticlesService,
     private _notifyService: NotifyService,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _loaderService: LoaderService
   ) {}
   ngAfterViewInit() {
     $(document).ready(function() {
@@ -41,6 +43,7 @@ export class CategoryComponent implements AfterViewInit, OnInit, OnDestroy {
     this._subscriptions.push(
       this._articlesService.fetchedCategoryArticles$.subscribe(articles => {
         console.log(articles);
+        this._loaderService.hide();
       })
     );
   }

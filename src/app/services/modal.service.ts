@@ -1,5 +1,5 @@
-import { Injectable, NgZone } from "@angular/core";
-import { Subject } from "rxjs/Subject";
+import { Injectable, NgZone } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 declare let $: any;
 
@@ -22,38 +22,23 @@ export class ModalService {
 
     this._isOpen = true;
     this._openModal.next(modalData);
-    $("#modal").css({
-      "-webkit-transition": "transform 0.8s ease-in-out !important",
-      "-moz-transition": "transform 0.8s ease-in-out !important",
-      transition: "transform 0.8s ease-in-out !important",
-      display: "block",
-      transform: "rotateX(270deg) translate3d(200%,100%, 25%) scaleX(1)"
+    $('#modal').css({
+      '-webkit-transition': 'transform 0.8s ease-in-out !important',
+      '-moz-transition': 'transform 0.8s ease-in-out !important',
+      transition: 'transform 0.8s ease-in-out !important',
+      display: 'block',
+      transform: 'rotateX(270deg) translate3d(200%,100%, 25%) scaleX(1)'
     });
 
-    $(".application").addClass("disabled");
+    $('.application').addClass('disabled');
     this._ngZone.runOutsideAngular(() =>
-      setTimeout(
-        () =>
-          $("#modal").css({
-            "z-index": 1005,
-            opacity: 1,
-            transform: "rotateX(0deg) translate3d(0%,0%, 0%) scaleX(1)",
-            top: "10%"
-          }),
-        0
-      )
+      setTimeout(() => $('#modal').addClass('open'), 0)
     );
   }
 
   public closeModal() {
-    $("#modal").css({
-      "-webkit-transition": "transform 0.8s ease-in-out !important",
-      "-moz-transition": "transform 0.8s ease-in-out !important",
-      transition: "transform 0.8s ease-in-out !important",
-      display: "block",
-      transform: "rotateX(270deg) translate3d(200%,100%, 25%) scaleX(1)"
-    });
-    $(".application").removeClass("disabled");
+    $('#modal').removeClass('open');
+    $('.application').removeClass('disabled');
     this._isOpen = false;
     this._closeModal.next();
   }

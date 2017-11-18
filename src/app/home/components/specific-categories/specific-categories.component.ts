@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ArticlesService } from '../../../services/articles.service';
 import { NotifyService } from '../../../services/notify.service';
+import { LoaderService } from '../../../services/loader.service';
 
 @Component({
   selector: 'specific-categories',
@@ -20,9 +21,10 @@ export class SpecificCategoriesComponent {
   constructor(
     private _articlesService: ArticlesService,
     private _notifyService: NotifyService,
-    private _changeDetectorRef: ChangeDetectorRef
-  ) { }
-  
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _loaderService: LoaderService
+  ) {}
+
   ngOnInit() {
     this._listenToArticlesFetched();
   }
@@ -32,9 +34,12 @@ export class SpecificCategoriesComponent {
   }
   private _listenToArticlesFetched() {
     this._subscriptions.push(
-      this._articlesService.specificCategoryArticlesFetched$.subscribe(articles => {
-        console.log(articles);
-      })
+      this._articlesService.specificCategoryArticlesFetched$.subscribe(
+        articles => {
+          console.log(articles);
+          this._loaderService.hide();
+        }
+      )
     );
   }
 }

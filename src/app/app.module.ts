@@ -31,6 +31,7 @@ import { UserRegistrationService } from './services/user-registration.service';
 import { SearchService } from './services/search.service';
 import { ConfigurationHTTPService } from './services/configuration-http.service';
 import { NotifyService } from './services/notify.service';
+import { LoaderService } from './services/loader.service';
 
 /* ENTRY COMPONENTS */
 import { LoginComponent } from './shared/components/login/login.component';
@@ -75,7 +76,8 @@ import { appRoutes } from './app.routing';
     SearchService,
     ConfigurationHTTPService,
     ArticleCounterHTTPService,
-    NotifyService
+    NotifyService,
+    LoaderService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

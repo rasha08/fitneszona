@@ -6,6 +6,7 @@ import { RegistrationComponent } from "./registration/registration.component";
 import { LoginComponent } from "./login/login.component";
 import { ResetPaswordComponent } from "./reset-password/reset-password";
 import { AlertComponent } from "./alert/alert";
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule],
@@ -13,13 +14,15 @@ import { AlertComponent } from "./alert/alert";
     RegistrationComponent,
     LoginComponent,
     ResetPaswordComponent,
-    AlertComponent
+    AlertComponent,
+    LoaderComponent
   ],
   exports: [
     RegistrationComponent,
     LoginComponent,
     ResetPaswordComponent,
-    AlertComponent
+    AlertComponent,
+    LoaderComponent
   ],
   providers: []
 })
