@@ -18,6 +18,9 @@ export class ArticlesService {
   private _specificCategoryArticlesFetched = new Subject();
   public specificCategoryArticlesFetched$ = this._specificCategoryArticlesFetched.asObservable();
 
+  private _singleArticleFetched = new Subject();
+  public fetchedSingleArticle$ = this._singleArticleFetched.asObservable();
+
   constructor(
     private _articlesHTTPService: ArticlesHTTPService,
     private _ngZone: NgZone
@@ -26,12 +29,7 @@ export class ArticlesService {
   }
 
   public getArticle(id) {
-    this._articlesHTTPService
-      .getArticle(id)
-      .subscribe(
-        article => this.openArticle(article),
-        error => console.error(error)
-      );
+    return this._articlesHTTPService.getArticle(id);
   }
 
   public getAllArticles() {
@@ -126,5 +124,9 @@ export class ArticlesService {
 
   public articlesFetchedForSpecificCategory(articles) {
     this._specificCategoryArticlesFetched.next(articles);
+  }
+
+  public singleArticleFetched(article) {
+    this._singleArticleFetched.next(article);
   }
 }

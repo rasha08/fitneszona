@@ -6,4 +6,8 @@ export class NotifyService {
   public subscribeToConfigurationChanges(id) {
     return database().ref(`/configurationsfb/${id}`);
   }
+
+  public subscribeToArticleChanges(id) {
+    return database().ref(`/articlesfb/${id}`);
+  }
 }

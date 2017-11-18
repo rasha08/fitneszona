@@ -13,6 +13,7 @@ import { SpecificCategoriesComponent } from './components/specific-categories/sp
 /* RESOLVERS */
 import { CategoryResolver } from './resolvers/category.resolver';
 import { SpecificCategoryResolver } from './resolvers/specific-category.resolver';
+import { SingleArticleResolver } from './resolvers/single-article.resolver';
 
 @NgModule({
   imports: [CommonModule, RouterModule, LeftSidebarModule],
@@ -25,6 +26,6 @@ import { SpecificCategoryResolver } from './resolvers/specific-category.resolver
     HomeIndexComponent
   ],
   exports: [HomeComponent],
-  providers: [CategoryResolver, SpecificCategoryResolver]
+  providers: [CategoryResolver, SpecificCategoryResolver, SingleArticleResolver]
 })
 export class HomeModule {}

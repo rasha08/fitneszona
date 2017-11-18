@@ -8,6 +8,7 @@ import { SpecificCategoriesComponent } from './components/specific-categories/sp
 
 import { CategoryResolver } from './resolvers/category.resolver';
 import { SpecificCategoryResolver } from './resolvers/specific-category.resolver';
+import { SingleArticleResolver } from 'app/home/resolvers/single-article.resolver';
 
 export const homeRoutes: Routes = [
   {
@@ -43,7 +44,10 @@ export const homeRoutes: Routes = [
   },
   {
     path: 'tekstovi/:category/:text',
-    component: SingleArticleComponent
+    component: SingleArticleComponent,
+    resolve: {
+      text: SingleArticleResolver
+    }
   },
   { path: '**', component: HomeIndexComponent }
 ];
