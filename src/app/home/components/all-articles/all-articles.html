@@ -10,7 +10,7 @@
           <div class="collapsible-body" [ngClass]="{open: isArticleSelected(article.id)}">
             <span>{{ article.description }}</span>
             <hr>
-            <span class=" link " [routerLink]="getArticleUrl(category, article)">otvori</span>
+            <span class="link col s12" [routerLink]="getArticleUrl(category, article)">otvori</span>
           </div>
         </li>
       </ul>
