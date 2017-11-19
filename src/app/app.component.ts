@@ -6,22 +6,21 @@ import {
   ComponentFactoryResolver,
   ViewChild,
   ViewContainerRef
-} from "@angular/core";
-import { Subscription } from "rxjs/Subscription";
+} from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from "./services/auth.service";
-import { ModalService } from "./services/modal.service";
-import { LocalStorageService } from "./services/local-storage.service";
-import { ArticlesService } from "./services/articles.service";
+import { ModalService } from './services/modal.service';
+import { LocalStorageService } from './services/local-storage.service';
+import { ArticlesService } from './services/articles.service';
 import { ConfigurationService } from './services/configuration.service';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  @ViewChild("placeholder", { read: ViewContainerRef })
+  @ViewChild('placeholder', { read: ViewContainerRef })
   placeholder;
 
   private _componentRef;
@@ -29,7 +28,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private _subscription: Subscription;
 
   constructor(
-    private _authService: AuthService,
     private _changeDetectorRef: ChangeDetectorRef,
     private _componentFactoryResolver: ComponentFactoryResolver,
     private _modalService: ModalService,
@@ -38,7 +36,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private _configurationService: ConfigurationService
   ) {
     this._configurationService.getConfiguration();
-    this._authService.checkIfUserIsLoggedIn();
   }
 
   public ngOnInit() {
@@ -98,5 +95,4 @@ export class AppComponent implements OnInit, OnDestroy {
   private _closeModal() {
     this._componentRef.destroy();
   }
-
 }

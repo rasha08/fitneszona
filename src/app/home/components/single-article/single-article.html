@@ -19,23 +19,13 @@
   <div class="row col s12 m12 z-depth-5">
     <div class="row">
       <div class="text-img col s12 m5 right ">
-        <img class="z-depth-5 responsive-img" src="http://fitneszona.rs/images/r_t_801.jpg" alt="">
+        <img class="z-depth-5 responsive-img" src="{{ article.image_url }}" alt="">
       </div>
-      <p class="flow-text col s12 m7 left">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam nulla inventore explicabo quo repellendus, sit ut aspernatur
-        assumenda qui earum asperiores perferendis facere eius magnam possimus. Laboriosam quod sunt voluptatibus
+      <p class="flow-text col s12 m7 left" [innerHtml]="article.intro">
       </p>
     </div>
     <div class="row col s12 m12">
-      <p class="flow-text col s12 m12 center">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam nulla inventore explicabo quo repellendus, sit ut aspernatur
-        assumenda qui earum asperiores perferendis facere eius magnam possimus. Laboriosam quod sunt voluptatibus. Lorem
-        ipsum dolor sit amet consectetur adipisicing elit. Eos sapiente, odit ab, officiis, omnis voluptate itaque tempore
-        in est velit odio? Assumenda, dignissimos eum tempore aspernatur rem eius in ab! Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Modi odit perspiciatis autem, placeat natus distinctio corrupti libero error quasi? Rerum rem nesciunt
-        aliquid enim sunt facere obcaecati laudantium quas corrupti! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Tenetur labore rem quas saepe minus repellendus inventore nostrum sint ipsam facere suscipit mollitia expedita debitis,
-        quisquam earum dolorum hic delectus quia?
+      <p class="flow-text col s12 m12 center" [innerHtml]="article.text">
       </p>
     </div>
   </div>
@@ -48,17 +38,17 @@
       <ul>
         <li>
           <a class="btn-floating red darken-4">
-            <i class="material-icons">sentiment_satisfied</i>
+            <i class="material-icons" (click)="like()">sentiment_satisfied</i>
           </a>
         </li>
         <li>
           <a class="btn-floating red darken-4">
-            <i class="material-icons">sentiment_very_dissatisfied</i>
+            <i class="material-icons" (click)="disLike()">sentiment_very_dissatisfied</i>
           </a>
         </li>
         <li>
           <a class="btn-floating red darken-4">
-            <i class="material-icons">comment</i>
+            <i class="material-icons" (click)="openCommentBox()">comment</i>
           </a>
         </li>
         <li>
@@ -69,48 +59,33 @@
       </ul>
     </div>
   </div>
-  <div class="row tags right-align col m12">
-    <span class="tag z-depth-5">NOGE
-      <i class="material-icons">favorite_border</i>
-    </span>
-    <span class="tag z-depth-5">TRCANJE
-      <i class="material-icons">favorite_border</i>
-    </span>
-    <span class="tag z-depth-5">ZDRAVLJE
-      <i class="material-icons">favorite_border</i>
-    </span>
-    <span class="tag z-depth-5">YOGA
-      <i class="material-icons">favorite_border</i>
-    </span>
-    <span class="tag z-depth-5">MRSAVLJENJE
-      <i class="material-icons">favorite_border</i>
+  <div class="row tags right-align col m12" *ngIf="article.tags">
+    <span class="tag z-depth-5" *ngFor="let tag of article.tags">{{ tag }}
+      <i class="material-icons" (click)="likeOrUnlikeTag(tag)">{{ hasUSerLikedTag(tag) ? 'favorite' : 'favorite_border'}}</i>
     </span>
   </div>
-  <div class="row comments">
-    <h4>Komentari:</h4>
-    <div class="comment z-depth-5">
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas ad atque tenetur que eaque doloribus, dolores omnis
-        quam. Sint, qui tempore!</p>
-      <span class="user">Milica Markovic</span>
-      <span class="time right ">20:15 11/11/2017</span>
-    </div>
-    <div class="comment z-depth-5">
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas ad atque tenetur que eaque doloribus, dolores omnis
-        quam. Sint, qui tempore!</p>
-      <span class="user">Milica Markovic</span>
-      <span class="time right ">20:15 11/11/2017</span>
-    </div>
-    <div class="comment z-depth-5">
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas ad atque tenetur que eaque doloribus, dolores omnis
-        quam. Sint, qui tempore!</p>
-      <span class="user">Milica Markovic</span>
-      <span class="time right ">20:15 11/11/2017</span>
-    </div>
-    <div class="comment z-depth-5">
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas ad atque tenetur que eaque doloribus, dolores omnis
-        quam. Sint, qui tempore!</p>
-      <span class="user">Milica Markovic</span>
-      <span class="time right ">20:15 11/11/2017</span>
+  <div class="row comments" *ngIf="article.comments">
+    <h4 id="commentDiv">Komentari:</h4>
+    <div class="comment z-depth-5" *ngFor="let comment of article.comments">
+      <p>{{ comment.comment }}</p>
+      <span class="user">{{ comment.userName }}</span>
+      <span class="time right ">{{ comment.created_at }}</span>
     </div>
   </div>
-</div>
+
+  <div class="row z-depth-5" id="commentBox" [ngClass]="{open: comentBoxOpen}">
+    <div class="col s12">
+      <div class="row">
+        <div class="input-field col s8">
+          <i class="material-icons prefix">mode_edit</i>
+          <textarea id="icon_prefix2" class="materialize-textarea" [(ngModel)]="commentText"></textarea>
+          <label for="icon_prefix2">Mesto za Vaš komentar...</label>
+        </div>
+        <div class="col s2">
+          <div class="btn-floating large red darken-4 pulse">
+            <i class="material-icons prefix" (click)="comment()">done</i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

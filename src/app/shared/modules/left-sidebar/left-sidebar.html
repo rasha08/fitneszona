@@ -1,5 +1,5 @@
 <div id="left-sidebar">
-    <category-list-component  [tags]="tagsInSidebar"
+    <category-list-component *ngIf="tags"  [tags]="tagsInSidebar"
       [numberOfArticlesByTag]="numberOfArticlesByTag"
     ></category-list-component>
 

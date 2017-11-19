@@ -10,4 +10,8 @@ export class NotifyService {
   public subscribeToArticleChanges(id) {
     return database().ref(`/articlesfb/${id}`);
   }
+
+  public subscribeToUserChanges(id) {
+    return database().ref(`/usersfb/${id}`);
+  }
 }

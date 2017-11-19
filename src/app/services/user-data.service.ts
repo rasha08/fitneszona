@@ -1,41 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService } from './auth.service';
+import { UserHTTPService } from './user-http.service';
 
-Injectable()
+@Injectable()
 export class UserDataService {
-  private _user;
-  constructor(
-    private _authService: AuthService
-  ) {
-    this._authService.authStatusChange$.subscribe((change) => {
-      this._user = this._authService.getUser();
-    });
+  constructor(private _userHttpService: UserHTTPService) {}
+
+  public likeTag(tag, id) {
+    const body = {
+      action: 'addLikedTag',
+      value: tag
+    };
+
+    this._userHttpService.action(body, id);
   }
 
-  public getUserLikedTags() {
-    return this._user.liked_tags.split('|');
+  public addTextToVisited(textId, id) {
+    const body = {
+      action: 'addTextToVisited',
+      textId: textId
+    };
+
+    this._userHttpService.action(body, id);
   }
 
-  public getUserLikedCategories() {
-    return this._user.liked_categories.split('|');
-  }
+  public getUserLikedTags() {}
 
-  public getUserVisitedCategories() {
-    return this._user.visited_categories.split('|');
-  }
+  public getUserLikedCategories() {}
 
-  public getUserVisitedTags() {
-    return this._user.visited_tags.split('|');
-  }
+  public getUserVisitedCategories() {}
 
-  public getUserVisitedTextsIds() {
-    return this._user.visited_text_ids.split('|');
-  }
+  public getUserVisitedTags() {}
 
-  public predictTextsThatUserMightLike() {
-  }
-  
+  public getUserVisitedTextsIds() {}
+
+  public predictTextsThatUserMightLike() {}
 }

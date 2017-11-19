@@ -129,4 +129,40 @@ export class ArticlesService {
   public singleArticleFetched(article) {
     this._singleArticleFetched.next(article);
   }
+
+  public inceraseSeanTimes(textId) {
+    const data = {
+      action: 'setSeenTimes'
+    };
+
+    this._articlesHTTPService.action(data, textId);
+  }
+
+  public like(textId, userId) {
+    const data = {
+      action: 'like',
+      userId: userId
+    };
+
+    this._articlesHTTPService.action(data, textId);
+  }
+
+  public disLike(textId, userId) {
+    const data = {
+      action: 'dislike',
+      userId: userId
+    };
+
+    this._articlesHTTPService.action(data, textId);
+  }
+
+  public comment(textId, userId, comment) {
+    const data = {
+      action: 'comment',
+      userId,
+      comment
+    };
+
+    this._articlesHTTPService.action(data, textId);
+  }
 }

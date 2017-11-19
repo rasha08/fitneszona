@@ -67,7 +67,7 @@ import { appRoutes } from './app.routing';
     ResponseService,
     AlertService,
     ArticlesHTTPService,
-    //UserDataService,
+    UserDataService,
     UtilsService,
     ArticlesService,
     ConfigurationService,

@@ -55,6 +55,7 @@ a.brand-logo {
   background-color: rgba(255, 255, 255, 1);
   box-shadow: 3px 7px 20px #ab0002;
   transform: translateX(10%) rotateX(0deg) rotateZ(0deg);
+  max-height: 500px;
 }
 
 #modal {
@@ -75,34 +76,6 @@ a.brand-logo {
   background-position-x: 130%;
   background-repeat: no-repeat;
   overflow: hidden;
-}
-
-.lg {
-  min-height: 60vh;
-}
-
-.med {
-  min-height: 20vh;
-}
-
-.xs {
-  min-height: 10vh;
-}
-
-.modal-open {
-  z-index: 1005;
-  display: block;
-  opacity: 1;
-  transform: scaleX(1);
-  top: 10%;
-}
-
-.modal-closed {
-  z-index: 1005;
-  display: none;
-  opacity: 0;
-  transform: scaleX(0.7);
-  top: 4%;
 }
 
 .error {
@@ -300,7 +273,8 @@ h1 span i {
   padding: 1%;
 }
 
-#loader, #start-loader {
+#loader,
+#start-loader {
   z-index: 99999999;
   position: absolute;
   width: 100vw;
@@ -329,7 +303,7 @@ h1 span i {
   left: 40%;
 }
 
- #start-loader h1 {
+#start-loader h1 {
   position: absolute;
   top: 30%;
   transform: translateX(30%);
@@ -341,7 +315,35 @@ h1 span i {
   text-shadow: 3px 2px 10px gray;
 }
 
- #start-loader h1 span {
+#start-loader h1 span {
   font-size: 24px;
   text-align: right;
+}
+
+.tags span i {
+  cursor: pointer;
+}
+
+.tags span {
+  text-transform: uppercase;
+}
+
+#commentBox {
+  position: absolute;
+  z-index: 99999;
+  top: 400px;
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.91);
+  transform: rotateX(90deg) rotateY(2003deg) rotateZ(90deg);
+  -webkit-transition: transform 1s ease-in-out;
+  -moz-transition: transform 1s ease-in-out;
+  transition: transform 1s ease-in-out;
+}
+
+#commentBox .btn-floating {
+  transform: translateX(150%) translateY(150%);
+}
+
+#commentBox.open {
+  transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
 }

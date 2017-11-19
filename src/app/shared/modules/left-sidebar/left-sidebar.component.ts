@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ConfigurationService } from '../../../services/configuration.service';
 import { AuthService } from '../../../services/auth.service';
 import { ArticlesService } from '../../../services/articles.service';
-import { ReplacmentListService } from "./services/replacment-list.service";
+import { ReplacmentListService } from './services/replacment-list.service';
 
 @Component({
   selector: 'left-sidebar-component',
@@ -60,93 +60,111 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     );
   }
 
-  private _subscribeToTagReplacmentEvent(){
+  private _subscribeToTagReplacmentEvent() {
     this._subscriptions.push(
       this._replacmentListService.replaceTagListNotification$.subscribe(
-        (replacmentTag) => {
+        replacmentTag => {
           let newTag = replacmentTag[0];
-          let newTagIndex = this.tagsInReplacmentList.findIndex(tag => tag.name === newTag.name);
+          let newTagIndex = this.tagsInReplacmentList.findIndex(
+            tag => tag.name === newTag.name
+          );
           let oldTagIndex = replacmentTag[1];
           let oldTag = this.tagsInSidebar[oldTagIndex];
           let newTagName = newTag.name;
           this.switchTagsInLists(
-            newTag, newTagIndex, oldTag, oldTagIndex, this.tagsInSidebar, this.tagsInReplacmentList
+            newTag,
+            newTagIndex,
+            oldTag,
+            oldTagIndex,
+            this.tagsInSidebar,
+            this.tagsInReplacmentList
           );
           this.setUserFavoriteTags(newTagName, oldTagIndex);
-          
+
           this._changeDetectorRef.detectChanges();
         }
       )
     );
   }
 
-  private _subscribeToUserLogInEvent(){
+  private _subscribeToUserLogInEvent() {
     this._subscriptions.push(
-      this._authService.authStatusChange$.subscribe(
-        () => {
-          this.tags = this.tagsInSidebar.concat(this.tagsInReplacmentList);
-          let userFavTags = this.getUserFavoriteTags().split('|');
-          this.tagsInSidebar = [];
-          this.tagsInReplacmentList = [];
-          this._tagsPriorityList.map( tag => {
-            let tagIndex = this.tags.findIndex( tagObj =>  tagObj.name === tag);
-              if (userFavTags.indexOf(tag) === -1) {
-                this.tagsInReplacmentList.push(this.tags[tagIndex]);
-              } else {
-                this.tagsInSidebar.push(this.tags[tagIndex]);
-              }
-            }
-          );
-
-          this._changeDetectorRef.detectChanges();
+      this._authService.authStatusChange$.subscribe(isLoggedIn => {
+        if (!isLoggedIn) {
+          this._populateSidebar();
+          return;
         }
-      )
-    )
+
+        this.tags = this.tagsInSidebar.concat(this.tagsInReplacmentList);
+        let userFavTags = this.getUserFavoriteTags();
+
+        if (userFavTags.length < 6) {
+          return;
+        }
+
+        this.tagsInSidebar = [];
+        this.tagsInReplacmentList = [];
+        this._tagsPriorityList.map(tag => {
+          let tagIndex = this.tags.findIndex(tagObj => tagObj.name === tag);
+          if (userFavTags.indexOf(tag) === -1) {
+            this.tagsInReplacmentList.push(this.tags[tagIndex]);
+          } else {
+            this.tagsInSidebar.push(this.tags[tagIndex]);
+          }
+        });
+
+        this._changeDetectorRef.detectChanges();
+      })
+    );
   }
 
-  public switchTagsInLists(newTag, newTagIndex, oldTag, oldTagIndex, array1, array2){
+  public switchTagsInLists(
+    newTag,
+    newTagIndex,
+    oldTag,
+    oldTagIndex,
+    array1,
+    array2
+  ) {
     array1[oldTagIndex] = newTag;
     array2[newTagIndex] = oldTag;
     this._changeDetectorRef.detectChanges();
   }
 
-  public setUserFavoriteTags(tag, index){
-    if (this.getUser()){
+  public setUserFavoriteTags(tag, index) {
+    if (this.getUser()) {
       let id = this.getUserId();
-      if (this.getUserFavoriteTags() === false) {
-        let tagNames = this.getNamesOfTagsInTagsList(this.tagsInSidebar); 
+      let userFavTags = this.getUserFavoriteTags();
+      if (userFavTags.length < 6) {
+        let tagNames = this.getNamesOfTagsInTagsList(this.tagsInSidebar);
         this.initialiseUserTagsInLeftSidebar(id, tagNames);
-      } 
-      else {
+      } else {
         this._replacmentListService.replaceUserTagInSidebar(id, tag, index);
       }
-    }
-    else {
+    } else {
       console.log('User not loged in');
     }
   }
 
   private _populateSidebar() {
     this._tagsPriorityList.map(tag => {
-      this.tags.push(
-        {
-          name: tag,
-          texts: this._articlesService.orderByTimeOfUpdate(
-            this._articlesService.getArticlesByTagName(tag, 15)
-              .filter(article => this._isArticleAlreadyAssigned(article.id))
-          )
-        }
-
-      );
+      this.tags.push({
+        name: tag,
+        texts: this._articlesService.orderByTimeOfUpdate(
+          this._articlesService
+            .getArticlesByTagName(tag, 15)
+            .filter(article => this._isArticleAlreadyAssigned(article.id))
+        )
+      });
     });
     this.tagsInSidebar = this.tags.splice(0, 6);
-    this.tagsInReplacmentList = this.tags.splice(0,this.tags.length);
+    this.tagsInReplacmentList = this.tags.splice(0, this.tags.length);
   }
 
   private _isArticleAlreadyAssigned(id) {
     if (this._filteredArticles.indexOf(id) !== -1) {
-       return false;
-      }
+      return false;
+    }
     this._filteredArticles.push(id);
 
     return true;
@@ -162,31 +180,26 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   public initialiseUserTagsInLeftSidebar(id, tags) {
-    this._replacmentListService.initialiseUserTagsInLeftSidebar(
-      id,
-      tags
-    );
-}
+    this._replacmentListService.initialiseUserTagsInLeftSidebar(id, tags);
+  }
 
-  getUserFavoriteTags(){
+  getUserFavoriteTags() {
     return this._authService.getUser().favorite_tags || false;
   }
 
-  getUserId(){
+  getUserId() {
     return this._authService.getUser().id;
   }
 
-  getUser(){
+  getUser() {
     return this._authService.getUser();
   }
 
-  getNamesOfTagsInTagsList(tagList){
+  getNamesOfTagsInTagsList(tagList) {
     let names = [];
-    for (let tag of tagList){
+    for (let tag of tagList) {
       names.push(tag.name);
     }
     return names;
   }
-
-
 }
