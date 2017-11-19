@@ -6,11 +6,11 @@
         <i class="material-icons">visibility</i>
         <small>{{ article.seen_times }}</small>
       </span>
-      <span class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Milica Markovic, Tamara Rajic, Vladiir Jugovic, Nikola Jankovic, Milica Markovic, Tamara Rajic, Vladiir Jugovic, Nikola Jankovic, Milica Markovic, Tamara Rajic...">
+      <span class="tooltipped" data-position="bottom" data-delay="50" [attr.data-tooltip]="listOfLikes">
         <i class="material-icons">sentiment_very_satisfied</i>
         <small>{{ article.number_of_likes }}</small>
       </span>
-      <span class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Milica Markovic, Tamara Rajic, Vladiir Jugovic, Nikola Jankovic">
+      <span class="tooltipped" data-position="bottom" data-delay="50" [attr.data-tooltip]="listOfDislikes">
         <i class="material-icons">sentiment_very_dissatisfied</i>
         <small>{{ article.number_of_dislikes }}</small>
       </span>

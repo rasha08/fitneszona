@@ -1,6 +1,5 @@
 import {
   Component,
-  AfterViewInit,
   OnInit,
   OnDestroy,
   ChangeDetectorRef,
@@ -21,14 +20,16 @@ declare const $;
   selector: 'single-article',
   templateUrl: './single-article.html'
 })
-export class SingleArticleComponent
-  implements OnInit, OnDestroy, AfterViewInit {
+export class SingleArticleComponent implements OnInit, OnDestroy {
   public article;
   private _user;
   private _updateCouner = 0;
   private _isAddedToVisited = false;
   public comentBoxOpen = false;
   public commentText = '';
+  public listOfLikes = '';
+  public listOfDislikes = '';
+
   private _subscriptions: Array<Subscription> = [];
 
   constructor(
@@ -51,10 +52,6 @@ export class SingleArticleComponent
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  ngAfterViewInit() {
-    $('.tooltipped').tooltip({ delay: 50 });
-  }
-
   private _subscribeToArticleFetchedEvent() {
     this._subscriptions.push(
       this._articlesService.fetchedSingleArticle$.subscribe(article => {
@@ -67,7 +64,10 @@ export class SingleArticleComponent
         this._subscribeToArticleUpdateEvent();
         this._loaderService.hide();
         this._changeDetectorRef.detectChanges();
-        this._articlesService.inceraseSeanTimes(this.article.id);
+        if (this._updateCouner === 0) {
+          this._articlesService.inceraseSeanTimes(this.article.id);
+          $('.tooltipped').tooltip({ delay: 50 });
+        }
       })
     );
   }
@@ -107,7 +107,8 @@ export class SingleArticleComponent
 
     article['intro'] = article.text.slice(0, imageIndex);
     article.text = article.text.slice(imageEnd + 8, -1);
-
+    this._populateListOfLikes(article);
+    this._populateListOfDislikes(article);
     return article;
   }
 
@@ -154,5 +155,26 @@ export class SingleArticleComponent
     }
 
     this.openCommentBox();
+  }
+
+  private _populateListOfLikes(article) {
+    this.listOfLikes = '';
+    article.likes.forEach(like => {
+      this.listOfLikes += like.userName + ', ';
+    });
+
+    this.listOfLikes = this.listOfLikes.slice(0, this.listOfLikes.length - 2);
+  }
+
+  private _populateListOfDislikes(article) {
+    this.listOfDislikes = '';
+    article.dislikes.forEach(dislike => {
+      this.listOfDislikes += dislike.userName + ', ';
+    });
+
+    this.listOfDislikes = this.listOfDislikes.slice(
+      0,
+      this.listOfDislikes.length - 2
+    );
   }
 }
