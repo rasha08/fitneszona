@@ -4,6 +4,10 @@ body {
   overflow-x: hidden;
 }
 
+.open {
+  display: block !important;
+}
+
 body .light {
   background-color: snow;
 }

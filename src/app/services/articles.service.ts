@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
+import { ConfigurationService } from './configuration.service';
 import { ArticlesHTTPService } from './atricles-http.service';
 
 @Injectable()
@@ -23,9 +24,14 @@ export class ArticlesService {
 
   constructor(
     private _articlesHTTPService: ArticlesHTTPService,
+    private _configurationService: ConfigurationService,
     private _ngZone: NgZone
   ) {
-    this._ngZone.runOutsideAngular(() => this.getAllArticles());
+    this._configurationService.configurationStatusChange$.subscribe(() => {
+      if (!this.allArticles) {
+        this.getAllArticles();
+      }
+    });
   }
 
   public getArticle(id) {

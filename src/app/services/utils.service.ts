@@ -1,30 +1,35 @@
 import { Injectable } from '@angular/core';
 
-
 @Injectable()
 export class UtilsService {
   public formatStringForUrl(string) {
     return string.trim().replace(/s+/g, '-');
   }
 
-  public getArticleUrl(article) {
-    const articleTitleUrlSlug = this.formatStringForUrl(article.titile);
-
-    return `/${article.category}/${articleTitleUrlSlug}`;
-  }
-
   public getFormatedDateWithTimeZoneOffset() {
     const currentDate = new Date();
     let hour;
-    const winterTimeOffsetStart = new Date(`${currentDate.getFullYear()}-10-29 23:00:00`);
-    const summerTimeOffsetStart = new Date(`${currentDate.getFullYear()}-03-29 23:00:00`);
+    const winterTimeOffsetStart = new Date(
+      `${currentDate.getFullYear()}-10-29 23:00:00`
+    );
+    const summerTimeOffsetStart = new Date(
+      `${currentDate.getFullYear()}-03-29 23:00:00`
+    );
 
-    if (currentDate < winterTimeOffsetStart && currentDate > summerTimeOffsetStart) {
+    if (
+      currentDate < winterTimeOffsetStart &&
+      currentDate > summerTimeOffsetStart
+    ) {
       hour = currentDate.getHours() - 2;
     } else {
       hour = currentDate.getHours() - 1;
     }
 
-    return `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()} ${hour}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+    return `${currentDate.getFullYear()}-${currentDate.getMonth() +
+      1}-${currentDate.getDate()} ${hour}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+  }
+
+  public getArticleUrl(category, article) {
+    return `/tekstovi/${category.urlSlug}/${article.article_title_url_slug}`;
   }
 }

@@ -29,6 +29,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
   public commentText = '';
   public listOfLikes = '';
   public listOfDislikes = '';
+  public isViewDestroyed = false;
 
   private _subscriptions: Array<Subscription> = [];
 
@@ -50,6 +51,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.isViewDestroyed = true;
   }
 
   private _subscribeToArticleFetchedEvent() {
@@ -63,7 +65,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
         this.article = this._transformHtml(article);
         this._subscribeToArticleUpdateEvent();
         this._loaderService.hide();
-        this._changeDetectorRef.detectChanges();
+        this._detectChanges();
         if (this._updateCouner === 0) {
           this._articlesService.inceraseSeanTimes(this.article.id);
           $('.tooltipped').tooltip({ delay: 50 });
@@ -90,14 +92,14 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
         this._isAddedToVisited = true;
         this._userDataService.addTextToVisited(this.article.id, this._user.id);
       }
-      this._changeDetectorRef.detectChanges();
+      this._detectChanges();
     });
   }
 
   private fetchArticleUpdate(articleId) {
     this._articlesService.getArticle(articleId).subscribe(article => {
       Object.assign(this.article, this._transformHtml(article));
-      this._changeDetectorRef.detectChanges();
+      this._detectChanges();
     });
   }
 
@@ -142,7 +144,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
 
   public openCommentBox() {
     this.comentBoxOpen = !this.comentBoxOpen;
-    this._changeDetectorRef.detectChanges();
+    this._detectChanges();
   }
 
   public comment() {
@@ -176,5 +178,11 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
       0,
       this.listOfDislikes.length - 2
     );
+  }
+
+  private _detectChanges() {
+    if (!this.isViewDestroyed) {
+      this._changeDetectorRef.detectChanges();
+    }
   }
 }

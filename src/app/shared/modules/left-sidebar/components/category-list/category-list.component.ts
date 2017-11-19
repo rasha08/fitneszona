@@ -1,10 +1,10 @@
-import { Component, Input, ChangeDetectorRef, OnInit } from "@angular/core";
+import { Component, Input, ChangeDetectorRef, OnInit } from '@angular/core';
 
 import { ReplacmentListService } from '../../services/replacment-list.service';
 
 @Component({
-  selector: "category-list-component",
-  templateUrl: "./category-list.html"
+  selector: 'category-list-component',
+  templateUrl: './category-list.html'
 })
 export class CategoryListComponent implements OnInit {
   public openCategory;
@@ -39,10 +39,15 @@ export class CategoryListComponent implements OnInit {
   }
 
   public getTagTexts(tag: any) {
-    return (this.numberOfArticlesByTag > tag.texts.length) ? tag.texts : tag.texts.slice(0, this.numberOfArticlesByTag);
+    if (!tag) {
+      return [];
+    }
+    return this.numberOfArticlesByTag > tag.texts.length
+      ? tag.texts
+      : tag.texts.slice(0, this.numberOfArticlesByTag);
   }
 
-  public getTagIndex(tag){
+  public getTagIndex(tag) {
     return this.tags.indexOf(tag);
   }
 }
