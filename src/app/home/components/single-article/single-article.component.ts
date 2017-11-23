@@ -80,10 +80,17 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     this._notifyService
       .subscribeToArticleChanges(this.article.subscriptionId)
       .on('value', update => {
+        const updateObject = JSON.parse(update.val());
         this._updateCouner += 1;
-        if (this._shouldUpdateArticle()) {
+        if (updateObject.change === 'action' && this._shouldUpdateArticle()) {
+          Object.assign(this.article, JSON.parse(updateObject.payload));
+          this._populateListOfLikes(this.article);
+          this._populateListOfDislikes(this.article);
+        }  else if (this._shouldUpdateArticle()) {
           this.fetchArticleUpdate(this.article.id);
         }
+
+        this._detectChanges();
       });
   }
 
@@ -101,7 +108,6 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
   private fetchArticleUpdate(articleId) {
     this._articlesService.getArticle(articleId).subscribe(article => {
       Object.assign(this.article, this._transformHtml(article));
-      this._detectChanges();
     });
   }
 
