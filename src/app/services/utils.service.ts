@@ -30,6 +30,8 @@ export class UtilsService {
   }
 
   public getArticleUrl(category, article) {
+    console.log(`/tekstovi/${category.urlSlug}/${article.article_title_url_slug}`);
     return `/tekstovi/${category.urlSlug}/${article.article_title_url_slug}`;
   }
+
 }
