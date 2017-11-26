@@ -11,6 +11,7 @@ import { ConfigurationHTTPService } from './configuration-http.service';
 export class ConfigurationService {
   public BASE_URL: string = 'http://fitneszona.rs';
   public configuration: object;
+  public isConfigurationFetched = false;
   private _updateCouner = 0;
 
   private _openConfiguration = new Subject();
@@ -27,6 +28,7 @@ export class ConfigurationService {
     this._configurationHTTPService.getConfiguration().subscribe(
       configuration => {
         this.configuration = configuration;
+        this.isConfigurationFetched = true;
         this._sendNotification(true);
       },
       error => console.log(error)
@@ -44,7 +46,7 @@ export class ConfigurationService {
   private _subscribeToConfigurationChanges() {
     this._notifyService
       .subscribeToConfigurationChanges(1)
-        .on('value', update => {
+      .on('value', update => {
         this._updateCouner += 1;
         if (this._shouldFetchNewConfiguration()) {
           this.getConfiguration();

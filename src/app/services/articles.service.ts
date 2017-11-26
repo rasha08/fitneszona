@@ -16,6 +16,9 @@ export class ArticlesService {
   private _fetchedCategoryArticles = new Subject();
   public fetchedCategoryArticles$ = this._fetchedCategoryArticles.asObservable();
 
+  private _fetchedIndexPageArticles = new Subject();
+  public fetchedIndexPageArticles$ = this._fetchedIndexPageArticles.asObservable();
+
   private _specificCategoryArticlesFetched = new Subject();
   public specificCategoryArticlesFetched$ = this._specificCategoryArticlesFetched.asObservable();
 
@@ -128,6 +131,10 @@ export class ArticlesService {
     this._fetchedCategoryArticles.next(articles);
   }
 
+  public ariclesFetchedForIndexPage(articles) {
+    this._fetchedIndexPageArticles.next(articles);
+  }
+
   public articlesFetchedForSpecificCategory(articles) {
     this._specificCategoryArticlesFetched.next(articles);
   }
@@ -170,5 +177,9 @@ export class ArticlesService {
     };
 
     this._articlesHTTPService.action(data, textId);
+  }
+
+  public getIndexPageArticles() {
+    return this._articlesHTTPService.getIndexPageArticles();
   }
 }

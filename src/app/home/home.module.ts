@@ -15,6 +15,7 @@ import { SpecificCategoriesComponent } from './components/specific-categories/sp
 import { CategoryResolver } from './resolvers/category.resolver';
 import { SpecificCategoryResolver } from './resolvers/specific-category.resolver';
 import { SingleArticleResolver } from './resolvers/single-article.resolver';
+import { IndexPageResolver } from './resolvers/index-page.resolver';
 
 @NgModule({
   imports: [CommonModule, FormsModule, RouterModule, LeftSidebarModule],
@@ -27,6 +28,11 @@ import { SingleArticleResolver } from './resolvers/single-article.resolver';
     HomeIndexComponent
   ],
   exports: [HomeComponent],
-  providers: [CategoryResolver, SpecificCategoryResolver, SingleArticleResolver]
+  providers: [
+    CategoryResolver,
+    SpecificCategoryResolver,
+    SingleArticleResolver,
+    IndexPageResolver
+  ]
 })
 export class HomeModule {}

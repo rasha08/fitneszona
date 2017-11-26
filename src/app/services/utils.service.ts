@@ -26,7 +26,9 @@ export class UtilsService {
     }
 
     return `${currentDate.getFullYear()}-${currentDate.getMonth() +
-      1}-${currentDate.getDate()} ${hour}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+      1}-${currentDate.getDate()} ${
+      hour
+    }:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
   }
 
   public getArticleUrl(category, article) {

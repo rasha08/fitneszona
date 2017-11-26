@@ -8,12 +8,16 @@ import { SpecificCategoriesComponent } from './components/specific-categories/sp
 
 import { CategoryResolver } from './resolvers/category.resolver';
 import { SpecificCategoryResolver } from './resolvers/specific-category.resolver';
-import { SingleArticleResolver } from 'app/home/resolvers/single-article.resolver';
+import { SingleArticleResolver } from './resolvers/single-article.resolver';
+import { IndexPageResolver } from './resolvers/index-page.resolver';
 
 export const homeRoutes: Routes = [
   {
     path: '',
-    component: HomeIndexComponent
+    component: HomeIndexComponent,
+    resolve: {
+      IndexPageResolver
+    }
   },
   {
     path: 'tekstovi/svi-tekstovi',

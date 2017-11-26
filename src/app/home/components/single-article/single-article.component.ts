@@ -13,7 +13,6 @@ import { LoaderService } from '../../../services/loader.service';
 import { NotifyService } from '../../../services/notify.service';
 import { AuthService } from '../../../services/auth.service';
 import { UserDataService } from '../../../services/user-data.service';
-import { auth } from 'firebase';
 
 declare const $;
 
@@ -69,7 +68,6 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
         this._loaderService.hide();
         this._detectChanges();
         if (this._updateCouner === 0) {
-          this._articlesService.inceraseSeanTimes(this.article.id);
           $('.tooltipped').tooltip({ delay: 50 });
         }
       })

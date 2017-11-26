@@ -11,22 +11,39 @@ export class UserHTTPService {
 
   public getUserData(data, isUserRemembered?) {
     if (isUserRemembered) {
-      return this._http
-        .get(`https://fitneszona.rs/api/users/${data.id}`)
-        .map(result => result.json(), error => console.error(error));
+      return this._http.get(`https://fitneszona.rs/api/users/${data.id}`).map(
+        result => result.json(),
+        error => {
+          this._ngZone.runOutsideAngular(() => {
+            setTimeout(() => this.getUserData(data, isUserRemembered), 300);
+          });
+        }
+      );
     } else {
       const dataString = JSON.stringify(data);
 
-      return this._http
-        .post(`https://fitneszona.rs/api/users/login`, data)
-        .map(result => result.json(), error => console.error(error));
+      return this._http.post(`https://fitneszona.rs/api/users/login`, data).map(
+        result => result.json(),
+        error => {
+          this._ngZone.runOutsideAngular(() => {
+            setTimeout(() => this.getUserData(data, isUserRemembered), 300);
+          });
+        }
+      );
     }
   }
 
   public resetPassword(data) {
     return this._http
       .post(`https://fitneszona.rs/api/users/reset-password`, data)
-      .map(result => result.json(), error => console.error(error));
+      .map(
+        result => result.json(),
+        error => {
+          this._ngZone.runOutsideAngular(() => {
+            setTimeout(() => this.resetPassword(data), 300);
+          });
+        }
+      );
   }
 
   public registerUser(userObj) {
@@ -36,25 +53,41 @@ export class UserHTTPService {
   }
 
   public initilaiseUserTagsInLeftSidebar(id, tags) {
-    let action = {
+    const action = {
       action: 'leftSidebarInitialization',
       options: tags
     };
-    console.log(action);
     return this._http
       .post(`${this.BASE_URL}/api/users/action/${id}`, action)
-      .map(response => response.json());
+      .map(
+        response => response.json(),
+        error => {
+          this._ngZone.runOutsideAngular(() => {
+            setTimeout(
+              () => this.initilaiseUserTagsInLeftSidebar(id, tags),
+              300
+            );
+          });
+        }
+      );
   }
 
   public replaceUserTagInSidebar(id, tag, index) {
-    let action = {
+    const action = {
       action: 'leftSidebarChange',
       optionName: tag,
       optionIndex: index
     };
     return this._http
       .post(`${this.BASE_URL}/api/users/action/${id}`, action)
-      .map(response => response.json());
+      .map(
+        response => response.json(),
+        error => {
+          this._ngZone.runOutsideAngular(() => {
+            setTimeout(() => this.replaceUserTagInSidebar(id, tag, index), 300);
+          });
+        }
+      );
   }
 
   public action(body, id) {
@@ -66,7 +99,7 @@ export class UserHTTPService {
           this._ngZone.runOutsideAngular(() =>
             setTimeout(() => {
               this.action(body, id);
-            }, 100)
+            }, 300)
           )
       )
       .subscribe();

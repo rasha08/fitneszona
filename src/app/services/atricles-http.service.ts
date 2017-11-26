@@ -29,7 +29,7 @@ export class ArticlesHTTPService {
         this._ngZone.runOutsideAngular(() =>
           setTimeout(() => {
             this.getTopArticles();
-          }, 100)
+          }, 300)
         )
     );
   }
@@ -41,7 +41,19 @@ export class ArticlesHTTPService {
         this._ngZone.runOutsideAngular(() =>
           setTimeout(() => {
             this.getLatestArticles();
-          }, 100)
+          }, 300)
+        )
+    );
+  }
+
+  public getIndexPageArticles() {
+    return this._http.get(`${this.BASE_URL}/api/articles/index`).map(
+      result => result.json(),
+      error =>
+        this._ngZone.runOutsideAngular(() =>
+          setTimeout(() => {
+            this.getIndexPageArticles();
+          }, 300)
         )
     );
   }
@@ -55,7 +67,7 @@ export class ArticlesHTTPService {
           this._ngZone.runOutsideAngular(() =>
             setTimeout(() => {
               this.getArticlesForCategory(category);
-            }, 100)
+            }, 300)
           )
       );
   }
@@ -63,23 +75,43 @@ export class ArticlesHTTPService {
   public getTopArticlesForCategory(category) {
     return this._http
       .get(`${this.BASE_URL}/api/articles/category/${category}/top`)
-      .map(result => result.json(), error => console.error(error));
+      .map(
+        result => result.json(),
+        error => {
+          this._ngZone.runOutsideAngular(() => {
+            setTimeout(() => this.getTopArticlesForCategory(category), 300);
+          });
+        }
+      );
   }
 
   public getLatestArticlesForCategory(category) {
     return this._http
       .get(`${this.BASE_URL}/api/articles/category/${category}/latest`)
-      .map(result => result.json(), error => console.error(error));
+      .map(
+        result => result.json(),
+        error => {
+          this._ngZone.runOutsideAngular(() => {
+            setTimeout(() => this.getLatestArticlesForCategory(category), 300);
+          });
+        }
+      );
   }
 
   public getArticleByURLSlug(article_title_url_slug) {
-    console.log(
-      'Adress:',
-      `${this.BASE_URL}/api/articles/${article_title_url_slug}`
-    );
     return this._http
       .get(`${this.BASE_URL}/api/articles/${article_title_url_slug}`)
-      .map(result => result.json(), error => console.log(error));
+      .map(
+        result => result.json(),
+        error => {
+          this._ngZone.runOutsideAngular(() => {
+            setTimeout(
+              () => this.getArticleByURLSlug(article_title_url_slug),
+              300
+            );
+          });
+        }
+      );
   }
 
   public getArticle(id) {
@@ -89,7 +121,7 @@ export class ArticlesHTTPService {
         this._ngZone.runOutsideAngular(() =>
           setTimeout(() => {
             this.getArticle(id);
-          }, 100)
+          }, 300)
         )
     );
   }
@@ -97,13 +129,27 @@ export class ArticlesHTTPService {
   public getArticleCategoryAndTags(id) {
     return this._http
       .get(`${this.BASE_URL}/api/articles/${id}/catgory-and-tags`)
-      .map(result => result.json(), error => console.error(error));
+      .map(
+        result => result.json(),
+        error =>
+          this._ngZone.runOutsideAngular(() =>
+            setTimeout(() => {
+              this.getArticleCategoryAndTags(id);
+            }, 300)
+          )
+      );
   }
 
   public getArticlesByDate() {
-    return this._http
-      .get(`${this.BASE_URL}`)
-      .map(result => result.json(), error => console.log(error));
+    return this._http.get(`${this.BASE_URL}`).map(
+      result => result.json(),
+      error =>
+        this._ngZone.runOutsideAngular(() =>
+          setTimeout(() => {
+            this.getArticlesByDate();
+          }, 300)
+        )
+    );
   }
 
   public search(phrase) {
@@ -126,7 +172,7 @@ export class ArticlesHTTPService {
           this._ngZone.runOutsideAngular(() =>
             setTimeout(() => {
               this.action(body, id);
-            }, 100)
+            }, 300)
           )
       )
       .subscribe();
