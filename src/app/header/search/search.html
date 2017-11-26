@@ -1,6 +1,6 @@
 <li>
     <a class="row">
         <input #searchBox id="search" type="tel" class="validate" placeholder="pretraži..." 
-            (blur)="search(searchBox.value)" >
+            (keypress)="search($event, searchBox.value)" >
     </a>
 </li>

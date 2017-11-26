@@ -3,3 +3,4 @@ https://fitneszona.rs/api/configuration/1/  -user configuration gde je poslednji
 http://fitneszona.rs/api/articles/{id} - ruta za clanak,
 http://fitneszona.rs/api/articles/{article_title_url_slug} -neka ruta za url_slug umesto title slug ide naslov krosit nesto kao krosfit-nesto
 http://fitneszona.rs/api/articles/crossfit - ruta za sve clanke za kategoriju //to je valjda ovo gore https://fitneszona.rs/api/configuration/1/tags-priority-list - ruta za tagove usera
+https://fitneszona.rs/api/users/${data.id} -user ruta

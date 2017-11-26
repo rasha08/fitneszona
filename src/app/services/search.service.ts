@@ -29,14 +29,16 @@ export class SearchService {
     }
 
     public filterByDescription(phrase,articles){
-        let articlesWithPhrase = articles.filter( (article) => article.indexOf(phrase) !== -1 );
+        let articlesWithPhrase = articles.filter( 
+            (article) => article.description.indexOf(phrase) !== -1 
+        );
         return articlesWithPhrase;
     }
 
     public filterArticles(phrase, articles){
         let articlesWithPhraseInTitle = this.filterByTitle(phrase, articles);
-        let articlesWithPhraseInText = this.filterByTitle(phrase, articles);
-        return articlesWithPhraseInTitle.concat(articlesWithPhraseInText); 
+        let articlesWithPhraseInDescription = this.filterByDescription(phrase, articles);
+        return articlesWithPhraseInTitle.concat(articlesWithPhraseInDescription); 
     }
 
     public search(phrase){
