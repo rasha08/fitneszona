@@ -49,7 +49,6 @@ export class HomeIndexComponent extends SpecificCategoriesComponent
 
     this._subscriptions.push(
       this._articlesService.fetchedIndexPageArticles$.subscribe(articles => {
-        console.log(articles);
         this._allArticles = articles;
         this._organizeArticles();
         this._loaderService.hide();
@@ -71,7 +70,7 @@ export class HomeIndexComponent extends SpecificCategoriesComponent
         ) !== -1
     );
 
-    this.articles['featured'] = this.articles.slice(0, 3);
-    this.articles['articles'] = this.articles.splice(3);
+    this.articles['featured'] = this.articles.slice(0, 2);
+    this.articles['articles'] = this.articles.slice(2, 5);
   }
 }

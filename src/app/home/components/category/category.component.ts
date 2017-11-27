@@ -56,9 +56,7 @@ export class CategoryComponent implements AfterViewInit, OnInit, OnDestroy {
         this.articlesCategory = this._configurationService.getParam('active_categories').find(
           categoryObj => categoryObj.category == this.mainArticle.category
         );
-        console.log(this.articlesCategory);
         this.articles = this.secondaryArticles.splice(3);
-        console.log(this.mainArticle,this.articles,this.secondaryArticles)
         this._changeDetectorRef.detectChanges();
         this._loaderService.hide();
       })

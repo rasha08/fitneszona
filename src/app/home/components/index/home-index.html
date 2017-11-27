@@ -1,94 +1,39 @@
-<div class="row">
-
-  <div class="col s12 m6">
-    <div class="card">
+<div class="row home" *ngIf="articles">
+  <div class="col s12 m6" *ngFor="let article of articles.featured">
+    <div class="card big">
       <div class="card-image waves-effect waves-block waves-light">
-        <img class="activator responsive-img" src="http://fitneszona.rs/images/r_t_801.jpg">
+        <img class="activator responsive-img" src="{{ article.image_url }}">
       </div>
       <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">Card Title
+        <span class="card-title activator grey-text text-darken-4">{{ article.title }}
           <i class="material-icons right">more_vert</i>
         </span>
         <p>
-          <a routerLink="/tekstovi/kategorija/tekst">This is a link</a>
+          <a [routerLink]="getArticleUrl(article)">otvori...</a>
         </p>
       </div>
       <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">Card Title
+        <span class="card-title grey-text text-darken-4">{{ article.title }}
           <i class="material-icons right">close</i>
         </span>
-        <p>Here is some more information about this product that is only revealed once clicked on.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col s12 m6">
-    <div class="card">
-      <div class="card-image waves-effect waves-block waves-light">
-        <img class="activator responsive-img" src="http://fitneszona.rs/images/r_t_801.jpg">
-      </div>
-      <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">Card Title
-          <i class="material-icons right">more_vert</i>
-        </span>
-        <p>
-          <a routerLink="/tekstovi/kategorija/tekst">This is a link</a>
-        </p>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">Card Title
-          <i class="material-icons right">close</i>
-        </span>
-        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+        <p>{{ article.description }}</p>
       </div>
     </div>
 
 
   </div>
   <div class="row">
-    <div class="col s12 m4">
+    <div class="col s12 m4" *ngFor="let article of articles.articles">
       <div class="card horizontal">
         <div class="card-image">
-          <img src="https://2.bp.blogspot.com/-GRER8B9CpQM/WawWB_g_1fI/AAAAAAAAFcw/_RYQ8Y9tFf4iAoNvpkoFtI7AbTbgFRaBgCLcBGAs/s400/cara%2Bmemulai%2Bprogram%2Bfitnes.png" class="responsive-img" class="responsive-img">
+          <img src="{{ article.image_url }}" class="responsive-img" class="responsive-img">
         </div>
         <div class="card-stacked">
           <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information.</p>
+            <p>{{ article.title }}</p>
           </div>
           <div class="card-action">
-            <a routerLink="/tekstovi/kategorija/tekst">This is a link</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col s12 m4">
-      <div class="card horizontal">
-        <div class="card-image">
-          <img src="https://2.bp.blogspot.com/-GRER8B9CpQM/WawWB_g_1fI/AAAAAAAAFcw/_RYQ8Y9tFf4iAoNvpkoFtI7AbTbgFRaBgCLcBGAs/s400/cara%2Bmemulai%2Bprogram%2Bfitnes.png" class="responsive-img">
-        </div>
-        <div class="card-stacked">
-          <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information.</p>
-          </div>
-          <div class="card-action">
-            <a routerLink="/tekstovi/kategorija/tekst">This is a link</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col s12 m4">
-      <div class="card horizontal">
-        <div class="card-image">
-          <img src="https://2.bp.blogspot.com/-GRER8B9CpQM/WawWB_g_1fI/AAAAAAAAFcw/_RYQ8Y9tFf4iAoNvpkoFtI7AbTbgFRaBgCLcBGAs/s400/cara%2Bmemulai%2Bprogram%2Bfitnes.png" class="responsive-img">
-        </div>
-        <div class="card-stacked">
-          <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information.</p>
-          </div>
-          <div class="card-action">
-            <a routerLink="/tekstovi/kategorija/tekst">This is a link</a>
+             <a [routerLink]="getArticleUrl(article)">otvori...</a>
           </div>
         </div>
       </div>

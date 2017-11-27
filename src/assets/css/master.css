@@ -358,3 +358,11 @@ h1 span i {
   transform: translateX(-1%);
   background-color: snow;
 }
+
+.home .card.big {
+  height: 450px;
+}
+
+.home .card.horizontal {
+  height: 150px;
+}
