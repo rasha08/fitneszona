@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 
 import { SearchService } from "../../services/search.service";
 import { ArticlesService } from "../../services/articles.service";
@@ -24,10 +24,10 @@ export class SearchComponent {
     public searchResult;
     public errorMessage;
     public result;
-    private _userLikedCategories;
-    private _userLikedTags;
-    private _userVisitedCtegories;
-    private userVisitedTags;
+    private _userLikedCategories = [];
+    private _userLikedTags = [];
+    private _userVisitedCtegories = [];
+    private userVisitedTags = [];
     public allArticles;
 
   constructor(
@@ -35,6 +35,11 @@ export class SearchComponent {
     private _articlesService: ArticlesService,
     private _authService: AuthService
   ) { }
+
+  ngOnInit(){
+    this.subscribeToAllArticlesFetchEvent();
+    this.subscribeToUserLogInEvent();
+  }
 
   ngOnDestroy(){
     this._subscription.forEach(subscription => subscription.unsubscribe());
@@ -55,10 +60,22 @@ export class SearchComponent {
     ));
   }
 
+  subscribeToUserLogInEvent(){
+    this._subscription.push(this._authService.authStatusChange$.subscribe(
+      notification => {
+        this._userLikedTags = this._getUserLikedTags();
+        this._userLikedCategories = this._getUserLikedCategories();
+        this._userVisitedCtegories = this._getUserVisitedCategories();
+        this.userVisitedTags = this._getUserVisitedTags();
+      }
+    ))
+  }
+
   search(event, phrase){
     event.stopPropagation();
     if (event.keyCode === 13) {
-        
+       console.log(this._searchService.filterArticles(phrase, this.allArticles)
+           .sort( (article1, article2) => this.getPoints(article1) - this.getPoints(article2) ));
     }
     /*this._searchService.search(phrase).subscribe(
       response => console.log(response)

@@ -19,26 +19,29 @@ export class SearchService {
     ) { }
 
     public filterByTitle(phrase, articles){
-       let articlesWithPhrase =  articles.filter( (article) => article.title.indexOf(phrase) !== -1 );
+       let pattern = new RegExp(`${phrase}`,'i');
+       let articlesWithPhrase =  articles.filter( (article) => pattern.test(article.title) );
        return articlesWithPhrase;
     }
 
     public filterByText(phrase, articles){
-        let articlesWithPhrase = articles.filter( (article) => article.text.indexOf(phrase) !== -1 );
+        let pattern = new RegExp(`${phrase}`,'i');
+        let articlesWithPhrase = articles.filter( (article) => pattern.test(article.text) );
         return articlesWithPhrase;
     }
 
     public filterByDescription(phrase,articles){
-        let articlesWithPhrase = articles.filter( 
-            (article) => article.description.indexOf(phrase) !== -1 
-        );
+        let pattern = new RegExp(`${phrase}`,'i');
+        console.log(pattern)
+        let articlesWithPhrase = articles.filter( (article) =>  pattern.test(article.description) );
         return articlesWithPhrase;
     }
 
     public filterArticles(phrase, articles){
         let articlesWithPhraseInTitle = this.filterByTitle(phrase, articles);
         let articlesWithPhraseInDescription = this.filterByDescription(phrase, articles);
-        return articlesWithPhraseInTitle.concat(articlesWithPhraseInDescription); 
+        console.log(articlesWithPhraseInDescription, articlesWithPhraseInTitle);
+        return articlesWithPhraseInTitle.concat(articlesWithPhraseInDescription);
     }
 
     public search(phrase){
