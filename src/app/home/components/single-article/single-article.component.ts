@@ -84,7 +84,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
           Object.assign(this.article, JSON.parse(updateObject.payload));
           this._populateListOfLikes(this.article);
           this._populateListOfDislikes(this.article);
-        }  else if (this._shouldUpdateArticle()) {
+        } else if (this._shouldUpdateArticle()) {
           this.fetchArticleUpdate(this.article.id);
         }
 
@@ -95,7 +95,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
   private _subscribeToAuthStatusChange() {
     this._authService.authStatusChange$.subscribe(change => {
       this._user = this._authService.getUser();
-      if (this._user && !this._isAddedToVisited) {
+      if (this._user && !this._isAddedToVisited && this.article) {
         this._isAddedToVisited = true;
         this._userDataService.addTextToVisited(this.article.id, this._user.id);
       }
