@@ -64,7 +64,7 @@ a.brand-logo {
 
 #modal {
   width: 80%;
-  top: 6%;
+  top: 150px;
   background-color: rgba(255, 255, 255, 1);
   transform: translateX(-240%) rotateX(184deg) rotateZ(4330deg);
   background-image: url(http://icons.iconarchive.com/icons/double-j-design/origami-colored-pencil/256/red-user-icon.png);
@@ -363,6 +363,46 @@ h1 span i {
   height: 450px;
 }
 
+.home .card.big .card-image {
+  max-height: 320px;
+  overflow-y: hidden;
+}
+
 .home .card.horizontal {
   height: 150px;
+  overflow-y: hidden;
+}
+
+#category .card.big {
+  height: 500px;
+}
+
+#category .card.big .card-image {
+  max-height: 380px;
+  overflow-y: hidden;
+}
+
+#category .card.horizontal {
+  height: 150px;
+  overflow-y: hidden;
+}
+
+#modal.search {
+  max-height: 720px !important;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#modal.search .card {
+  height: 160px;
+  overflow-y: hidden;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+#modal.search #close {
+  position: fixed;
+  top: -10px;
+  left: -10px;
+  z-index: 999999999;
 }

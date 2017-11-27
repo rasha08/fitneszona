@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/fromEvent';
 
 import { ConfigurationService } from '../../../services/configuration.service';
 import { ArticlesService } from '../../../services/articles.service';
@@ -9,12 +11,16 @@ import { UtilsService } from '../../../services/utils.service';
 
 import { SpecificCategoriesComponent } from '../specific-categories/specific-categories.component';
 
+declare const window: any;
+
 @Component({
   selector: 'home-index',
   templateUrl: './home-index.html'
 })
 export class HomeIndexComponent extends SpecificCategoriesComponent
   implements OnInit, OnDestroy {
+  private _nuberOfVisibleArticles = 8;
+
   constructor(
     _articlesService: ArticlesService,
     _notifyService: NotifyService,
@@ -35,6 +41,7 @@ export class HomeIndexComponent extends SpecificCategoriesComponent
 
   ngOnInit() {
     super.ngOnInit();
+    this._listenForScrollEvent();
   }
 
   ngOnDestroy() {
@@ -59,6 +66,14 @@ export class HomeIndexComponent extends SpecificCategoriesComponent
     this._isSubscribedToArticlesFetchEvent = true;
   }
 
+  private _listenForScrollEvent() {
+    this._subscriptions.push(
+      Observable.fromEvent(window, 'scroll').subscribe(e => {
+        this._loadMoreIfNeeded();
+      })
+    );
+  }
+
   protected _organizeArticles() {
     this._activeCategories = this._configurationService.getParam(
       'active_categories'
@@ -71,6 +86,23 @@ export class HomeIndexComponent extends SpecificCategoriesComponent
     );
 
     this.articles['featured'] = this.articles.slice(0, 2);
-    this.articles['articles'] = this.articles.slice(2, 5);
+    this._showRestOfArticles();
+  }
+
+  private _showRestOfArticles() {
+    this.articles['articles'] = this.articles.slice(
+      2,
+      this._nuberOfVisibleArticles
+    );
+  }
+
+  private _loadMoreIfNeeded() {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      if (this._nuberOfVisibleArticles < 20) {
+        this._nuberOfVisibleArticles += 3;
+        this._showRestOfArticles();
+        this._changeDetectorRef.detectChanges();
+      }
+    }
   }
 }

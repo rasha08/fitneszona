@@ -1,0 +1,33 @@
+<div id="modal" class="modal bottom-sheet scale-out z-depth-5 search center" [ngClass]="isModalOpen">
+  <div class="modal-content">
+    <div class="row">
+      <div class="col s12">
+        <h4>
+          <blockquote class=" z-depth-5">
+            {{ title }}:
+          </blockquote>
+        </h4>
+        <div class="row">
+          <div class="card horizontal col s12 m5 z-depth-5" *ngFor="let article of data.results">
+            <div class="card-image">
+              <img [src]="article.image_url" class="responsive-img">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>{{ article.title }}</p>
+              </div>
+              <div class="card-action">
+                <a [routerLink]="getArticleUrl(article)" (click)="close()">otvori...</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="btn-floating btn-large waves-effect waves-light red darken-4 pulse" id="close" (click)="close()">
+      <i class="large material-icons">close</i>
+    </a>
+  </div>
+</div>

@@ -38,6 +38,7 @@ import { LoginComponent } from './shared/components/login/login.component';
 import { RegistrationComponent } from './shared/components/registration/registration.component';
 import { ResetPaswordComponent } from './shared/components/reset-password/reset-password';
 import { AlertComponent } from './shared/components/alert/alert';
+import { SearchResultsComponent } from './shared/components/search-results/search-results.component';
 
 /* FIREBASE */
 import { initializeApp } from 'firebase';
@@ -84,7 +85,8 @@ import { appRoutes } from './app.routing';
     LoginComponent,
     RegistrationComponent,
     ResetPaswordComponent,
-    AlertComponent
+    AlertComponent,
+    SearchResultsComponent
   ]
 })
 export class AppModule {

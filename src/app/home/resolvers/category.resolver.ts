@@ -20,7 +20,10 @@ export class CategoryResolver implements Resolve<any> {
     state: RouterStateSnapshot
   ): Observable<any> | Promise<any> | any {
     this._loaderSerice.show();
-    const category = route.params.category;
+    let category = route.params.category;
+
+    category = category === 'grupni-treninzi' ? 'grupni' : category;
+
     return this._articleService
       .getArticlesForCategory(category)
       .subscribe(articles =>
