@@ -13,7 +13,7 @@ body .light {
 }
 
 body .dark {
-  background-color: #000;
+  background-color: #1e1e1e;
 }
 
 .disabled {
@@ -25,7 +25,16 @@ body .dark {
 }
 
 .dark .nav-extended {
-  background-color: #030606;
+  background-image: -webkit-gradient(
+    linear,
+    left,
+    right,
+    from(black),
+    to(#ab0002)
+  );
+  background-image: -webkit-linear-gradient(top, black, #ab0002);
+  background-image: -moz-linear-gradient(top, black, #ab0002);
+  background-image: linear-gradient(to bottom, black, #ab0002);
 }
 
 a.brand-logo {
@@ -38,7 +47,7 @@ a.brand-logo {
 }
 
 .dark a.brand-logo {
-  color: #ab0002;
+  color: snow;
 }
 
 #search {
@@ -55,8 +64,7 @@ a.brand-logo {
   -webkit-transition: transform 2.5s ease-in-out 0.5 !important;
   -moz-transition: transform 2.5s ease-in-out 0.5 !important;
   transition: transform 2.5s ease-in-out 0.5 !important;
-  z-index: 1005;
-  background-color: rgba(255, 255, 255, 1);
+  z-index: 999999999;
   box-shadow: 3px 7px 20px #ab0002;
   transform: translateX(10%) rotateX(0deg) rotateZ(0deg);
   max-height: 500px;
@@ -74,6 +82,39 @@ a.brand-logo {
   position: absolute;
 }
 
+.light #modal.open {
+  background-color: snow;
+}
+
+.dark #modal.open {
+  background-color: black;
+}
+
+.dark #modal.open h4 {
+  color: #ab0002;
+}
+
+.dark #modal.open .modal-footer {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(dimgray),
+    to(darkred)
+  );
+  background-image: -webkit-linear-gradient(top, dimgray, darkred);
+  background-image: -moz-linear-gradient(top, dimgray, darkred);
+  background-image: linear-gradient(to bottom, dimgray, darkred);
+}
+
+.dark #modal.open .modal-footer a {
+  color: snow;
+}
+
+.dark #modal.open input {
+  color: snow;
+}
+
 #modal.alert {
   background-image: url(http://www.fil.bg.ac.rs/mmd_27/mmd_2015/css/images/menu/photo.png);
   background-size: contain;
@@ -89,10 +130,74 @@ a.brand-logo {
   background: rgba(255, 255, 255, 0.88);
 }
 
-.alert .flow-text {
+.light .alert .flow-text {
   padding: 5%;
   background: rgba(255, 255, 255, 0.8);
   text-align: center;
+}
+
+.dark .error {
+  box-shadow: 2px 3px 20px #ab0002;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.dark .card {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(black),
+    to(#1e1e1e)
+  );
+  background-image: -webkit-linear-gradient(top, black, #1e1e1e);
+  background-image: -moz-linear-gradient(top, black, #1e1e1e);
+  background-image: linear-gradient(to bottom, black, #1e1e1e);
+  box-shadow: 5px 7px 20px lightgray;
+}
+
+.dark .card .card-title {
+  color: snow !important;
+}
+
+.dark .card p a {
+  color: snow !important;
+  text-decoration: underline;
+}
+
+.dark .card p {
+  color: snow !important;
+}
+
+.dark .card .card-reveal {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#1e1e1e),
+    to(black)
+  );
+  background-image: -webkit-linear-gradient(top, #1e1e1e, black);
+  background-image: -moz-linear-gradient(top, #1e1e1e, black);
+  background-image: linear-gradient(to bottom, #1e1e1e, black);
+}
+
+.dark .card .card-reveal p {
+  color: snow !important;
+}
+
+.dark li.collection-item,
+.dark ul li.collection-header.category-button {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#1e1e1e),
+    to(black)
+  );
+  background-image: -webkit-linear-gradient(top, #1e1e1e, black);
+  background-image: -moz-linear-gradient(top, #1e1e1e, black);
+  background-image: linear-gradient(to bottom, #1e1e1e, black);
+  color: snow !important;
 }
 
 body {
