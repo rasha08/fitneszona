@@ -1,4 +1,4 @@
-<div *ngIf="article">
+<div *ngIf="article" id="single-article">
   <h1 class="z-depth-5 center-align">
     {{ article.title }}
     <span class="right">
@@ -16,7 +16,7 @@
       </span>
     </span>
   </h1>
-  <div class="row col s12 m12 z-depth-5">
+  <div class="row col s12 m12 z-depth-5 article-text">
     <div class="row">
       <div class="text-img col s12 m5 right ">
         <img class="z-depth-5 responsive-img" src="{{ article.image_url }}" alt="">
@@ -64,7 +64,7 @@
       <i class="material-icons" (click)="likeOrUnlikeTag(tag)">{{ hasUSerLikedTag(tag) ? 'favorite' : 'favorite_border'}}</i>
     </span>
   </div>
-  <div class="row comments" *ngIf="article.comments">
+  <div class="row comments" *ngIf="article.comments && article.comments.length">
     <h4 id="commentDiv">Komentari:</h4>
     <div class="comment z-depth-5" *ngFor="let comment of article.comments">
       <p>{{ comment.comment }}</p>

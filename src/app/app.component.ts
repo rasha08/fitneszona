@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   placeholder;
 
   private _componentRef;
-  public article: any;
+  public theme = 'light';
   private _subscription: Subscription;
 
   constructor(
@@ -40,6 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this._listenForModalOpenCloseEvents();
+    this._listenForConfigurationChange();
   }
 
   public ngOnDestroy() {
@@ -55,6 +56,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this._modalService.closeModal$.subscribe(() => {
       this._closeModal();
       this._changeDetectorRef.detectChanges();
+    });
+  }
+
+  private _listenForConfigurationChange() {
+    this._configurationService.configurationStatusChange$.subscribe(() => {
+      this.theme = this._configurationService.getParam('theme');
     });
   }
 

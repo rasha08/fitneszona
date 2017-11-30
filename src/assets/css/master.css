@@ -50,6 +50,16 @@ a.brand-logo {
   color: snow;
 }
 
+.dark #single-article h1, .dark #single-article .article-text, .dark #single-article #commentBox, .dark #single-article .comment {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: snow;
+  box-shadow: 3px 4px 12px darkgray;
+}
+
+.dark #single-article .tags, .dark #single-article #commentDiv {
+  color: snow;
+}
+
 #search {
   width: 45vw;
   min-width: 300px;
@@ -186,7 +196,7 @@ a.brand-logo {
 }
 
 .dark li.collection-item,
-.dark ul li.collection-header.category-button {
+.dark ul li.collection-header.category-button, .dark ul.collapsible li .collapsible-header, .dark ul.collapsible li .collapsible-body{
   background-image: -webkit-gradient(
     linear,
     left top,
@@ -265,7 +275,7 @@ body {
 .card-action a {
   color: #ab0002 !important;
   text-transform: lowercase !important;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 #left-sidebar,
