@@ -10,11 +10,15 @@ export class SearchResultsComponent implements AfterContentChecked {
   @Input() data: any;
 
   public title = '';
+  public results = false;
 
   constructor(private _modalService: ModalService) {}
 
   ngAfterContentChecked() {
     this.title = this.data.title;
+    if (Array.isArray(this.data.results)){
+      this.results = true;
+    }
   }
 
   public close() {

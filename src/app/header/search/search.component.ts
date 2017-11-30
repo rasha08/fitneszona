@@ -73,7 +73,7 @@ export class SearchComponent {
   search(event, phrase) {
     event.stopPropagation();
     if (event.keyCode === 13) {
-      const results = this._searchService
+      let results = this._searchService
         .filterArticles(phrase, this.allArticles)
         .sort(
           (article1, article2) =>
@@ -88,6 +88,15 @@ export class SearchComponent {
             results
           }
         });
+      }else{
+        results = 'Nema rezultata za vasu pretragu';
+        this._modalService.openModal({
+          component: SearchResultsComponent,
+          data: {
+            title: 'Rezultati pretrage: ',
+            results
+          }
+        })
       }
     }
 
