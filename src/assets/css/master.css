@@ -413,10 +413,11 @@ h1 span i {
 #loader,
 #start-loader {
   z-index: 99999999;
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   top: 0;
+  bottom: 0;
   background-image: -webkit-gradient(
     linear,
     left top,
@@ -432,6 +433,7 @@ h1 span i {
 #loader {
   background-color: rgba(255, 255, 255, 0.8);
   background-image: none;
+  z-index: 999999999999999999;
 }
 
 #loader img {
@@ -551,7 +553,7 @@ h1 span i {
   border: 1px solid #ab0002;
   box-shadow: 3px 4px 8px #ab0002;
   position: absolute;
-  z-index: 99999999999;
+  z-index: 999;
   top: 150px;
   right: 0px;
   background: snow;
@@ -570,46 +572,54 @@ h1 span i {
 }
 
 #right-sidebar-trigger {
+  border: 1px solid snow;
+  box-shadow: 2px 3px 2px #ab0002;
   width: 30px;
   top: 0px;
-  left: -65px;
-  z-index: 9999999999999;
-  background-image: -webkit-gradient(
-    linear,
-    top left,
-    bottom right,
-    from(#ab0002),
-    to(black)
-  );
-  background-image: -webkit-linear-gradient(top, #ab0002, black);
-  background-image: -moz-linear-gradient(top, #ab0002, black);
-  background-image: linear-gradient(left right, #ab0002, black);
+  left: -69px;
+  z-index: 99;
+  background: #ab0002;
+  background: -webkit-radial-gradient(
+    circle,
+    #000000,
+    #282828,
+    #1e1e1e
+  ); /* Safari */
+  background: -o-radial-gradient(
+    circle,
+    #000000,
+    #282828,
+    #1e1e1e
+  ); /* Opera 11.6 to 12.0 */
+  background: -moz-radial-gradient(circle, #000000, #282828, #1e1e1e);
+  /* Firefox 3.6 to 15 */
+  background: radial-gradient(
+    circle,
+    #000000,
+    #282828,
+    #1e1e1e
+  ); /* Standard syntax */
   overflow: hidden;
 }
-
 #right-sidebar-trigger i {
-  color: snow;
+  color: #ab0002;
   font-size: 62px;
   position: absolute;
   left: -60%;
   top: 40%;
 }
-
 #right-sidebar.open {
   transform: translateX(0%);
 }
-
 .dark #right-sidebar {
   border: 3px solid black;
   box-shadow: 3px 4px 8px darkgrey;
   background: #1e1e1e;
 }
-
 .dark #right-sidebar .sidebar-tab {
   border: 2px solid snow;
   box-shadow: inset 3px 4px 8px black;
 }
-
 #right-sidebar .tab-title {
   box-shadow: 3px 4px 4px black;
   background-image: -webkit-gradient(
@@ -623,7 +633,6 @@ h1 span i {
   background-image: -moz-linear-gradient(top, black, #1e1e1e);
   background-image: linear-gradient(to bottom, black, #1e1e1e);
 }
-
 #right-sidebar .tab-title.active {
   background-image: -webkit-gradient(
     linear,
@@ -636,14 +645,12 @@ h1 span i {
   background-image: -moz-linear-gradient(top, black, #ab0002);
   background-image: linear-gradient(to bottom, black, #ab0002);
 }
-
 #right-sidebar .tab-title h5 {
   text-align: center;
   padding-top: 5%;
   padding-bottom: 5%;
   color: snow;
 }
-
 #right-sidebar .right-sidebar-tab {
   top: 0px;
   position: inherit;
@@ -653,29 +660,97 @@ h1 span i {
   transition: transform 0.7s ease-in-out;
   overflow: hidden;
 }
-
 #right-sidebar .right-sidebar-tab .content {
   -webkit-transition: height 0.4s ease-in-out 0.25;
   -moz-transition: height 0.4s ease-in-out 0.25;
   transition: height 0.4s ease-in-out 0.25;
   height: 0px;
 }
-
 #right-sidebar .right-sidebar-tab.active .content {
   -webkit-transition: height 0.6s ease-in-out 0.25;
   -moz-transition: height 0.6s ease-in-out 0.25;
   transition: height 0.6s ease-in-out 0.25;
   height: 100%;
 }
-
 #right-sidebar .right-sidebar-tab.recomended {
   transform: translateX(-100%);
 }
-
 #right-sidebar .right-sidebar-tab.history {
   transform: translateX(100%);
 }
-
 #right-sidebar .right-sidebar-tab.active {
   transform: translateX(0%) !important;
+}
+.dark .bottom-menu-button {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#ab0002),
+    to(black)
+  );
+  background-image: -webkit-linear-gradient(top, #ab0002, black);
+  background-image: -moz-linear-gradient(top, #ab0002, black);
+  background-image: linear-gradient(to bottom, #ab0002, black);
+}
+#bottom-menu-panel {
+  background-color: snow;
+  position: fixed;
+  bottom: 0px;
+  width: 100vw;
+  z-index: 99999999999999;
+  height: 0% !important;
+  -webkit-transition: height 0.7s ease-in-out;
+  -moz-transition: height 0.7s ease-in-out;
+  transition: height 0.7s ease-in-out;
+  box-shadow: inset 5px 8px 8px black;
+}
+#bottom-menu-panel.open {
+  height: 55% !important;
+}
+#bottom-menu-panel #close {
+  position: absolute;
+  top: -1%;
+  left: -1%;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+#bottom-menu-panel .btn-floating {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.dark #bottom-menu-panel {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#1e1e1e),
+    to(#282828)
+  );
+  background-image: -webkit-linear-gradient(top, #1e1e1e, #282828);
+  background-image: -moz-linear-gradient(top, #1e1e1e, #282828);
+  background-image: linear-gradient(to bottom, #1e1e1e, #282828);
+  box-shadow: inset 2px 3px 10px black;
+}
+.dark #bottom-menu-panel h4 {
+  color: #ab0002;
+}
+.dark #bottom-menu-panel {
+  color: snow;
+}
+.dark #bottom-menu-panel .select-dropdown.active {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#1e1e1e),
+    to(#282828)
+  ) !important;
+  background-image: -webkit-linear-gradient(top, #1e1e1e, #282828) !important;
+  background-image: -moz-linear-gradient(top, #1e1e1e, #282828) !important;
+  background-image: linear-gradient(to bottom, #1e1e1e, #282828) !important;
+}
+.dark #bottom-menu-panel .dropdown-content li > a,
+.dropdown-content li > span {
+  color: snow !important;
 }

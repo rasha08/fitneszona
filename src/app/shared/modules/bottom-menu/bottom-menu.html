@@ -1,0 +1,70 @@
+<div id="bottom-menu-panel" [ngClass]="{open: isBottomMenuOpen}">
+  <div class="row col s12">
+    <h4 class="bottom-menu-panel-title center">PODEŠAVANJA
+      <a class="btn-floating btn-large waves-effect waves-light left pulse red darken-4" id="close" (click)="toggleBotomMenu()">
+        <i class="material-icons">close</i>
+      </a>
+    </h4>
+  </div>
+  <div class="row">
+    <div class="input-field col s12 m6 option">
+      <select class="icons option">
+        <option value="" disabled selected>Izberite temu sajta</option>
+        <option value="" data-icon="images/sample-1.jpg" class="circle">Svetla Tema</option>
+        <option value="" data-icon="images/office.jpg" class="circle">Mračna Tema</option>
+        <option value="" data-icon="images/yuna.jpg" class="circle">Urban Tema</option>
+        <option value="" data-icon="images/yuna.jpg" class="circle">Art Tema</option>
+        <option value="" data-icon="images/yuna.jpg" class="circle">Roboto Tema</option>
+      </select>
+      <label>Izberite temu sajta</label>
+    </div>
+
+    <div class="input-field col s12 m6">
+      <select multiple>
+        <option value="" disabled selected>Izaberite kategotije koje zelite u navigaciji</option>
+        <option value="1">Kategorija 1</option>
+        <option value="2">Kategorija 2</option>
+        <option value="3">Kategorija 3</option>
+        <option value="1">Kategorija 4</option>
+        <option value="2">Kategorija 5</option>
+        <option value="3">Kategorija 6</option>
+        <option value="1">Kategorija 7</option>
+        <option value="2">Kategorija 8</option>
+        <option value="3">Kategorija 9</option>
+      </select>
+      <label>Izaberite kategotije koje zelite u navigaciji</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12 m6">
+      <select>
+        <option value="" disabled selected>Broj prokazanih tekstova po jednoj opciji u levom meniju</option>
+        <option value="1">2</option>
+        <option value="2">5</option>
+        <option value="3">7</option>
+        <option value="1">10</option>
+      </select>
+      <label>Broj prokazanih tekstova po jednoj opciji</label>
+    </div>
+
+    <div class="input-field col s12 m6">
+      <select multiple>
+        <option value="" disabled selected>Izaberite tame za koje zelite da dobijate obaveštenja</option>
+        <option value="1">Noge</option>
+        <option value="2">Trening za Žene</option>
+        <option value="3">Teretana</option>
+        <option value="3">Mršavljenje</option>
+        <option value="3">Trening za Masu</option>
+      </select>
+      <label>Izaberite tame za koje zelite da dobijate obaveštenja</label>
+    </div>
+  </div>
+  <div class="row center-align">
+    <a class="btn-floating btn-large waves-effect waves-light green darken-4 z-depth-5">
+      <i class="material-icons large">check</i>
+    </a>
+    <a class="btn-floating btn-large waves-effect waves-light red darken-4 z-depth-5">
+      <i class="material-icons large">refresh</i>
+    </a>
+  </div>
+</div>

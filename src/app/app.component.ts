@@ -8,11 +8,13 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { ModalService } from './services/modal.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { ArticlesService } from './services/articles.service';
 import { ConfigurationService } from './services/configuration.service';
+import { BottomMenuService } from './shared/modules/bottom-menu/services/bottom-menu.service';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
   placeholder;
 
   private _componentRef;
-  public theme = 'light';
+  public theme = 'dark';
   private _subscription: Subscription;
 
   constructor(
@@ -33,7 +35,9 @@ export class AppComponent implements OnInit, OnDestroy {
     private _modalService: ModalService,
     private _localStorageService: LocalStorageService,
     private _articlesService: ArticlesService,
-    private _configurationService: ConfigurationService
+    private _configurationService: ConfigurationService,
+    private _bottomMenuService: BottomMenuService,
+    private _router: Router
   ) {
     this._configurationService.getConfiguration();
   }
@@ -41,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this._listenForModalOpenCloseEvents();
     this._listenForConfigurationChange();
+    this._listenForRouteChange();
   }
 
   public ngOnDestroy() {
@@ -62,6 +67,14 @@ export class AppComponent implements OnInit, OnDestroy {
   private _listenForConfigurationChange() {
     this._configurationService.configurationStatusChange$.subscribe(() => {
       this.theme = this._configurationService.getParam('theme');
+    });
+  }
+
+  private _listenForRouteChange() {
+    this._router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
     });
   }
 
@@ -101,5 +114,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _closeModal() {
     this._componentRef.destroy();
+  }
+
+  public toggleBotomMenu() {
+    this._bottomMenuService.toggleBottomMenuStatus();
   }
 }
