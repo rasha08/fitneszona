@@ -1,0 +1,132 @@
+<div id="right-sidebar" class="col s11 m4 l3" [ngClass]="{open: isSidebarOpen}">
+  <button id="right-sidebar-trigger" class="waves-effect waves-light valign-wrapper" (click)="toggleSidebar()">
+    <i class="material-icons valign-wrapper">{{ !isSidebarOpen ? 'chevron_left' : 'chevron_right' }} chevron_left</i>
+  </button>
+  <div class="row tab">
+    <div class="sidebar-tab">
+      <div class="tab-title col s6" [ngClass]="{active: isRecomendedTabActive}" (click)="activateTab('recomended')">
+        <h5>Preporučeno</h5>
+      </div>
+      <div class="tab-title col s6" [ngClass]="{active: !isRecomendedTabActive}" (click)="activateTab('history')">
+        <h5>Aktivnost</h5>
+      </div>
+      <hr>
+      <div class="recomended right-sidebar-tab" [ngClass]="{active: isRecomendedTabActive}">
+        <div class="content">
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>I am a very simple card. I am good at containing small bits of information.</p>
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+          </div>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>I am a very simple card. I am good at containing small bits of information.</p>
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+          </div>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>I am a very simple card. I am good at containing small bits of information.</p>
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+          </div>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>I am a very simple card. I am good at containing small bits of information.</p>
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+          </div>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>I am a very simple card. I am good at containing small bits of information.</p>
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+          </div>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>I am a very simple card. I am good at containing small bits of information.</p>
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+          </div>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>I am a very simple card. I am good at containing small bits of information.</p>
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+          </div>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>I am a very simple card. I am good at containing small bits of information.</p>
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+          </div>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>I am a very simple card. I am good at containing small bits of information.</p>
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-sidebar-tab history" [ngClass]="{active: !isRecomendedTabActive}">
+        <div class="content">
+          <ul class="collection">
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+            <li class="collection-item">Naslov i link do posecenog teksta</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
