@@ -119,4 +119,8 @@ export class AppComponent implements OnInit, OnDestroy {
   public toggleBotomMenu() {
     this._bottomMenuService.toggleBottomMenuStatus();
   }
+
+  public toggleCustomerSuport() {
+    this._bottomMenuService.toggleCustomerSupportStatus();
+  }
 }

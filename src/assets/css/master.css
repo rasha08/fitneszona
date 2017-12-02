@@ -754,3 +754,45 @@ h1 span i {
 .dropdown-content li > span {
   color: snow !important;
 }
+#customer-support {
+  padding: 3%;
+  padding-bottom: 0%;
+  border-radius: 70%;
+  border-bottom-right-radius: 0%;
+  border: 1px solid snow;
+  box-shadow: 5px 8px 22px #ab0002;
+  min-width: 320px;
+  width: 35vw;
+  position: fixed;
+  bottom: 0px;
+  z-index: 9999;
+  background: snow;
+  transform: rotateZ(300deg) translateX(100vw);
+  -webkit-transition: transform 0.5s ease-in;
+  -moz-transition: transform 0.5s ease-in;
+  transition: transform 0.5s ease-in;
+}
+#customer-support.open {
+  transform: rotateZ(0deg) translateX(0vw);
+}
+.dark #customer-support {
+  background: #1e1e1e;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(black),
+    to(#1e1e1e)
+  );
+  background-image: -webkit-linear-gradient(top, black, #1e1e1e);
+  background-image: -moz-linear-gradient(top, black, #1e1e1e);
+  background-image: linear-gradient(to bottom, black, #1e1e1e);
+  color: snow;
+}
+#customer-support label {
+  color: #ab0002;
+}
+#customer-support .btn-floating {
+  margin-left: 2%;
+  margin-right: 2%;
+}

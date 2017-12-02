@@ -9,6 +9,8 @@ import { ResetPaswordComponent } from './reset-password/reset-password';
 import { AlertComponent } from './alert/alert';
 import { LoaderComponent } from './loader/loader.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { CustomerSupportComponent } from './customer-support/customer-support.component';
+
 @NgModule({
   imports: [CommonModule, FormsModule, RouterModule],
   declarations: [
@@ -17,7 +19,8 @@ import { SearchResultsComponent } from './search-results/search-results.componen
     ResetPaswordComponent,
     AlertComponent,
     LoaderComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    CustomerSupportComponent
   ],
   exports: [
     RegistrationComponent,
@@ -25,7 +28,8 @@ import { SearchResultsComponent } from './search-results/search-results.componen
     ResetPaswordComponent,
     AlertComponent,
     LoaderComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    CustomerSupportComponent
   ],
   providers: []
 })

@@ -1,0 +1,28 @@
+<div id="customer-support" [ngClass]="{open: isCustomerSupportOpen}">
+  <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate">
+          <label for="email" data-error="wrong" data-success="right">Email</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea"></textarea>
+          <label for="textarea1">Textarea</label>
+        </div>
+        <a class="btn-floating waves-effect waves-light right green darken-4 z-depth-5">
+          <i class="material-icons large">check</i>
+        </a>
+        <a class="btn-floating waves-effect waves-light right red darken-4 z-depth-5" (click)="toggleCustomerSuport()">
+          <i class="material-icons large">close</i>
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
