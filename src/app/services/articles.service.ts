@@ -7,11 +7,16 @@ import { ArticlesHTTPService } from './atricles-http.service';
 @Injectable()
 export class ArticlesService {
   public allArticles;
+  public allArticlesWithText;
+
   private _openArticle = new Subject();
   public openArticle$ = this._openArticle.asObservable();
 
   private _allArticlesFetched = new Subject();
   public allArticlesStateChange$ = this._allArticlesFetched.asObservable();
+
+  private _allArticlesWithTextFetched = new Subject();
+  public allArticlesWithTextStateChange$ = this._allArticlesWithTextFetched.asObservable();
 
   private _fetchedCategoryArticles = new Subject();
   public fetchedCategoryArticles$ = this._fetchedCategoryArticles.asObservable();
@@ -49,6 +54,15 @@ export class ArticlesService {
       },
       error => console.log('Error: ', error)
     );
+  }
+
+  public getAllArticlesWithText(){
+    this._articlesHTTPService.getAllArticlesWithText().subscribe(
+      articles => {
+        this.allArticlesWithText = articles;
+        this._allArticlesWithTextFetched.next(true);
+      }
+    )
   }
 
   public getTopArticles() {

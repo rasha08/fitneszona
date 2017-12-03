@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
+import {Observable} from 'rxjs/Observable';
+import { debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
+import { of } from "rxjs/observable/of";
 
 import { SearchService } from '../../services/search.service';
 import { ArticlesService } from '../../services/articles.service';
@@ -16,6 +19,8 @@ import { SearchResultsComponent } from '../../shared/components/search-results/s
 export class SearchComponent {
   private _sendToSearchService = new Subject();
   public sendToSearchService$ = this._sendToSearchService.asObservable();
+  private _autocomplete = new Subject();
+  public autocompleteResults$: Observable<any>;
   private _subscription: Subscription[] = [];
   public searchResult;
   public errorMessage;
@@ -34,12 +39,22 @@ export class SearchComponent {
   ) {}
 
   ngOnInit() {
-    this.subscribeToAllArticlesFetchEvent();
+    this.subscribeToAllArticlesWithTextFetchEvent();
     this.subscribeToUserLogInEvent();
+    this.getAllArticles();
+    this.initiateAutocomplete();
   }
 
   ngOnDestroy() {
     this._subscription.forEach(subscription => subscription.unsubscribe());
+  }
+
+  initiateAutocomplete(){
+    console.log('called initiate')
+    this.autocompleteResults$ = this._autocomplete
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .switchMap(phrase => this.searchTitles(phrase))
   }
 
   search1(phrase) {
@@ -51,10 +66,10 @@ export class SearchComponent {
     );
   }
 
-  subscribeToAllArticlesFetchEvent() {
+  subscribeToAllArticlesWithTextFetchEvent() {
     this._subscription.push(
-      this._articlesService.allArticlesStateChange$.subscribe(
-        notification => (this.allArticles = this._articlesService.allArticles)
+      this._articlesService.allArticlesWithTextStateChange$.subscribe(
+        notification => this.allArticles = this._articlesService.allArticlesWithText
       )
     );
   }
@@ -70,39 +85,47 @@ export class SearchComponent {
     );
   }
 
-  search(event, phrase) {
-    event.stopPropagation();
-    if (event.keyCode === 13) {
-      let results = this._searchService
-        .filterArticles(phrase, this.allArticles)
-        .sort(
-          (article1, article2) =>
-            this.getPoints(article1) - this.getPoints(article2)
-        );
+  getAllArticles(){
+    this._articlesService.getAllArticlesWithText();
+  }
 
-      if (results && results.length) {
-        this._modalService.openModal({
-          component: SearchResultsComponent,
-          data: {
-            title: 'Rezultati Pretrage: ',
-            results
-          }
-        });
-      }else{
-        results = 'Nema rezultata za vasu pretragu';
-        this._modalService.openModal({
-          component: SearchResultsComponent,
-          data: {
-            title: 'Rezultati pretrage: ',
-            results
-          }
-        })
-      }
+  formatUserInput(event, phrase){
+    event.stopPropagation();
+    if(event.keyCode === 13) {
+      this.search(phrase)
+    }
+    else{
+      console.log('Calling next',phrase);
+      this._autocomplete.next(phrase);
     }
 
-    /*this._searchService.search(phrase).subscribe(
-      response => console.log(response)
-    )*/
+  }
+
+  search(phrase) {
+    let results = this._searchService
+      .filterArticles(phrase, this.allArticles)
+      .sort(
+        (article1, article2) =>
+          this.getPoints(article1) - this.getPoints(article2)
+      );
+    if (!results || results.length === 0) {
+      results = 'Nema rezultata za Vasu pretragu';
+    }
+    this._modalService.openModal({
+      component: SearchResultsComponent,
+      data: {
+        title: 'Rezultati Pretrage: ',
+        results
+      }
+    });
+    
+  }
+
+  public searchTitles(phrase){
+    console.log('Called search tittles');
+    phrase = phrase.replace(/s/gi, '[šs]').replace(/c/gi,'[cćč]').replace(/z/gi,'[zž]');
+    let pattern = new RegExp(`\\b${phrase}\\b`, 'i');
+    return this._searchService.filterByTitle(phrase, this.allArticles, pattern);
   }
 
   public order(article1, article2) {

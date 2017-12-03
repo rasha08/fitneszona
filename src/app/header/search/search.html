@@ -1,6 +1,13 @@
 <li>
     <a class="row">
         <input #searchBox id="search" type="tel" class="validate" placeholder="pretraži..." 
-            (keypress)="search($event, searchBox.value)" >
+            (keyup)="formatUserInput($event, searchBox.value)" >
+        <ul>
+            <li *ngFor="let article of autocompleteResult$ | async" >
+                <a (click)="console.log(hero)">
+                {{article.title}}
+                </a>
+            </li>
+        </ul>
     </a>
 </li>

@@ -11,6 +11,7 @@ export class SearchResultsComponent implements AfterContentChecked {
 
   public title = '';
   public results = false;
+  public message = true;
 
   constructor(private _modalService: ModalService) {}
 
@@ -18,6 +19,7 @@ export class SearchResultsComponent implements AfterContentChecked {
     this.title = this.data.title;
     if (Array.isArray(this.data.results)){
       this.results = true;
+      this.message = false;
     }
   }
 

@@ -152,6 +152,9 @@ export class ArticlesHTTPService {
     );
   }
 
+  public getAllArticlesWithText(){
+    return this._http.get(`${this.BASE_URL}/api/search`).map(result => result.json().articles);
+  }
   public search(phrase) {
     console.log(
       'https://fitneszona.rs/api/search' == `${this.BASE_URL}/api/search`
