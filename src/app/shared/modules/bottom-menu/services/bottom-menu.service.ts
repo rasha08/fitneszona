@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Subject } from 'rxjs/Subject';
+
+import { UserHTTPService } from '../../../../services/user-http.service';
 
 declare const $: any;
 
@@ -14,6 +17,10 @@ export class BottomMenuService {
   private _customerSupportStatusChange = new ReplaySubject();
   public customerSupportStatusChanges$ = this._customerSupportStatusChange.asObservable();
 
+  constructor(
+    private _userHTTPService: UserHTTPService
+  ){}
+
   public toggleBottomMenuStatus() {
     this._isBottomMenuOpen = !this._isBottomMenuOpen;
     this._bottomMenuStatusChange.next(this._isBottomMenuOpen);
@@ -27,5 +34,13 @@ export class BottomMenuService {
       $('.application').removeClass('disabled');
     }
     this._customerSupportStatusChange.next(this._isCustomerSupportOpen);
+  }
+
+  public setUserConfiguration(configuration, id) {
+    this._userHTTPService.setUserConfiguration(configuration, id)
+      .subscribe(
+        response => console.log(response),
+        error => console.log(error)
+      )
   }
 }

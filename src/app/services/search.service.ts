@@ -42,9 +42,5 @@ export class SearchService {
             articles => articles
         )
     }
-    
-    public getUserSearchPhrasesFromLocalStorage(){
-        return this._localStorageService.getKeyIfExists('userSearchPhrases');
-    }
 
 }

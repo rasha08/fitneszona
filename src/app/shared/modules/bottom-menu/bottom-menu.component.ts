@@ -8,6 +8,8 @@ import {
 import { Subscription } from 'rxjs/Subscription';
 
 import { BottomMenuService } from './services/bottom-menu.service';
+import { AuthService } from '../../../services/auth.service';
+import { ConfigurationService } from '../../../services/configuration.service';
 
 declare const $: any;
 
@@ -18,18 +20,39 @@ declare const $: any;
 export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   public isBottomMenuOpen = false;
   private _subscriptions: Array<Subscription> = [];
+  public numberOfTextInLeftSidebar = null;
+  public userChosenTheme = null;
+  public userChosenTags = [];
+  public userChosenCategories = [];
+  public tags;
+  public categories;
 
   constructor(
     private _bottomMenuService: BottomMenuService,
+    private _authService: AuthService,
+    private _configurationService: ConfigurationService,
     private _changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this._listenForBottomMenuStatusChange();
+    this._subscribeToConfigurationFetchEvent();
   }
 
   ngOnDestroy() {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  private _subscribeToConfigurationFetchEvent(){
+    this._subscriptions.push(
+      this._configurationService.configurationStatusChange$.subscribe(
+         _ =>  {
+           this.getAllCategories();
+           this.getAllTags();
+           this._changeDetectorRef.detectChanges();
+         }
+        )
+    )
   }
 
   ngAfterViewInit() {
@@ -50,4 +73,47 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   public toggleBotomMenu() {
     this._bottomMenuService.toggleBottomMenuStatus();
   }
+
+  public addToUserCategories(category) {
+    this.userChosenCategories.push(category);
+  }
+
+  public addToUserTags(tag) {
+    this.userChosenTags.push(tag);
+  }
+
+  public setUserTheme(theme) {
+    this.userChosenTheme = theme;
+  }
+
+  public setNumberOfTexts(number) {
+    console.log(number);
+    this.numberOfTextInLeftSidebar = number;
+  }
+
+  public getUserId() {
+    return this._authService.getUser()['id'] || false;
+  }
+
+  public sendConfiguration() {
+    const configuration = {
+      theme: this.userChosenTheme ,
+      categoriesInNavigation: this.userChosenCategories !== [] ? this.userChosenCategories : null,
+      numbersOfTextsInLeftSidebar: this.numberOfTextInLeftSidebar,
+      notificationOfThemes: this.userChosenTags !== [] ? this.userChosenTags : null
+    };
+    const userId = this.getUserId();
+    if (userId) {
+      this._bottomMenuService.setUserConfiguration(JSON.stringify(configuration), userId);
+    }
+  }
+
+  public getAllCategories() {
+    this.categories = this._configurationService.getParam('active_categories');
+  }
+
+  public getAllTags() {
+    this.tags = this._configurationService.getParam('tags_priority_list');
+  }
+
 }
