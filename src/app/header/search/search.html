@@ -1,13 +1,21 @@
 <li>
     <a class="row">
-        <input #searchBox id="search" type="tel" class="validate" placeholder="pretraži..." 
-            (keyup)="formatUserInput($event, searchBox.value)" >
-        <ul>
-            <li *ngFor="let article of autocompleteResult$ | async" >
-                <a (click)="console.log(hero)">
-                {{article.title}}
-                </a>
-            </li>
-        </ul>
+        <input #searchBox
+            id="search"
+            type="text"
+            class="validate"
+            placeholder="pretraži..."
+            [(ngModel)]="searchPhrase"
+            value="searchPhrase"
+            (keyup.enter)="formatUserInput($event, searchBox.value)"
+            (keyup)="autoComplete()"
+            autocomplete="off">
     </a>
 </li>
+<ul id="search-autocomplete" class="collection" *ngIf="autocompleteResultsList?.length">
+    <li *ngFor="let article of autocompleteResultsList" class="collection-item">
+        <a (click)="resetAutoCompleteResults()" [routerLink]="article.link">
+            {{article.title}}
+        </a>
+    </li>
+</ul>

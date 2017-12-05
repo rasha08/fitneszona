@@ -152,17 +152,27 @@ export class ArticlesHTTPService {
     );
   }
 
-  public getAllArticlesWithText(){
-    return this._http.get(`${this.BASE_URL}/api/search`).map(result => result.json().articles);
+  public getAllArticlesWithText() {
+    return this._http.get(`${this.BASE_URL}/api/search`).map(
+      result => result.json().articles,
+       error =>
+        this._ngZone.runOutsideAngular(() =>
+          setTimeout(() => {
+            this.getAllArticlesWithText();
+          }, 300)
+        )
+     );
   }
+
   public search(phrase) {
-    console.log(
-      'https://fitneszona.rs/api/search' == `${this.BASE_URL}/api/search`
-    );
     return this._http.post(`${this.BASE_URL}/api/search`, phrase).map(
-      //ruta mora da se popravi
       result => result,
-      error => console.log(error)
+      error =>
+        this._ngZone.runOutsideAngular(() =>
+          setTimeout(() => {
+            this.search(phrase);
+          }, 300)
+        )
     );
   }
 

@@ -79,9 +79,24 @@ a.brand-logo {
   color: snow;
 }
 
-#search {
+#search,  #search-autocomplete {
   width: 45vw;
   min-width: 300px;
+}
+
+#search-autocomplete {
+  position: absolute;
+  z-index: 999999999999;
+  overflow: visible;
+  top: 45px;
+}
+
+#search-autocomplete li {
+  width:  100%;
+}
+
+#search-autocomplete li a {
+  color: snow;
 }
 
 #search:focus {

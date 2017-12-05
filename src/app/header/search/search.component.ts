@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { SearchService } from '../../services/search.service';
 import { ArticlesService } from '../../services/articles.service';
 import { AuthService } from '../../services/auth.service';
 import { ModalService } from '../../services/modal.service';
+import { UtilsService } from '../../services/utils.service';
 
 import { SearchResultsComponent } from '../../shared/components/search-results/search-results.component';
 
@@ -15,7 +15,7 @@ import { SearchResultsComponent } from '../../shared/components/search-results/s
   selector: 'app-search',
   templateUrl: './search.html'
 })
-export class SearchComponent {
+export class SearchComponent implements OnDestroy, OnInit {
   private _sendToSearchService = new Subject();
   private _subscription: Subscription[] = [];
   public errorMessage;
@@ -25,18 +25,23 @@ export class SearchComponent {
   private _userVisitedCtegories = [];
   private userVisitedTags = [];
   public allArticles;
+  private _autoCompleteEntities: any = [];
+  public autocompleteResultsList = [];
+  public searchPhrase = '';
 
   constructor(
     private _searchService: SearchService,
     private _articlesService: ArticlesService,
     private _authService: AuthService,
-    private _modalService: ModalService
+    private _modalService: ModalService,
+    private _utilsService: UtilsService
   ) {}
 
   ngOnInit() {
     this.subscribeToAllArticlesWithTextFetchEvent();
     this.subscribeToUserLogInEvent();
     this.getAllArticles();
+    this.subscribeToAutoCompleteEntitiesReadyEvent();
   }
 
   ngOnDestroy() {
@@ -72,19 +77,29 @@ export class SearchComponent {
     );
   }
 
-  getAllArticles(){
+
+ public  subscribeToAutoCompleteEntitiesReadyEvent() {
+    this._subscription.push(
+      this._articlesService.searchAutoCompleteEntitiesReady$.subscribe(entities => {
+        this._autoCompleteEntities = entities;
+      })
+    );
+  }
+
+  getAllArticles() {
     this._articlesService.getAllArticlesWithText();
   }
 
-  formatUserInput(event, phrase){
+  formatUserInput(event, phrase) {
     event.stopPropagation();
-    if(event.keyCode === 13) {
-      this.search(phrase)
+    if (event.keyCode === 13) {
+      this.search(phrase);
     }
 
   }
 
   search(phrase) {
+    this.resetAutoCompleteResults();
     phrase = phrase.trim();
     let results = this._searchService
       .filterArticles(phrase, this.allArticles)
@@ -161,5 +176,22 @@ export class SearchComponent {
 
   private _getUserVisitedTags() {
     return this._authService.getUser()['visited_tags'];
+  }
+
+  public resetAutoCompleteResults() {
+    this.autocompleteResultsList = [];
+    this.searchPhrase = ''
+  }
+
+  public autoComplete() {
+    if (this.searchPhrase.length < 2) {
+      return;
+    }
+
+    this.autocompleteResultsList = this._autoCompleteEntities.filter(article => {
+      return article.titleSearchString.includes(
+        this._utilsService.formatStringForSearch(this.searchPhrase)
+      );
+    }).slice(0, 10);
   }
 }

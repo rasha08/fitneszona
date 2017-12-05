@@ -3,11 +3,13 @@ import { Subject } from 'rxjs/Subject';
 
 import { ConfigurationService } from './configuration.service';
 import { ArticlesHTTPService } from './atricles-http.service';
+import { UtilsService } from './utils.service';
 
 @Injectable()
 export class ArticlesService {
   public allArticles;
   public allArticlesWithText;
+  public articlesAutocompleteEnitities = [];
 
   private _openArticle = new Subject();
   public openArticle$ = this._openArticle.asObservable();
@@ -30,10 +32,14 @@ export class ArticlesService {
   private _singleArticleFetched = new Subject();
   public fetchedSingleArticle$ = this._singleArticleFetched.asObservable();
 
+  private _searchAutoCompleteEntitiesReady = new Subject();
+  public searchAutoCompleteEntitiesReady$ = this._searchAutoCompleteEntitiesReady.asObservable();
+
   constructor(
     private _articlesHTTPService: ArticlesHTTPService,
     private _configurationService: ConfigurationService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private _utilsService: UtilsService
   ) {
     this._configurationService.configurationStatusChange$.subscribe(() => {
       if (!this.allArticles) {
@@ -51,18 +57,19 @@ export class ArticlesService {
       articles => {
         this.allArticles = articles;
         this.allArticlesStateChange(true);
+        this.formatArticlesForAutoComplete();
       },
       error => console.log('Error: ', error)
     );
   }
 
-  public getAllArticlesWithText(){
+  public getAllArticlesWithText() {
     this._articlesHTTPService.getAllArticlesWithText().subscribe(
       articles => {
         this.allArticlesWithText = articles;
         this._allArticlesWithTextFetched.next(true);
       }
-    )
+    );
   }
 
   public getTopArticles() {
@@ -96,7 +103,7 @@ export class ArticlesService {
   }
 
   public getArticleCategoryAndTags(id) {
-    //greska sa json token at position 1 sa id = 13 -ko bi rekao
+    // greska sa json token at position 1 sa id = 13 -ko bi rekao
     this._articlesHTTPService
       .getArticleCategoryAndTags(id)
       .subscribe(
@@ -195,5 +202,17 @@ export class ArticlesService {
 
   public getIndexPageArticles() {
     return this._articlesHTTPService.getIndexPageArticles();
+  }
+
+  public formatArticlesForAutoComplete() {
+    this.articlesAutocompleteEnitities = this.allArticles.map(article => {
+      return {
+        title: article.title,
+        link: `/tekstovi/${article.categoryUrlSlug}/${article.article_title_url_slug}`,
+        titleSearchString: this._utilsService.formatStringForSearch(article.title)
+      };
+    });
+
+    this._searchAutoCompleteEntitiesReady.next(this.articlesAutocompleteEnitities);
   }
 }

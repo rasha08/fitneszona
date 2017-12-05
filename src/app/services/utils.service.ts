@@ -35,4 +35,13 @@ export class UtilsService {
     return `/tekstovi/${category.urlSlug}/${article.article_title_url_slug}`;
   }
 
+  public formatStringForSearch(string) {
+    return string.toLowerCase()
+      .replace(/š/g, 's')
+      .replace(/č/g, 'c')
+      .replace(/ć/g, 'c')
+      .replace(/ž/g, 'z')
+      .replace(/đ/g, 'dj');
+  }
+
 }
