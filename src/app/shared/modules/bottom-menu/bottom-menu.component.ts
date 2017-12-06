@@ -78,8 +78,18 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.userChosenCategories.push(category);
   }
 
-  public addToUserTags(tag) {
-    this.userChosenTags.push(tag);
+  public addOrRemoveUserTags(tag) {
+    // If tag not in array then add tag to array
+    // Else delete him from array
+    if (this.userChosenTags.find(
+      (tagInArray) => tag === tagInArray
+    ) === undefined ) {
+      this.userChosenTags.push(tag);
+    } else {
+      const tagIndex = this.userChosenTags.indexOf(tag);
+      this.userChosenTags.splice(tagIndex, 1);
+    }
+    console.log(this.userChosenTags);
   }
 
   public setUserTheme(theme) {

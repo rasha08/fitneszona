@@ -9,6 +9,7 @@
             value="searchPhrase"
             (keyup.enter)="formatUserInput($event, searchBox.value)"
             (keyup)="autoComplete()"
+            (blur)="clearSearchResults()"
             autocomplete="off">
     </a>
 </li>

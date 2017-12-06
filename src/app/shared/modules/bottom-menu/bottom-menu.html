@@ -15,10 +15,22 @@
       </select>
       <label>Izberite temu sajta</label>
     </div>
+
+    <div class="col s12 m6">
+    <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Drop Me!</a>
+      <ul id='dropdown1' class='dropdown-content'>
+        <li changeClass
+        *ngFor="let tag of tags" 
+        (click)="addOrRemoveUserTags(tag)" >
+          {{tag}} 
+          <i class="material-icons">cancel</i>
+        </li>
+      </ul>
+    </div>  
     <div class="input-field col s12 m6">
-      <select multiple>
+      <select multiple *ngFor="let category of categories" >
         <option disabled selected>Izaberite kategotije koje zelite u navigaciji</option>
-        <option *ngFor="let category of categories"  >
+        <option  >
           Kategorija
         </option>
         <option value="1">Kategorija 1</option>

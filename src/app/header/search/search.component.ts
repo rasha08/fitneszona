@@ -194,4 +194,8 @@ export class SearchComponent implements OnDestroy, OnInit {
       );
     }).slice(0, 10);
   }
+
+  clearSearchResults(){
+    this.autocompleteResultsList = [];
+  }
 }
