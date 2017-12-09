@@ -1,11 +1,11 @@
 import { Component, ChangeDetectorRef, Input, OnInit } from "@angular/core";
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from 'rxjs/Subscription';
 
-import { ConfigurationService } from "../../../../../../../services/configuration.service";
+import { ConfigurationService } from '../../../../../../../services/configuration.service';
 
 @Component({
-  selector: "category-items-component",
-  templateUrl: "./category-items.html"
+  selector: 'category-items-component',
+  templateUrl: './category-items.html'
 })
 export class CategoryItemsComponent implements OnInit{
   public openText;

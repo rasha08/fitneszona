@@ -19,7 +19,7 @@ export class SearchComponent implements OnDestroy, OnInit {
   private _sendToSearchService = new Subject();
   private _subscription: Subscription[] = [];
   public errorMessage;
-  public result;
+  public result: any;
   private _userLikedCategories = [];
   private _userLikedTags = [];
   private _userVisitedCtegories = [];
@@ -101,11 +101,11 @@ export class SearchComponent implements OnDestroy, OnInit {
   search(phrase) {
     this.resetAutoCompleteResults();
     phrase = phrase.trim();
-    let results = this._searchService
+    let results: any = this._searchService
       .filterArticles(phrase, this.allArticles)
       .sort(
-        (article1, article2) =>
-          this.getPoints(article1) - this.getPoints(article2)
+        (article1, article2) => 
+          this.getPoints(article2) - this.getPoints(article1)
       );
     if (!results || results.length === 0) {
       results = 'Nema rezultata za Vasu pretragu';
@@ -123,12 +123,13 @@ export class SearchComponent implements OnDestroy, OnInit {
   public order(article1, article2) {
     const result1 = this.getPoints(article1);
     const result2 = this.getPoints(article2);
-
+    console.log(article1, article2);
+    console.log(result1, result2);
     return result1 - result2;
   }
 
   public getPoints(article) {
-    const points = [1, 2, 3, 4];
+    const points = [1, 2, 3, 4, 10];
     let result = 0;
     if (
       this._userLikedCategories.find(
@@ -146,17 +147,20 @@ export class SearchComponent implements OnDestroy, OnInit {
     }
     if (
       this._userLikedTags.find(likedTag => {
-        return article.tags.find(tag => tag === likedTag);
+        return article.tags.split('|').find(tag => tag === likedTag);
       })
     ) {
       result += points[2];
     }
     if (
       this.userVisitedTags.find(visitedTag => {
-        return article.tags.find(tag => tag === visitedTag);
+        return article.tags.split('|').find(tag => tag === visitedTag);
       })
     ) {
       result += points[0];
+    }
+    if (article['foundIn']  === 'title') {
+      result += points[4];
     }
 
     return result;
@@ -180,7 +184,7 @@ export class SearchComponent implements OnDestroy, OnInit {
 
   public resetAutoCompleteResults() {
     this.autocompleteResultsList = [];
-    this.searchPhrase = ''
+    this.searchPhrase = '';
   }
 
   public autoComplete() {
@@ -195,7 +199,7 @@ export class SearchComponent implements OnDestroy, OnInit {
     }).slice(0, 10);
   }
 
-  clearSearchResults(){
+  clearSearchResults() {
     this.autocompleteResultsList = [];
   }
 }

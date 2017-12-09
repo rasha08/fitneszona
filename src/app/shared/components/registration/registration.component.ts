@@ -48,10 +48,11 @@ export class RegistrationComponent {
   }
 
   public registerUser() {
-    console.log('called register user');
     if (this.checkIfUserInputIsValid()) {
       this._userRegistrationService.registerUser(this._userObj);
-    } else this.errorMessage = 'Your input is invalid';
+    } else {
+      this.errorMessage = 'Your input is invalid';
+    }
   }
 
   public validate(param: string) {

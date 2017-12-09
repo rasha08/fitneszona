@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
-import 'rxjs/add/operator/debounceTime'
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/debounceTime';
 
-import { ArticlesHTTPService } from "./atricles-http.service";
-import { LocalStorageService } from "./local-storage.service";
+import { ArticlesHTTPService } from './atricles-http.service';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable()
 
@@ -30,17 +30,40 @@ export class SearchService {
     }
 
     public filterArticles(phrase, articles){
+        console.log(articles);
         phrase = phrase.replace(/s/gi, '[šs]').replace(/c/gi,'[cćč]').replace(/z/gi,'[zž]');
-        let pattern = new RegExp(`\\b${phrase}\\b`, 'i');
-        let articlesWithPhraseInTitle = this.filterByTitle(phrase, articles, pattern);
-        let articlesWithPhraseInText = this.filterByText(phrase, articles, pattern);
-        return articlesWithPhraseInTitle.concat(articlesWithPhraseInText);
+        const pattern = new RegExp(`\\b${phrase}\\b`, 'i');
+        console.log(pattern);
+        let result = [];
+        let filteredArticles = [];
+        for (let article of articles){
+            if (!this.isArticleAlreadyInArray(article.article_title_url_slug, filteredArticles)){
+                if (pattern.test(article.title)) {
+                    filteredArticles.push(article.article_title_url_slug);
+                    article['foundIn'] = 'title';
+                    result.push(article);
+                } else if (pattern.test(article.text)) {
+                    filteredArticles.push(article.article_title_url_slug);
+                    article['foundIn'] = 'text';
+                    result.push(article);
+                }
+            }
+        }
+        return result;
     }
 
-    public search(phrase){
+    isArticleAlreadyInArray(urlSlug, array) {
+        const index = array.indexOf(urlSlug);
+        if ( index === -1) {
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public search(phrase) {
         return this._articlesHTTPService.search(phrase).map(
             articles => articles
-        )
+        );
     }
-
 }
