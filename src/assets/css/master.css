@@ -20,6 +20,15 @@ body .dark {
   background-color: #1e1e1e;
 }
 
+body .winter {
+  background-image: url(/assets/images/winter.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50%;
+  background-size: cover;
+  min-height: 100vh;
+}
+
 .dark table td {
   text-align: center !important;
   border: 2px solid snow !important;
@@ -52,6 +61,19 @@ body .dark {
   background-image: linear-gradient(to bottom, black, #ab0002);
 }
 
+.winter .nav-extended {
+  background-image: -webkit-gradient(
+    linear,
+    left,
+    right,
+    from(#20204d),
+    to(#1e1e1e)
+  );
+  background-image: -webkit-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: -moz-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
+}
+
 a.brand-logo {
   padding-left: 5%;
   font-size: calc(36px + 1vw);
@@ -79,7 +101,44 @@ a.brand-logo {
   color: snow;
 }
 
-#search,  #search-autocomplete {
+.winter #single-article h1,
+.winter #single-article .article-text,
+.winter #single-article #commentBox,
+.winter #single-article .comment {
+  background-color: rgba(32, 32, 77, 0.7);
+  color: snow;
+  box-shadow: 3px 4px 12px darkgray;
+  background-image: -webkit-gradient(
+    linear,
+    left,
+    right,
+    from(rgba(32, 32, 77, 0.7)),
+    to(rgba(30, 30, 30, 0.7))
+  );
+  background-image: -webkit-linear-gradient(
+    top,
+    rgba(32, 32, 77, 0.7),
+    rgba(30, 30, 30, 0.7)
+  );
+  background-image: -moz-linear-gradient(
+    top,
+    rgba(32, 32, 77, 0.7),
+    rgba(30, 30, 30, 0.7)
+  );
+  background-image: linear-gradient(
+    to bottom,
+    rgba(32, 32, 77, 0.7),
+    rgba(30, 30, 30, 0.7)
+  );
+}
+
+.winter #single-article .tags,
+.winter #single-article #commentDiv {
+  color: snow;
+}
+
+#search,
+#search-autocomplete {
   width: 45vw;
   min-width: 300px;
 }
@@ -92,7 +151,7 @@ a.brand-logo {
 }
 
 #search-autocomplete li {
-  width:  100%;
+  width: 100%;
 }
 
 #search-autocomplete li a {
@@ -134,8 +193,25 @@ a.brand-logo {
   background-color: black;
 }
 
+.winter #modal.open {
+  background-image: -webkit-gradient(
+    linear,
+    left,
+    right,
+    from(#20204d),
+    to(#1e1e1e)
+  );
+  background-image: -webkit-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: -moz-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
+}
+
 .dark #modal.open h4 {
   color: #ab0002;
+}
+
+.winter #modal.open h4 {
+  color: snow;
 }
 
 .dark #modal.open .modal-footer {
@@ -185,6 +261,20 @@ a.brand-logo {
   background: rgba(0, 0, 0, 0.6);
 }
 
+.winter .error {
+  box-shadow: 2px 3px 20px #ab0002;
+  background-image: -webkit-gradient(
+    linear,
+    left,
+    right,
+    from(#1e1e1e),
+    to(gray)
+  );
+  background-image: -webkit-linear-gradient(top, #1e1e1e, gray);
+  background-image: -moz-linear-gradient(top, #1e1e1e, gray);
+  background-image: linear-gradient(to bottom, #1e1e1e, gray);
+}
+
 .dark .card {
   background-image: -webkit-gradient(
     linear,
@@ -199,16 +289,32 @@ a.brand-logo {
   box-shadow: 5px 7px 20px lightgray;
 }
 
-.dark .card .card-title {
+.winter .card {
+  background-image: -webkit-gradient(
+    linear,
+    left,
+    right,
+    from(#20204d),
+    to(#1e1e1e)
+  );
+  background-image: -webkit-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: -moz-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
+}
+
+.dark .card .card-title,
+.winter .card .card-title {
   color: snow !important;
 }
 
-.dark .card p a {
+.dark .card p a,
+.winter .dark .card p a {
   color: snow !important;
   text-decoration: underline;
 }
 
-.dark .card p {
+.dark .card p,
+.winter .card p {
   color: snow !important;
 }
 
@@ -223,6 +329,19 @@ a.brand-logo {
   background-image: -webkit-linear-gradient(top, #1e1e1e, black);
   background-image: -moz-linear-gradient(top, #1e1e1e, black);
   background-image: linear-gradient(to bottom, #1e1e1e, black);
+}
+
+.winter .card .card-reveal {
+  background-image: -webkit-gradient(
+    linear,
+    left,
+    right,
+    from(#20204d),
+    to(#1e1e1e)
+  );
+  background-image: -webkit-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: -moz-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
 }
 
 .dark .card .card-reveal p {
@@ -244,6 +363,23 @@ a.brand-logo {
   background-image: -moz-linear-gradient(top, #1e1e1e, black);
   background-image: linear-gradient(to bottom, #1e1e1e, black);
   color: snow !important;
+}
+
+.winter li.collection-item,
+.winter ul li.collection-header.category-button,
+.winter ul.collapsible li .collapsible-header,
+.winter ul.collapsible li .collapsible-body {
+  background-image: -webkit-gradient(
+    linear,
+    left,
+    right,
+    from(#20204d),
+    to(#1e1e1e)
+  );
+  background-image: -webkit-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: -moz-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
+  color: snow;
 }
 
 body {
@@ -626,12 +762,14 @@ h1 span i {
 #right-sidebar.open {
   transform: translateX(0%);
 }
-.dark #right-sidebar {
+.dark #right-sidebar,
+.winter #right-sidebar {
   border: 3px solid black;
   box-shadow: 3px 4px 8px darkgrey;
   background: #1e1e1e;
 }
-.dark #right-sidebar .sidebar-tab {
+.dark #right-sidebar .sidebar-tab,
+.winter #right-sidebar .sidebar-tab {
   border: 2px solid snow;
   box-shadow: inset 3px 4px 8px black;
 }
@@ -659,6 +797,18 @@ h1 span i {
   background-image: -webkit-linear-gradient(top, black, #ab0002);
   background-image: -moz-linear-gradient(top, black, #ab0002);
   background-image: linear-gradient(to bottom, black, #ab0002);
+}
+.winter #right-sidebar .tab-title.active {
+  background-image: -webkit-gradient(
+    linear,
+    left,
+    right,
+    from(#20204d),
+    to(#1e1e1e)
+  );
+  background-image: -webkit-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: -moz-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
 }
 #right-sidebar .tab-title h5 {
   text-align: center;
@@ -708,6 +858,21 @@ h1 span i {
   background-image: -moz-linear-gradient(top, #ab0002, black);
   background-image: linear-gradient(to bottom, #ab0002, black);
 }
+.winter .bottom-menu-button,
+.winter .fixed-action-btn.toolbar.active,
+.winter .fixed-action-btn.toolbar.active ul li a {
+  background-color: #1e1e1e !important;
+  background-image: -webkit-gradient(
+    linear,
+    left,
+    right,
+    from(#20204d),
+    to(#1e1e1e)
+  ) !important;
+  background-image: -webkit-linear-gradient(top, #20204d, #1e1e1e) !important;
+  background-image: -moz-linear-gradient(top, #20204d, #1e1e1e) !important;
+  background-image: linear-gradient(to bottom, #20204d, #1e1e1e) !important;
+}
 #bottom-menu-panel {
   background-color: snow;
   position: fixed;
@@ -747,13 +912,30 @@ h1 span i {
   background-image: linear-gradient(to bottom, #1e1e1e, #282828);
   box-shadow: inset 2px 3px 10px black;
 }
+.winter #bottom-menu-panel {
+  background-image: -webkit-gradient(
+    linear,
+    left,
+    right,
+    from(#20204d),
+    to(#1e1e1e)
+  );
+  background-image: -webkit-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: -moz-linear-gradient(top, #20204d, #1e1e1e);
+  background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
+}
 .dark #bottom-menu-panel h4 {
   color: #ab0002;
 }
-.dark #bottom-menu-panel {
+.winter #bottom-menu-panel h4 {
   color: snow;
 }
-.dark #bottom-menu-panel .select-dropdown.active {
+.dark #bottom-menu-panel,
+.winter #bottom-menu-panel {
+  color: snow;
+}
+.dark #bottom-menu-panel .select-dropdown.active,
+.winter #bottom-menu-panel .select-dropdown.active {
   background-image: -webkit-gradient(
     linear,
     left top,

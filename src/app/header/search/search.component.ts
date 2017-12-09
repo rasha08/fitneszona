@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 
 import { SearchService } from '../../services/search.service';
 import { ArticlesService } from '../../services/articles.service';
@@ -34,20 +34,20 @@ export class SearchComponent implements OnDestroy, OnInit {
     private _articlesService: ArticlesService,
     private _authService: AuthService,
     private _modalService: ModalService,
-    private _utilsService: UtilsService
+    private _utilsService: UtilsService,
+    private _ngZone: NgZone
   ) {}
 
   ngOnInit() {
     this.subscribeToAllArticlesWithTextFetchEvent();
     this.subscribeToUserLogInEvent();
-    this.getAllArticles();
+    this.subscribeToGetAllArticlesEvent();
     this.subscribeToAutoCompleteEntitiesReadyEvent();
   }
 
   ngOnDestroy() {
     this._subscription.forEach(subscription => subscription.unsubscribe());
   }
-
 
   search1(phrase) {
     this._subscription.push(
@@ -61,7 +61,8 @@ export class SearchComponent implements OnDestroy, OnInit {
   subscribeToAllArticlesWithTextFetchEvent() {
     this._subscription.push(
       this._articlesService.allArticlesWithTextStateChange$.subscribe(
-        notification => this.allArticles = this._articlesService.allArticlesWithText
+        notification =>
+          (this.allArticles = this._articlesService.allArticlesWithText)
       )
     );
   }
@@ -77,12 +78,23 @@ export class SearchComponent implements OnDestroy, OnInit {
     );
   }
 
-
- public  subscribeToAutoCompleteEntitiesReadyEvent() {
+  subscribeToGetAllArticlesEvent() {
     this._subscription.push(
-      this._articlesService.searchAutoCompleteEntitiesReady$.subscribe(entities => {
-        this._autoCompleteEntities = entities;
-      })
+      this._articlesService.allArticlesStateChange$.subscribe(() =>
+        this._ngZone.runOutsideAngular(() =>
+          setTimeout(() => this.getAllArticles(), 2600)
+        )
+      )
+    );
+  }
+
+  public subscribeToAutoCompleteEntitiesReadyEvent() {
+    this._subscription.push(
+      this._articlesService.searchAutoCompleteEntitiesReady$.subscribe(
+        entities => {
+          this._autoCompleteEntities = entities;
+        }
+      )
     );
   }
 
@@ -95,7 +107,6 @@ export class SearchComponent implements OnDestroy, OnInit {
     if (event.keyCode === 13) {
       this.search(phrase);
     }
-
   }
 
   search(phrase) {
@@ -104,7 +115,7 @@ export class SearchComponent implements OnDestroy, OnInit {
     let results: any = this._searchService
       .filterArticles(phrase, this.allArticles)
       .sort(
-        (article1, article2) => 
+        (article1, article2) =>
           this.getPoints(article2) - this.getPoints(article1)
       );
     if (!results || results.length === 0) {
@@ -118,7 +129,6 @@ export class SearchComponent implements OnDestroy, OnInit {
       }
     });
   }
-
 
   public order(article1, article2) {
     const result1 = this.getPoints(article1);
@@ -159,7 +169,7 @@ export class SearchComponent implements OnDestroy, OnInit {
     ) {
       result += points[0];
     }
-    if (article['foundIn']  === 'title') {
+    if (article['foundIn'] === 'title') {
       result += points[4];
     }
 
@@ -192,11 +202,13 @@ export class SearchComponent implements OnDestroy, OnInit {
       return;
     }
 
-    this.autocompleteResultsList = this._autoCompleteEntities.filter(article => {
-      return article.titleSearchString.includes(
-        this._utilsService.formatStringForSearch(this.searchPhrase)
-      );
-    }).slice(0, 10);
+    this.autocompleteResultsList = this._autoCompleteEntities
+      .filter(article => {
+        return article.titleSearchString.includes(
+          this._utilsService.formatStringForSearch(this.searchPhrase)
+        );
+      })
+      .slice(0, 10);
   }
 
   clearSearchResults() {

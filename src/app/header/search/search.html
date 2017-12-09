@@ -1,16 +1,7 @@
 <li>
     <a class="row">
-        <input #searchBox
-            id="search"
-            type="text"
-            class="validate"
-            placeholder="pretraži..."
-            [(ngModel)]="searchPhrase"
-            value="searchPhrase"
-            (keyup.enter)="formatUserInput($event, searchBox.value)"
-            (keyup)="autoComplete()"
-            (blur)="clearSearchResults()"
-            autocomplete="off">
+        <input #searchBox id="search" type="text" class="validate" placeholder="pretraži..." [(ngModel)]="searchPhrase" value="searchPhrase"
+            (keyup.enter)="formatUserInput($event, searchBox.value)" (keyup)="autoComplete()" autocomplete="off">
     </a>
 </li>
 <ul id="search-autocomplete" class="collection" *ngIf="autocompleteResultsList?.length">

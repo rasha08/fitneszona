@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  NgZone
+} from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 //Services
@@ -25,13 +31,13 @@ export class BottomNavigationComponent implements OnInit, OnDestroy {
     private _localStorageService: LocalStorageService,
     private _articleCounterService: ArticlesCounterService,
     private _utilsService: UtilsService,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _ngZone: NgZone
   ) {}
 
   ngOnInit() {
     this.subscribeToConfiguration();
     this.subscribeToCategoriesWithNewArticles();
-    this.getHeaderData();
   }
 
   ngOnDestroy() {
@@ -40,7 +46,13 @@ export class BottomNavigationComponent implements OnInit, OnDestroy {
 
   getHeaderData() {
     const timestring = this._utilsService.getFormatedDateWithTimeZoneOffset();
-    this._articleCounterService.getCategoriesWithNewArticles(timestring);
+    this._ngZone.runOutsideAngular(() =>
+      setTimeout(
+        () =>
+          this._articleCounterService.getCategoriesWithNewArticles(timestring),
+        1500
+      )
+    );
   }
 
   subscribeToConfiguration() {
@@ -50,7 +62,7 @@ export class BottomNavigationComponent implements OnInit, OnDestroy {
           this.activeCategories = this._configurationService.getParam(
             'active_categories'
           );
-          this.setCategoriesWithNewArticles();
+          this.getHeaderData();
           this._changeDetectorRef.detectChanges();
         },
         error => {}
