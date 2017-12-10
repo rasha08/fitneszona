@@ -12,6 +12,7 @@ import { ConfigurationService } from '../../services/configuration.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ArticlesCounterService } from '../../services/articles-counter.service';
 import { UtilsService } from '../../services/utils.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-bottom-navigation',
@@ -32,12 +33,14 @@ export class BottomNavigationComponent implements OnInit, OnDestroy {
     private _articleCounterService: ArticlesCounterService,
     private _utilsService: UtilsService,
     private _changeDetectorRef: ChangeDetectorRef,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private _authService: AuthService
   ) {}
 
   ngOnInit() {
     this.subscribeToConfiguration();
     this.subscribeToCategoriesWithNewArticles();
+    this.subscribeToUserStatusChange();
   }
 
   ngOnDestroy() {
@@ -54,7 +57,6 @@ export class BottomNavigationComponent implements OnInit, OnDestroy {
       )
     );
   }
-
   subscribeToConfiguration() {
     this._subscriptions.push(
       this._configurationService.configurationStatusChange$.subscribe(
@@ -62,7 +64,6 @@ export class BottomNavigationComponent implements OnInit, OnDestroy {
           this.activeCategories = this._configurationService.getParam(
             'active_categories'
           );
-          this.getHeaderData();
           this._changeDetectorRef.detectChanges();
         },
         error => {}
@@ -79,6 +80,16 @@ export class BottomNavigationComponent implements OnInit, OnDestroy {
         },
         error => {}
       )
+    );
+  }
+
+  subscribeToUserStatusChange() {
+    this._subscriptions.push(
+      this._authService.authStatusChange$.subscribe(isLoggedIn => {
+        if (isLoggedIn) {
+          this.getHeaderData();
+        }
+      })
     );
   }
 

@@ -6,6 +6,7 @@ import { ResponseService } from './response.service';
 import { LocalStorageService } from './local-storage.service';
 import { ConfigurationService } from './configuration.service';
 import { NotifyService } from './notify.service';
+import { ArticlesService } from './articles.service';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,6 @@ export class AuthService {
   private _subscribed = false;
 
   private _authStatusChange = new Subject();
-
   public authStatusChange$ = this._authStatusChange.asObservable();
 
   constructor(
@@ -24,12 +24,15 @@ export class AuthService {
     private _localStorageService: LocalStorageService,
     private _ngZone: NgZone,
     private _configurationService: ConfigurationService,
-    private _notifyService: NotifyService
+    private _notifyService: NotifyService,
+    private _articlesService: ArticlesService
   ) {
     this._configurationService.configurationStatusChange$.subscribe(() => {
-      if (!this._isCheckedIsUserLoggedIn) {
-        this.checkIfUserIsLoggedIn();
-      }
+      this._articlesService.allArticlesStateChange$.subscribe(() => {
+        if (!this._isCheckedIsUserLoggedIn) {
+          this.checkIfUserIsLoggedIn();
+        }
+      });
     });
   }
 
@@ -45,7 +48,7 @@ export class AuthService {
         id
       };
 
-      return this._getUserData(data);
+      this._getUserData(data);
     }
   }
 
@@ -60,12 +63,16 @@ export class AuthService {
 
         return {};
       },
-      error => console.error(error)
+      error =>
+        this._ngZone.runOutsideAngular(() =>
+          setTimeout(() => this._getUserData(data), 600)
+        )
     );
   }
   public logout() {
     this._localStorageService.setUserLastVist(this._user);
     this._user = null;
+    localStorage.removeItem('rememberUser');
     this._changeAuthStatus(false);
     this._subscribed = false;
     this._updateCouner = 0;
@@ -74,7 +81,6 @@ export class AuthService {
   public login(data, rememberMe) {
     this._userHTTPService.getUserData(data).subscribe(response => {
       if (response.status) {
-        console.log('RESPONSE STATUS: ', response.status);
         this._responseService.handleResponse(response);
 
         return;

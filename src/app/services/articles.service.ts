@@ -43,7 +43,9 @@ export class ArticlesService {
   ) {
     this._configurationService.configurationStatusChange$.subscribe(() => {
       if (!this.allArticles) {
-        this.getAllArticles();
+        this._ngZone.runOutsideAngular(() =>
+          setTimeout(() => this.getAllArticles(), 600)
+        );
       }
     });
   }
@@ -64,12 +66,10 @@ export class ArticlesService {
   }
 
   public getAllArticlesWithText() {
-    this._articlesHTTPService.getAllArticlesWithText().subscribe(
-      articles => {
-        this.allArticlesWithText = articles;
-        this._allArticlesWithTextFetched.next(true);
-      }
-    );
+    this._articlesHTTPService.getAllArticlesWithText().subscribe(articles => {
+      this.allArticlesWithText = articles;
+      this._allArticlesWithTextFetched.next(true);
+    });
   }
 
   public getTopArticles() {
@@ -208,11 +208,17 @@ export class ArticlesService {
     this.articlesAutocompleteEnitities = this.allArticles.map(article => {
       return {
         title: article.title,
-        link: `/tekstovi/${article.categoryUrlSlug}/${article.article_title_url_slug}`,
-        titleSearchString: this._utilsService.formatStringForSearch(article.title)
+        link: `/tekstovi/${article.categoryUrlSlug}/${
+          article.article_title_url_slug
+        }`,
+        titleSearchString: this._utilsService.formatStringForSearch(
+          article.title
+        )
       };
     });
 
-    this._searchAutoCompleteEntitiesReady.next(this.articlesAutocompleteEnitities);
+    this._searchAutoCompleteEntitiesReady.next(
+      this.articlesAutocompleteEnitities
+    );
   }
 }

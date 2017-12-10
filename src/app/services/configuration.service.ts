@@ -31,7 +31,7 @@ export class ConfigurationService {
         this.isConfigurationFetched = true;
         this._sendNotification(true);
       },
-      error => console.log(error)
+      error => setTimeout(() => this.getConfiguration(), 600)
     );
   }
 
