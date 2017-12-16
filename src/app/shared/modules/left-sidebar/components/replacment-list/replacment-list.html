@@ -1,8 +1,7 @@
 <div id="replacment-list" class="col s3">
   <ul class="collection">
     <li class="collection-item avatar" *ngFor="let tag of tags" (click)="replaceTag(tag)">
-      <i class="material-icons circle apply">done_all</i>
-      <span class="title" *ngIf="tag">{{tag.name}}</span>
+      <span class="title" *ngIf="tag">{{tag.name.toUpperCase()}}</span>
       <a class="secondary-content">
         <i class="material-icons swap">swap_horiz</i>
       </a>

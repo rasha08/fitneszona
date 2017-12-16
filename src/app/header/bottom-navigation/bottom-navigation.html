@@ -2,7 +2,7 @@
   <div class="tabs tabs-transparent">
     <li class="tab" *ngFor="let category of activeCategories">
       <a routerLink="tekstovi/{{category.urlSlug}}" routerLinkActive="selected"> {{ category.name }}
-        <span class="new badge red darken-3" *ngIf="category.count">
+        <span class="new badge" *ngIf="category.count">
           {{ category.count }}
         </span>
       </a>

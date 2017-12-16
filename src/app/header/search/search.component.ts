@@ -199,6 +199,7 @@ export class SearchComponent implements OnDestroy, OnInit {
 
   public autoComplete() {
     if (this.searchPhrase.length < 2) {
+      this.autocompleteResultsList = [];
       return;
     }
 
