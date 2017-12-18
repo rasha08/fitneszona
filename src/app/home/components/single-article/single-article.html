@@ -30,6 +30,20 @@
     </div>
   </div>
 
+
+  <div class="row tags right-align col m12" *ngIf="article.tags">
+    <span class="tag z-depth-5" *ngFor="let tag of article.tags">{{ tag }}
+      <i class="material-icons" (click)="likeOrUnlikeTag(tag)">{{ hasUSerLikedTag(tag) ? 'favorite' : 'favorite_border'}}</i>
+    </span>
+  </div>
+  <div class="row comments" *ngIf="article.comments && article.comments.length">
+    <h4 id="commentDiv">Komentari:</h4>
+    <div class="comment z-depth-5" *ngFor="let comment of article.comments">
+      <p>{{ comment.comment }}</p>
+      <span class="user">{{ comment.userName }}</span>
+      <span class="time right ">{{ comment.created_at }}</span>
+    </div>
+  </div>
   <div class="text-button-action valign-wrapper">
     <div class="fixed-action-btn horizontal pulse">
       <a class="btn-floating btn-large red darken-4 pulse">
@@ -59,20 +73,6 @@
       </ul>
     </div>
   </div>
-  <div class="row tags right-align col m12" *ngIf="article.tags">
-    <span class="tag z-depth-5" *ngFor="let tag of article.tags">{{ tag }}
-      <i class="material-icons" (click)="likeOrUnlikeTag(tag)">{{ hasUSerLikedTag(tag) ? 'favorite' : 'favorite_border'}}</i>
-    </span>
-  </div>
-  <div class="row comments" *ngIf="article.comments && article.comments.length">
-    <h4 id="commentDiv">Komentari:</h4>
-    <div class="comment z-depth-5" *ngFor="let comment of article.comments">
-      <p>{{ comment.comment }}</p>
-      <span class="user">{{ comment.userName }}</span>
-      <span class="time right ">{{ comment.created_at }}</span>
-    </div>
-  </div>
-
   <div class="row z-depth-5" id="commentBox" [ngClass]="{open: comentBoxOpen}">
     <div class="col s12">
       <div class="row">

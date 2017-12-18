@@ -83,7 +83,6 @@ body .nature {
   background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
 }
 
-
 .nature .nav-extended {
   background-color: papayawhip !important;
   background-image: url(/assets/images/wood_tab.jpg);
@@ -170,6 +169,15 @@ a.brand-logo {
   color: snow;
 }
 
+.nature #single-article .tag,
+.nature #single-article #commentBox {
+  color: papayawhip;
+  background-color: papayawhip !important;
+  background-image: url(/assets/images/wood_tab.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .nav-content .tabs li.tab a span.new.badge {
   background-color: #ab0002;
 }
@@ -192,7 +200,7 @@ a.brand-logo {
 }
 
 .nature #search-autocomplete li:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 #search-autocomplete {
@@ -246,9 +254,10 @@ a.brand-logo {
 }
 
 .nature #modal.open {
-  background-image: url(/assets/images/wood.jpg);
+  background-image: url(/assets/images/wood_card.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  box-shadow: 3px 7px 20px darkolivegreen;
 }
 
 .winter #modal.open {
@@ -302,7 +311,7 @@ a.brand-logo {
 }
 
 .nature #modal.open input {
-  color: darkgreen;
+  color: papayawhip;
 }
 
 .dark #modal.open input {
@@ -376,10 +385,12 @@ a.brand-logo {
   background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
 }
 
-.nature .card, .nature .card .card-reveal {
-  background-image: url(/assets/images/wood.jpg);
+.nature .card,
+.nature .card .card-reveal {
+  background-image: url(/assets/images/wood_card.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  overflow-y: hidden;
 }
 
 .dark .card .card-title,
@@ -398,8 +409,9 @@ a.brand-logo {
   color: snow !important;
 }
 
-.nature .card .card-title, .nature .card p {
-  color: snow !important;
+.nature .card .card-title,
+.nature .card p {
+  color: papayawhip !important;
 }
 
 .nature .card p a {
@@ -431,7 +443,6 @@ a.brand-logo {
   background-image: -moz-linear-gradient(top, #20204d, #1e1e1e);
   background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
 }
-
 
 .dark .card .card-reveal p {
   color: snow !important;
@@ -503,13 +514,13 @@ body {
   transition: height 0.35 ease-in-out;
 }
 
-.nature #left-sidebar .collection  li.collection-header.category-button{
+.nature #left-sidebar .collection li.collection-header.category-button {
   background-image: url(/assets/images/wood_card.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.nature #left-sidebar .collection  li.collection-header.category-button h5 {
+.nature #left-sidebar .collection li.collection-header.category-button h5 {
   color: papayawhip !important;
 }
 
@@ -549,12 +560,45 @@ body {
   transform: translateX(-10%) rotateX(0deg);
 }
 
-.nature #left-sidebar .collection.open .list-items .category-text.open .text-details,
-.nature #left-sidebar .collection .category-text {
+#left-sidebar
+  .collection.open
+  .list-items
+  .category-text.open
+  .text-details
+  .card-action {
+  position: fixed;
+  bottom: 0;
+  z-index: 99999;
+}
+
+.nature
+  #left-sidebar
+  .collection.open
+  .list-items
+  .category-text.open
+  .text-details,
+.nature #left-sidebar .collection .category-text,
+.nature
+  #left-sidebar
+  .collection.open
+  .list-items
+  .category-text.open
+  .text-details
+  .card.horizontal {
   background-image: url(/assets/images/wood_tab.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   color: papayawhip;
+  box-shadow: none;
+}
+
+.nature
+  #left-sidebar
+  .collection.open
+  .list-items
+  .category-text.open
+  .text-details {
+  box-shadow: 2px 3px 6px papayawhip;
 }
 
 .material-icons {
@@ -587,7 +631,7 @@ body {
   overflow-y: scroll;
 }
 
-.nature #replacment-list li{
+.nature #replacment-list li {
   background-image: url(/assets/images/wood_card.jpg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -643,12 +687,16 @@ h1 span i {
   text-shadow: 2px 3px 5px gray;
 }
 
+h1 span {
+  margin-right: 50px;
+}
+
 .flow-text {
   text-shadow: 2px 3px 5px gray;
 }
 
 .text-button-action {
-  transform: translateY(0.5vh) translateX(-3vw);
+  position: fixed;
 }
 
 #bottom-menu {
@@ -851,7 +899,7 @@ h1 span i {
   box-shadow: 2px 3px 2px #ab0002;
   width: 30px;
   top: 0px;
-  left: -69px;
+  left: -80px;
   z-index: 99;
   background: #ab0002;
   background: -webkit-radial-gradient(
@@ -876,6 +924,31 @@ h1 span i {
   ); /* Standard syntax */
   overflow: hidden;
 }
+.nature #right-sidebar-trigger {
+  box-shadow: 2px 3px 2px darkolivegreen;
+  background: #302012;
+  background: -webkit-radial-gradient(
+    circle,
+    #362415,
+    #553920,
+    #302012
+  ); /* Safari */
+  background: -o-radial-gradient(
+    circle,
+    #362415,
+    #553920,
+    #302012
+  ); /* Opera 11.6 to 12.0 */
+  background: -moz-radial-gradient(circle, #362415, #553920, #302012);
+  /* Firefox 3.6 to 15 */
+  background: radial-gradient(
+    circle,
+    #362415,
+    #553920,
+    #302012
+  ); /* Standard syntax */
+  overflow: hidden;
+}
 #right-sidebar-trigger i {
   color: #ab0002;
   font-size: 62px;
@@ -893,7 +966,6 @@ h1 span i {
   box-shadow: 3px 4px 8px darkgrey;
   background: #1e1e1e;
 }
-
 .dark #right-sidebar .sidebar-tab,
 .winter #right-sidebar .sidebar-tab {
   border: 2px solid snow;
@@ -936,14 +1008,12 @@ h1 span i {
   background-image: -moz-linear-gradient(top, #20204d, #1e1e1e);
   background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
 }
-
 .nature #right-sidebar .tab-title.active {
-    background-image: url(/assets/images/wood_card.jpg);
+  background-image: url(/assets/images/wood_card.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   color: papayawhip;
 }
-
 #right-sidebar .tab-title h5 {
   text-align: center;
   padding-top: 5%;
@@ -1007,6 +1077,14 @@ h1 span i {
   background-image: -moz-linear-gradient(top, #20204d, #1e1e1e) !important;
   background-image: linear-gradient(to bottom, #20204d, #1e1e1e) !important;
 }
+.nature .bottom-menu-button,
+.nature .fixed-action-btn.toolbar.active,
+.nature .fixed-action-btn.toolbar.active ul li a {
+  background-color: #362415 !important;
+  background-image: url(/assets/images/wood_tab.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 #bottom-menu-panel {
   background-color: snow;
   position: fixed;
@@ -1046,7 +1124,8 @@ h1 span i {
   background-image: linear-gradient(to bottom, #1e1e1e, #282828);
   box-shadow: inset 2px 3px 10px black;
 }
-.winter #bottom-menu-panel {
+.winter #bottom-menu-panel,
+.winter #customer-support {
   background-image: -webkit-gradient(
     linear,
     left,
@@ -1058,14 +1137,12 @@ h1 span i {
   background-image: -moz-linear-gradient(top, #20204d, #1e1e1e);
   background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
 }
-
 .nature #bottom-menu-panel {
-  background-image: url(/assets/images/wood.jpg);
+  background-image: url(/assets/images/wood_card.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   color: papayawhip;
 }
-
 .dark #bottom-menu-panel h4 {
   color: #ab0002;
 }
@@ -1106,13 +1183,18 @@ h1 span i {
   bottom: 0px;
   z-index: 9999;
   background: snow;
-  transform: rotateZ(300deg) translateX(100vw);
-  -webkit-transition: transform 0.5s ease-in;
-  -moz-transition: transform 0.5s ease-in;
-  transition: transform 0.5s ease-in;
+  max-height: 0%;
+  -webkit-transition: max-height, 0.6s ease-in;
+  -moz-transition: max-height, 0.6s ease-in;
+  transition: max-height, 0.6s ease-in;
+  overflow: hidden !important;
+  opacity: 0;
+  z-index: -999999;
 }
 #customer-support.open {
-  transform: rotateZ(0deg) translateX(0vw);
+  max-height: 100%;
+  opacity: 1;
+  z-index: 999999;
 }
 .dark #customer-support {
   background: #1e1e1e;
@@ -1134,4 +1216,14 @@ h1 span i {
 #customer-support .btn-floating {
   margin-left: 2%;
   margin-right: 2%;
+}
+.nature #customer-support {
+  background-image: url(/assets/images/wood_tab.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: papayawhip;
+  box-shadow: 5px 8px 22px darkolivegreen;
+}
+#customer-support label {
+  color: papayawhip;
 }
