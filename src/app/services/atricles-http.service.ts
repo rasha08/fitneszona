@@ -177,7 +177,7 @@ export class ArticlesHTTPService {
   }
 
   public action(body, id) {
-    this._http
+    return this._http
       .post(`https://fitneszona.rs/api/articles/${id}`, body)
       .map(
         result => result,
@@ -187,7 +187,6 @@ export class ArticlesHTTPService {
               this.action(body, id);
             }, 800)
           )
-      )
-      .subscribe();
+      );
   }
 }

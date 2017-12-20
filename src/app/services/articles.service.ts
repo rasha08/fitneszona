@@ -35,6 +35,12 @@ export class ArticlesService {
   private _searchAutoCompleteEntitiesReady = new Subject();
   public searchAutoCompleteEntitiesReady$ = this._searchAutoCompleteEntitiesReady.asObservable();
 
+  private _likeResponseStatus = new Subject();
+  public likeResponseStatus$ = this._likeResponseStatus.asObservable();
+
+  private _dislikeResponseStatus = new Subject();
+  public dislikeResponseStatus$ = this._dislikeResponseStatus.asObservable();
+
   constructor(
     private _articlesHTTPService: ArticlesHTTPService,
     private _configurationService: ConfigurationService,
@@ -178,7 +184,10 @@ export class ArticlesService {
       userId: userId
     };
 
-    this._articlesHTTPService.action(data, textId);
+    this._articlesHTTPService.action(data, textId).subscribe(
+      response => this._likeResponseStatus.next(response),
+      error => console.log(error)
+    );
   }
 
   public disLike(textId, userId) {
@@ -187,7 +196,10 @@ export class ArticlesService {
       userId: userId
     };
 
-    this._articlesHTTPService.action(data, textId);
+    this._articlesHTTPService.action(data, textId).subscribe(
+      reponse => this._dislikeResponseStatus.next(reponse),
+      error => console.log(error)
+    );
   }
 
   public comment(textId, userId, comment) {

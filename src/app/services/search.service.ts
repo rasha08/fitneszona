@@ -37,17 +37,14 @@ export class SearchService {
         let result = [];
         let filteredArticles = [];
         for (let article of articles){
-            if (!this.isArticleAlreadyInArray(article.article_title_url_slug, filteredArticles)){
-                if (pattern.test(article.title)) {
-                    filteredArticles.push(article.article_title_url_slug);
-                    article['foundIn'] = 'title';
-                    result.push(article);
-                } else if (pattern.test(article.text)) {
-                    filteredArticles.push(article.article_title_url_slug);
-                    article['foundIn'] = 'text';
-                    result.push(article);
-                }
+            if (pattern.test(article.title)) {
+                article['foundIn'] = 'title';
+                result.push(article);
+            } else if (pattern.test(article.text)) {
+                article['foundIn'] = 'text';
+                result.push(article);
             }
+
         }
         return result;
     }

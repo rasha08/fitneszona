@@ -2,8 +2,7 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  ChangeDetectorRef,
-  NgZone
+  ChangeDetectorRef
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
@@ -30,6 +29,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
   public listOfLikes = '';
   public listOfDislikes = '';
   public isViewDestroyed = false;
+  public isRequestPending = false;
 
   private _subscriptions: Array<Subscription> = [];
 
@@ -40,13 +40,14 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     private _notifyService: NotifyService,
     private _changeDetectorRef: ChangeDetectorRef,
     private _authService: AuthService,
-    private _userDataService: UserDataService,
-    private _ngZone: NgZone
+    private _userDataService: UserDataService
   ) {}
 
   ngOnInit() {
     this._subscribeToArticleFetchedEvent();
     this._subscribeToAuthStatusChange();
+    this._subscribeToLikeResponseEvent();
+    this._subscribeToDislikeResponseStatus();
     this._user = this._authService.getUser();
   }
 
@@ -103,6 +104,18 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     });
   }
 
+  private _subscribeToLikeResponseEvent(){
+    this._articlesService.likeResponseStatus$.subscribe(
+      _ =>  this.isRequestPending = false
+    )
+  }
+
+  private _subscribeToDislikeResponseStatus(){
+    this._articlesService.dislikeResponseStatus$.subscribe(
+      _ => this.isRequestPending = false
+    );
+  }
+
   private fetchArticleUpdate(articleId) {
     this._articlesService.getArticle(articleId).subscribe(article => {
       Object.assign(this.article, this._transformHtml(article));
@@ -137,13 +150,15 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
   }
 
   public like() {
-    if (this._user) {
+    if (this._user && this.isRequestPending === false) {
+      this.isRequestPending = true;
       this._articlesService.like(this.article.id, this._user.id);
     }
   }
 
   public disLike() {
-    if (this._user) {
+    if (this._user && this.isRequestPending === false) {
+      this.isRequestPending = true;
       this._articlesService.disLike(this.article.id, this._user.id);
     }
   }

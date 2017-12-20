@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, OnDestroy, NgZone } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -6,6 +6,7 @@ import { ConfigurationService } from '../../../services/configuration.service';
 import { AuthService } from '../../../services/auth.service';
 import { ArticlesService } from '../../../services/articles.service';
 import { ReplacmentListService } from './services/replacment-list.service';
+//import { setTimeout } from 'timers';
 
 @Component({
   selector: 'left-sidebar-component',
@@ -25,10 +26,14 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     private _configurationService: ConfigurationService,
     private _authService: AuthService,
     private _articlesService: ArticlesService,
-    private _replacmentListService: ReplacmentListService
+    private _replacmentListService: ReplacmentListService,
+    private _ngZone: NgZone
   ) {}
 
   ngOnInit() {
+    console.log(this._ngZone.runOutsideAngular(
+      () => setTimeout(() => console.log(this.tagsInSidebar), 3000)
+    ));
     this._subscribeToConfigurationFetchEvent();
     this._subscribeToAllArticlesFetchEvent();
     this._subscribeToTagReplacmentEvent();
@@ -97,13 +102,11 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
 
         this.tags = this.tagsInSidebar.concat(this.tagsInReplacmentList);
         let userFavTags = this.getUserFavoriteTags();
-
         if (userFavTags.length < 6) {
           return;
         }
 
         this.tagsInSidebar = [];
-        this.tagsInReplacmentList = [];
         this._tagsPriorityList.map(tag => {
           let tagIndex = this.tags.findIndex(tagObj => tagObj.name === tag);
           if (userFavTags.indexOf(tag) === -1) {
@@ -157,6 +160,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
         )
       });
     });
+    
     this.tagsInSidebar = this.tags.splice(0, 6);
     this.tagsInReplacmentList = this.tags.splice(0, this.tags.length);
   }
@@ -178,8 +182,9 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       'tags_priority_list'
     );
   }
-
+  
   public initialiseUserTagsInLeftSidebar(id, tags) {
+    console.log('Tags in sidebar is cnaging');
     this._replacmentListService.initialiseUserTagsInLeftSidebar(id, tags);
   }
 
