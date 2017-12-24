@@ -38,6 +38,15 @@ body .nature {
   min-height: 100vh;
 }
 
+body .metal {
+  background-image: url(/assets/images/metal.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50%;
+  background-size: cover;
+  min-height: 100vh;
+}
+
 .dark table td {
   text-align: center !important;
   border: 2px solid snow !important;
@@ -94,6 +103,17 @@ body .nature {
   color: papayawhip !important;
 }
 
+.metal .nav-extended li > a {
+  color: snow !important;
+}
+
+.metal .nav-extended {
+  background-color: papayawhip !important;
+  background-image: url(/assets/images/metal-card.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 a.brand-logo {
   padding-left: 5%;
   font-size: calc(36px + 1vw);
@@ -109,6 +129,11 @@ a.brand-logo {
 
 .nature a.brand-logo {
   color: papayawhip !important;
+}
+
+.metal a.brand-logo {
+  color: snow !important;
+  text-shadow: 1px 2px 5px #ab0002 !important;
 }
 
 .dark #single-article h1,
@@ -164,6 +189,14 @@ a.brand-logo {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.metal #single-article h1,
+.metal #single-article .article-text,
+.metal #single-article #commentBox,
+.metal #single-article .comment {
+  color: snow !important;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .winter #single-article .tags,
 .winter #single-article #commentDiv {
   color: snow;
@@ -178,12 +211,25 @@ a.brand-logo {
   background-size: cover;
 }
 
+.metal #single-article .tag,
+.metal #single-article #commentBox {
+  color: papayawhip;
+  background-color: papayawhip !important;
+  background-image: url(/assets/images/metal.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .nav-content .tabs li.tab a span.new.badge {
   background-color: #ab0002;
 }
 
 .nature .nav-content .tabs li.tab a span.new.badge {
   background-color: darkgreen;
+}
+
+.metal .nav-content .tabs li.tab a span.new.badge {
+  background-color: gray;
 }
 
 #search,
@@ -197,6 +243,13 @@ a.brand-logo {
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 0.7;
+}
+
+.metal #search-autocomplete li {
+  background-image: url(/assets/images/metal.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.9;
 }
 
 .nature #search-autocomplete li:hover {
@@ -260,6 +313,13 @@ a.brand-logo {
   box-shadow: 3px 7px 20px darkolivegreen;
 }
 
+.metal #modal.open {
+  background-image: url(/assets/images/metal-card.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 3px 7px 20px gray;
+}
+
 .winter #modal.open {
   background-image: -webkit-gradient(
     linear,
@@ -281,7 +341,8 @@ a.brand-logo {
   color: papayawhip;
 }
 
-.winter #modal.open h4 {
+.winter #modal.open h4,
+.metal #modal.open h4 {
   color: snow;
 }
 
@@ -298,11 +359,13 @@ a.brand-logo {
   background-image: linear-gradient(to bottom, dimgray, darkred);
 }
 
-.nature #modal.open .modal-footer {
+.nature #modal.open .modal-footer,
+.metal #modal.open .modal-footer {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.dark #modal.open .modal-footer a {
+.dark #modal.open .modal-footer a,
+.metal #modal.open .modal-footer a {
   color: snow;
 }
 
@@ -331,6 +394,14 @@ a.brand-logo {
   box-shadow: 2px 3px snow;
   font-weight: bolder;
   background: rgba(255, 255, 255, 0.88);
+}
+
+.metal .error {
+  color: firebrick;
+  box-shadow: 2px 3px gray;
+  font-weight: bolder;
+  background: rgba(0, 0, 0, 0.88);
+  padding: 1%;
 }
 
 .light .alert .flow-text {
@@ -393,19 +464,30 @@ a.brand-logo {
   overflow-y: hidden;
 }
 
+.metal .card,
+.metal .card .card-reveal {
+  background-image: url(/assets/images/metal-card.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-y: hidden;
+}
+
 .dark .card .card-title,
-.winter .card .card-title {
+.winter .card .card-title,
+.metal .card .card-title {
   color: snow !important;
 }
 
 .dark .card p a,
-.winter .dark .card p a {
+.winter .card p a,
+.metal .card p a {
   color: snow !important;
   text-decoration: underline;
 }
 
 .dark .card p,
-.winter .card p {
+.winter .card p,
+.metal .card p {
   color: snow !important;
 }
 
@@ -487,6 +569,16 @@ a.brand-logo {
 .nature ul.collapsible li .collapsible-header,
 .nature ul.collapsible li .collapsible-body {
   background-image: url(/assets/images/wood_card.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: papayawhip;
+}
+
+.metal li.collection-item,
+.metal ul li.collection-header.category-button,
+.metal ul.collapsible li .collapsible-header,
+.metal ul.collapsible li .collapsible-body {
+  background-image: url(/assets/images/metal-card.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   color: papayawhip;
@@ -961,7 +1053,8 @@ h1 span {
 }
 .dark #right-sidebar,
 .winter #right-sidebar,
-.nature #right-sidebar {
+.nature #right-sidebar,
+.metal #right-sidebar {
   border: 3px solid black;
   box-shadow: 3px 4px 8px darkgrey;
   background: #1e1e1e;
@@ -1085,6 +1178,14 @@ h1 span {
   background-repeat: no-repeat;
   background-size: cover;
 }
+.metal .bottom-menu-button,
+.metal .fixed-action-btn.toolbar.active,
+.metal .fixed-action-btn.toolbar.active ul li a {
+  background-color: #1e1e1e !important;
+  background-image: url(/assets/images/metal-card.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 #bottom-menu-panel {
   background-color: snow;
   position: fixed;
@@ -1139,6 +1240,12 @@ h1 span {
 }
 .nature #bottom-menu-panel {
   background-image: url(/assets/images/wood_card.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: papayawhip;
+}
+.metal #bottom-menu-panel {
+  background-image: url(/assets/images/metal-card.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   color: papayawhip;
@@ -1223,6 +1330,13 @@ h1 span {
   background-size: cover;
   color: papayawhip;
   box-shadow: 5px 8px 22px darkolivegreen;
+}
+.metal #customer-support {
+  background-image: url(/assets/images/metal-card.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: papayawhip;
+  box-shadow: 5px 8px 22px gray;
 }
 #customer-support label {
   color: papayawhip;
