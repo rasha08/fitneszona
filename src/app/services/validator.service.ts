@@ -18,6 +18,6 @@ export class ValidatorService {
   public isNameOrLastNameValid(name) {
     const regEx = /^[a-zA-Z]*$/;
 
-    return regEx.test(name);
+    return regEx.test(name) && name.length > 0;
   }
 }

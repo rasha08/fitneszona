@@ -26,6 +26,7 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   public userChosenCategories = [];
   public tags;
   public categories;
+  public themes;
 
   constructor(
     private _bottomMenuService: BottomMenuService,
@@ -49,6 +50,7 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
          _ =>  {
            this.getAllCategories();
            this.getAllTags();
+           this.getThemes();
            this._changeDetectorRef.detectChanges();
          }
         )
@@ -124,6 +126,10 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public getAllTags() {
     this.tags = this._configurationService.getParam('tags_priority_list');
+  }
+
+  public getThemes(){
+    this.themes = this._configurationService.getParam('validThemeOptions');
   }
 
 }

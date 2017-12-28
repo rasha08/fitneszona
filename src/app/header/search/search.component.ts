@@ -29,6 +29,7 @@ export class SearchComponent implements OnDestroy, OnInit {
   public autocompleteResultsList = [];
   public searchPhrase = '';
 
+
   constructor(
     private _searchService: SearchService,
     private _articlesService: ArticlesService,
@@ -70,10 +71,12 @@ export class SearchComponent implements OnDestroy, OnInit {
   subscribeToUserLogInEvent() {
     this._subscription.push(
       this._authService.authStatusChange$.subscribe(notification => {
-        this._userLikedTags = this._getUserLikedTags();
-        this._userLikedCategories = this._getUserLikedCategories();
-        this._userVisitedCtegories = this._getUserVisitedCategories();
-        this.userVisitedTags = this._getUserVisitedTags();
+        if (notification === true) {
+          this._userLikedTags = this._getUserLikedTags();
+          this._userLikedCategories = this._getUserLikedCategories();
+          this._userVisitedCtegories = this._getUserVisitedCategories();
+          this.userVisitedTags = this._getUserVisitedTags();
+        }
       })
     );
   }

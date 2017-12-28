@@ -50,14 +50,14 @@ export class ArticlesService {
     this._configurationService.configurationStatusChange$.subscribe(() => {
       if (!this.allArticles) {
         this._ngZone.runOutsideAngular(() =>
-          setTimeout(() => this.getAllArticles(), 600)
+          setTimeout(() => this.getAllArticles(), 600) //da li menjati
         );
       }
     });
   }
 
   public getArticle(id) {
-    return this._articlesHTTPService.getArticle(id);
+      return this._articlesHTTPService.getArticle(id);
   }
 
   public getAllArticles() {
@@ -109,7 +109,6 @@ export class ArticlesService {
   }
 
   public getArticleCategoryAndTags(id) {
-    // greska sa json token at position 1 sa id = 13 -ko bi rekao
     this._articlesHTTPService
       .getArticleCategoryAndTags(id)
       .subscribe(
@@ -209,7 +208,7 @@ export class ArticlesService {
       comment
     };
 
-    this._articlesHTTPService.action(data, textId);
+    this._articlesHTTPService.action(data, textId).subscribe( response => console.log(response) );
   }
 
   public getIndexPageArticles() {

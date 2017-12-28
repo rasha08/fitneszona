@@ -4,38 +4,59 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+import { UserDataService } from './user-data.service';
+
 import {} from 'module';
 @Injectable()
 export class ArticlesHTTPService {
   private BASE_URL = 'https://fitneszona.rs';
-  constructor(private _http: Http, private _ngZone: NgZone) {}
+  constructor(
+    private _http: Http, 
+    private _ngZone: NgZone,
+    private _userDataService: UserDataService
+  ) {}
 
   public getAllArticles() {
-    return this._http.get(`${this.BASE_URL}/api/articles/all`).map(
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/articles/all`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
+    return this._http.get(url).map(
       result => result.json(),
       error =>
-        this._ngZone.runOutsideAngular(() =>
-          setTimeout(() => {
-            this.getAllArticles();
-          }, 500)
-        )
+          this._ngZone.runOutsideAngular(() =>
+            setTimeout(() => {
+              this.getAllArticles();
+            }, 500)
+          )
     );
   }
 
   public getTopArticles() {
-    return this._http.get(`${this.BASE_URL}/api/articles/top`).map(
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/articles/top`;
+    if (userId !== false){
+      url += `?uid=${userId}`;
+    }
+    return this._http.get(url).map(
       result => result.json(),
       error =>
-        this._ngZone.runOutsideAngular(() =>
-          setTimeout(() => {
-            this.getTopArticles();
-          }, 800)
-        )
+          this._ngZone.runOutsideAngular(() =>
+            setTimeout(() => {
+              this.getTopArticles();
+            }, 800)
+          )
     );
   }
 
   public getLatestArticles() {
-    return this._http.get(`${this.BASE_URL}/api/articles/latest`).map(
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/articles/latest`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
+    return this._http.get(url).map(
       result => result.json(),
       error =>
         this._ngZone.runOutsideAngular(() =>
@@ -47,7 +68,12 @@ export class ArticlesHTTPService {
   }
 
   public getIndexPageArticles() {
-    return this._http.get(`${this.BASE_URL}/api/articles/index`).map(
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/articles/index`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
+    return this._http.get(url).map(
       result => result.json(),
       error =>
         this._ngZone.runOutsideAngular(() =>
@@ -59,8 +85,13 @@ export class ArticlesHTTPService {
   }
 
   public getArticlesForCategory(category) {
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/articles/category/${category}`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
     return this._http
-      .get(`${this.BASE_URL}/api/articles/category/${category}`)
+      .get(url)
       .map(
         result => result.json(),
         error =>
@@ -73,8 +104,13 @@ export class ArticlesHTTPService {
   }
 
   public getTopArticlesForCategory(category) {
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/articles/category/${category}/top`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
     return this._http
-      .get(`${this.BASE_URL}/api/articles/category/${category}/top`)
+      .get(url)
       .map(
         result => result.json(),
         error => {
@@ -86,8 +122,13 @@ export class ArticlesHTTPService {
   }
 
   public getLatestArticlesForCategory(category) {
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/articles/category/${category}/latest`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
     return this._http
-      .get(`${this.BASE_URL}/api/articles/category/${category}/latest`)
+      .get(url)
       .map(
         result => result.json(),
         error => {
@@ -99,8 +140,13 @@ export class ArticlesHTTPService {
   }
 
   public getArticleByURLSlug(article_title_url_slug) {
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/articles/${article_title_url_slug}`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
     return this._http
-      .get(`${this.BASE_URL}/api/articles/${article_title_url_slug}`)
+      .get(url)
       .map(
         result => result.json(),
         error => {
@@ -115,7 +161,12 @@ export class ArticlesHTTPService {
   }
 
   public getArticle(id) {
-    return this._http.get(`${this.BASE_URL}/api/articles/${id}`).map(
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/articles/${id}`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
+    return this._http.get(url).map(
       result => result.json(),
       error =>
         this._ngZone.runOutsideAngular(() =>
@@ -127,8 +178,13 @@ export class ArticlesHTTPService {
   }
 
   public getArticleCategoryAndTags(id) {
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/articles/${id}/catgory-and-tags`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
     return this._http
-      .get(`${this.BASE_URL}/api/articles/${id}/catgory-and-tags`)
+      .get(url)
       .map(
         result => result.json(),
         error =>
@@ -141,7 +197,12 @@ export class ArticlesHTTPService {
   }
 
   public getArticlesByDate() {
-    return this._http.get(`${this.BASE_URL}`).map(
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
+    return this._http.get(url).map(
       result => result.json(),
       error =>
         this._ngZone.runOutsideAngular(() =>
@@ -153,7 +214,12 @@ export class ArticlesHTTPService {
   }
 
   public getAllArticlesWithText() {
-    return this._http.get(`${this.BASE_URL}/api/search`).map(
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/search`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
+    return this._http.get(url).map(
       result => result.json().articles,
       error =>
         this._ngZone.runOutsideAngular(() =>
@@ -165,7 +231,12 @@ export class ArticlesHTTPService {
   }
 
   public search(phrase) {
-    return this._http.post(`${this.BASE_URL}/api/search`, phrase).map(
+    let userId = this.getUserId() || false;
+    let url = `${this.BASE_URL}/api/search`;
+    if (userId !== false) {
+      url += `?uid=${userId}`;
+    }
+    return this._http.post(url, phrase).map(
       result => result,
       error =>
         this._ngZone.runOutsideAngular(() =>
@@ -177,6 +248,7 @@ export class ArticlesHTTPService {
   }
 
   public action(body, id) {
+    let userId = this.getUserId() || false;
     return this._http
       .post(`https://fitneszona.rs/api/articles/${id}`, body)
       .map(
@@ -188,5 +260,13 @@ export class ArticlesHTTPService {
             }, 800)
           )
       );
+  }
+
+  getUserId(){
+    let user = this._userDataService.getUser() || false;
+    if (user) {
+      return user['id'];
+    }
+    return false;
   }
 }

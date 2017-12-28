@@ -29,9 +29,13 @@ export class TopNavigationComponent implements OnInit {
 
   private _listenForUserStatusChange() {
     this._subscriptions.push(
-      this._authService.authStatusChange$.subscribe(() => {
+      this._authService.authStatusChange$.subscribe((notification) => {
+        if (notification === true){
         this.user = this._authService.getUser();
         this._changeDetectorRef.detectChanges();
+        }else {
+          this.user = null;
+        }
       }),
       this._configurationService.configurationStatusChange$.subscribe(
         notification => {

@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public validate(param) {
     if (param === "email") {
       this.isEmailValid = this._validtorService.isEmailValid(this.email);
+      console.log('validated param:')
     } else {
       this.isPasswordValid = this._validtorService.isPasswordValid(
         this.password

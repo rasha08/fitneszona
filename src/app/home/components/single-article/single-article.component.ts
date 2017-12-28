@@ -12,6 +12,9 @@ import { LoaderService } from '../../../services/loader.service';
 import { NotifyService } from '../../../services/notify.service';
 import { AuthService } from '../../../services/auth.service';
 import { UserDataService } from '../../../services/user-data.service';
+import { ModalService } from '../../../services/modal.service';
+
+import { AlertComponent } from '../../../shared/components/alert/alert';
 
 declare const $;
 
@@ -40,7 +43,8 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     private _notifyService: NotifyService,
     private _changeDetectorRef: ChangeDetectorRef,
     private _authService: AuthService,
-    private _userDataService: UserDataService
+    private _userDataService: UserDataService,
+    private _modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -104,13 +108,13 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _subscribeToLikeResponseEvent(){
+  private _subscribeToLikeResponseEvent() {
     this._articlesService.likeResponseStatus$.subscribe(
       _ =>  this.isRequestPending = false
     )
   }
 
-  private _subscribeToDislikeResponseStatus(){
+  private _subscribeToDislikeResponseStatus() {
     this._articlesService.dislikeResponseStatus$.subscribe(
       _ => this.isRequestPending = false
     );
@@ -153,6 +157,8 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     if (this._user && this.isRequestPending === false) {
       this.isRequestPending = true;
       this._articlesService.like(this.article.id, this._user.id);
+    }else {
+      this.openAlertWindows();
     }
   }
 
@@ -160,12 +166,18 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     if (this._user && this.isRequestPending === false) {
       this.isRequestPending = true;
       this._articlesService.disLike(this.article.id, this._user.id);
+    }else {
+      this.openAlertWindows();
     }
   }
 
   public openCommentBox() {
-    this.comentBoxOpen = !this.comentBoxOpen;
-    this._detectChanges();
+    if (this._user) {
+      this.comentBoxOpen = !this.comentBoxOpen;
+      this._detectChanges();
+    }else {
+      this.openAlertWindows();
+    }
   }
 
   public comment() {
@@ -205,5 +217,19 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     if (!this.isViewDestroyed) {
       this._changeDetectorRef.detectChanges();
     }
+  }
+
+  public openAlertWindows(){
+      const data = {
+        message: {
+        body: 'Morate biti ulogovani da biste mogli da komentarišete ili lajkujete članke',
+        title: 'Upozorenje'
+        }
+      };
+
+    this._modalService.openModal({
+      component: AlertComponent,
+      data: data
+    });
   }
 }

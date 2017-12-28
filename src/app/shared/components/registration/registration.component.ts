@@ -18,10 +18,10 @@ export class RegistrationComponent {
     email: '',
     password: ''
   };
-  public isFirstnameValid: boolean = false;
-  public isLastnameValid: boolean = false;
-  public isEmailValid: boolean = false;
-  public isPasswordValid: boolean = false;
+  public isFirstnameValid: boolean = true;
+  public isLastnameValid: boolean = true;
+  public isEmailValid: boolean = true;
+  public isPasswordValid: boolean = true;
   public message;
   public successMessage;
   public errorMessage;
@@ -78,7 +78,7 @@ export class RegistrationComponent {
         );
         break;
       default:
-        null;
+        break;
     }
   }
 

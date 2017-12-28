@@ -25,15 +25,15 @@ export class AuthService {
     private _ngZone: NgZone,
     private _configurationService: ConfigurationService,
     private _notifyService: NotifyService,
-    private _articlesService: ArticlesService
+    //private _articlesService: ArticlesService
   ) {
-    this._configurationService.configurationStatusChange$.subscribe(() => {
+   /* this._configurationService.configurationStatusChange$.subscribe(() => {
       this._articlesService.allArticlesStateChange$.subscribe(() => {
         if (!this._isCheckedIsUserLoggedIn) {
           this.checkIfUserIsLoggedIn();
         }
       });
-    });
+    });*/
   }
 
   public getUser() {

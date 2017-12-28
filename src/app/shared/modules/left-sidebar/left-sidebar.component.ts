@@ -31,9 +31,6 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log(this._ngZone.runOutsideAngular(
-      () => setTimeout(() => console.log(this.tagsInSidebar), 3000)
-    ));
     this._subscribeToConfigurationFetchEvent();
     this._subscribeToAllArticlesFetchEvent();
     this._subscribeToTagReplacmentEvent();
