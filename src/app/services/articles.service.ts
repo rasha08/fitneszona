@@ -5,6 +5,7 @@ import { ConfigurationService } from './configuration.service';
 import { ArticlesHTTPService } from './atricles-http.service';
 import { UtilsService } from './utils.service';
 import { VisitedArticlesService } from './visited-articles.service';
+import { NotifyService } from './notify.service';
 
 @Injectable()
 export class ArticlesService {
@@ -55,7 +56,8 @@ export class ArticlesService {
     private _configurationService: ConfigurationService,
     private _ngZone: NgZone,
     private _utilsService: UtilsService,
-    private _visitedArticlesService: VisitedArticlesService
+    private _visitedArticlesService: VisitedArticlesService,
+    private _notifyService: NotifyService
   ) {
     this._configurationService.configurationStatusChange$.subscribe(() => {
       if (!this.allArticles) {
@@ -82,6 +84,7 @@ export class ArticlesService {
         this.allArticlesStateChange(true);
         this.formatArticlesForAutoComplete();
         this.allArticlesFetched = true;
+        this.subscribeToAllArticlesChanges();
       },
       error => console.log('Error: ', error)
     );
@@ -91,6 +94,15 @@ export class ArticlesService {
     this._articlesHTTPService.getAllArticlesWithText().subscribe(articles => {
       this.allArticlesWithText = articles;
       this._allArticlesWithTextFetched.next(true);
+    });
+  }
+
+  public subscribeToAllArticlesChanges() {
+    this._notifyService.subscribeToAllArticlesChanges(1).on('value', update => {
+      const updateObject = update.val();
+      this.indexArticles = JSON.parse(updateObject.index);
+      this.latestArticles = JSON.parse(updateObject.latest);
+      this.topArticles = JSON.parse(updateObject.top);
     });
   }
 
