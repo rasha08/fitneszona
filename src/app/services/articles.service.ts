@@ -346,4 +346,24 @@ export class ArticlesService {
 
     return visitedArticles;
   }
+
+  public getArticlesForRightSidebar() {
+    const articles = [];
+    const articlesVisited = this._visitedArticlesService.getArticles();
+    for (const article of this.allArticles) {
+      if (articles.length < 20) {
+        if (
+          !(this.topArticles.indexOf(article.id) !== -1) &&
+          !(this.indexArticles.indexOf(article.id)  !== -1) &&
+          !(this.latestArticles.indexOf(article.id) !== -1) &&
+          !(articlesVisited.indexOf(article.id) !== -1)
+        ) {
+          articles.push(article);
+        }
+      } else {
+        break;
+      }
+    }
+    return articles;
+  }
 }

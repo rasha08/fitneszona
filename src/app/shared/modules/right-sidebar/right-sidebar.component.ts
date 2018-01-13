@@ -22,12 +22,11 @@ export class RightSidebarComponent implements OnInit, OnDestroy{
     private _articleService: ArticlesService,
     private _visitedArticlesService: VisitedArticlesService,
     private _changeDetectorRef: ChangeDetectorRef
-  ) {
-    this._subscibeToShouldRepoplulateSidebar();
-  }
+  ) { }
 
   ngOnInit() {
     this._subscibeToAllArticlesFetchEvent();
+    this._subscibeToShouldRepoplulateSidebar();
   }
 
   ngOnDestroy() {
@@ -45,17 +44,10 @@ export class RightSidebarComponent implements OnInit, OnDestroy{
   private _subscibeToShouldRepoplulateSidebar() {
     this._articleService.sholudResortTags$.subscribe(() => {
       this.historyArticles = this._articleService.getArticlesMarketsForHistory();
+      console.log('Calling repopulate sidebar from shouldreplace');
       this.populateRightSidebar();
       this._changeDetectorRef.detectChanges();
     });
-  }
-
-  private _subscribeToAllArticlesFrtchEvent() {
-    this._subscription.push(
-      this._articleService.allArticlesStateChange$.subscribe(
-      _ => this.populateRightSidebar()
-      )
-    );
   }
 
   public toggleSidebar() {
@@ -68,26 +60,7 @@ export class RightSidebarComponent implements OnInit, OnDestroy{
   }
 
   public populateRightSidebar() {
-    const topArticles = this._articleService.topArticles;
-    const indexArticles = this._articleService.indexArticles;
-    const latestArticles = this._articleService.latestArticles;
-    const articlesVisited = this._visitedArticlesService.getArticles();
-    for (const article of this._articleService.allArticles) {
-      if (this.articles.length < 20) {
-        if (
-          !(topArticles.indexOf(article.id) !== -1) &&
-          !(indexArticles.indexOf(article.id)  !== -1) &&
-          !(latestArticles.indexOf(article.id) !== -1) &&
-          !(articlesVisited.indexOf(article.id) !== -1)
-        ) {
-          this.articles.push(article);
-        }
-      } else {
-        break;
-      }
-    }
-
-    console.log(this.articles);
+   this.articles = this._articleService.getArticlesForRightSidebar();
   }
 
 }
