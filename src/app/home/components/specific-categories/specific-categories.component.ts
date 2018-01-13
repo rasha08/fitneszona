@@ -6,6 +6,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { ConfigurationService } from '../../../services/configuration.service';
 import { ArticlesService } from '../../../services/articles.service';
@@ -31,46 +32,53 @@ export class SpecificCategoriesComponent {
     protected _changeDetectorRef: ChangeDetectorRef,
     protected _loaderService: LoaderService,
     protected _utilsService: UtilsService,
-    protected _configurationService: ConfigurationService
+    protected _configurationService: ConfigurationService,
+    protected _router: Router
   ) {}
 
   ngOnInit() {
-    if (this._configurationService.isConfigurationFetched) {
-      this._listenToArticlesFetched();
+    if (this._articlesService.allArticlesFetched) {
+      this.setArticlesForPage();
+    } else {
+      this.subscribeToAllArticlesFetchedEvent();
     }
-    this._listenForConfigurationChangeEvent();
+
+    this._subscribeToRouteChange();
+    console.log('INIT');
   }
 
   ngOnDestroy() {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
+    console.log('DESTROY');
   }
 
-  private _listenForConfigurationChangeEvent() {
+  protected _subscribeToRouteChange() {
     this._subscriptions.push(
-      this._configurationService.configurationStatusChange$.subscribe(() => {
-        this._listenToArticlesFetched();
+      this._router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.setArticlesForPage();
+        }
       })
     );
   }
 
-  protected _listenToArticlesFetched() {
-    if (this._isSubscribedToArticlesFetchEvent) {
-      this._organizeArticles();
-      return;
-    }
-
+  protected subscribeToAllArticlesFetchedEvent() {
     this._subscriptions.push(
-      this._articlesService.specificCategoryArticlesFetched$.subscribe(
-        articles => {
-          this._allArticles = articles;
-          this._organizeArticles();
-          this._loaderService.hide();
-          this._changeDetectorRef.detectChanges();
-        }
-      )
+      this._articlesService.allArticlesStateChange$.subscribe(() => {
+        this.setArticlesForPage();
+      })
     );
 
     this._isSubscribedToArticlesFetchEvent = true;
+  }
+
+  protected setArticlesForPage() {
+    this._allArticles = this._articlesService.getArticlesForPage();
+    this._changeDetectorRef.detectChanges();
+    this._organizeArticles();
+    this._changeDetectorRef.detectChanges();
+    this._loaderService.hide();
+    this._changeDetectorRef.detectChanges();
   }
 
   protected _organizeArticles() {

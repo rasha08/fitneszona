@@ -11,6 +11,7 @@ import { HeaderModule } from './header/header.module';
 import { BottomMenuModule } from './shared/modules/bottom-menu/bottom-menu.module';
 import { RightSidebarModule } from './shared/modules/right-sidebar/right-sidebar.module';
 import { HomeModule } from './home/home.module';
+import { NotificationsModule } from './shared/modules/notifications/notifications.module';
 
 /* APP SERVICES */
 import { AuthService } from './services/auth.service';
@@ -32,6 +33,8 @@ import { SearchService } from './services/search.service';
 import { ConfigurationHTTPService } from './services/configuration-http.service';
 import { NotifyService } from './services/notify.service';
 import { LoaderService } from './services/loader.service';
+import { VisitedArticlesService } from './services/visited-articles.service';
+import { MenuAnimationService } from './services/menus-animation.service';
 
 /* ENTRY COMPONENTS */
 import { LoginComponent } from './shared/components/login/login.component';
@@ -57,7 +60,8 @@ import { appRoutes } from './app.routing';
     HeaderModule,
     BottomMenuModule,
     RightSidebarModule,
-    HomeModule
+    HomeModule,
+    NotificationsModule
   ],
   providers: [
     LocalStorageService,
@@ -78,7 +82,9 @@ import { appRoutes } from './app.routing';
     ConfigurationHTTPService,
     ArticleCounterHTTPService,
     NotifyService,
-    LoaderService
+    LoaderService,
+    VisitedArticlesService,
+    MenuAnimationService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

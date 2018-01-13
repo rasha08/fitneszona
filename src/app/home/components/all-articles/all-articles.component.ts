@@ -28,9 +28,7 @@ export class AllArticlesComponent implements OnInit {
     private _configurationService: ConfigurationService,
     private _utilsService: UtilsService,
     private _changeDetectorRef: ChangeDetectorRef
-  ) {
-    this._loaderService.show();
-  }
+  ) {}
   ngOnInit() {
     if (this._articlesService.allArticles) {
       this.groupArticlesByCategory();
@@ -60,7 +58,6 @@ export class AllArticlesComponent implements OnInit {
     });
 
     Object.assign(this.activeCategories, this.activeCategoriesWithoutArticles);
-    this._loaderService.hide();
     this._changeDetectorRef.detectChanges();
   }
 

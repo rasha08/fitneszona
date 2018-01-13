@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
-
+import { Injectable } from '@angular/core';
 import { UtilsService } from './utils.service';
 
 @Injectable()
 export class LocalStorageService {
   private _user;
 
-  constructor(
-    private _utilsService: UtilsService,
-  ) {
-    this.setItem("lastVisit", this._utilsService.getFormatedDateWithTimeZoneOffset());
+  constructor(private _utilsService: UtilsService) {
+    this.setItem(
+      'lastVisit',
+      this._utilsService.getFormatedDateWithTimeZoneOffset()
+    );
   }
 
   public setItem(key, value) {
@@ -17,7 +17,9 @@ export class LocalStorageService {
   }
 
   public getKeyIfExists(key) {
-    return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : null;
+    return localStorage.getItem(key)
+      ? JSON.parse(localStorage.getItem(key))
+      : null;
   }
 
   public setUserLastVist(user) {
@@ -25,15 +27,13 @@ export class LocalStorageService {
     let userLastVisitsArray = userLastVisits ? userLastVisits : [];
 
     if (!this.getUserLastVisit(user.id)) {
-      console.log('No USER ID');
-        userLastVisitsArray.push({
+      userLastVisitsArray.push({
         id: user.id,
         visit: this._utilsService.getFormatedDateWithTimeZoneOffset()
       });
     } else {
-      console.log('USER ID');
-      userLastVisitsArray = userLastVisitsArray.map((userLastVisit) => {
-        if (userLastVisit.id === user.id ) {
+      userLastVisitsArray = userLastVisitsArray.map(userLastVisit => {
+        if (userLastVisit.id === user.id) {
           userLastVisit.visit = this._utilsService.getFormatedDateWithTimeZoneOffset();
         }
 
@@ -41,21 +41,26 @@ export class LocalStorageService {
       });
     }
 
-    this.setItem("usersLastVisit", JSON.stringify(userLastVisitsArray));
+    this.setItem('usersLastVisit', JSON.stringify(userLastVisitsArray));
   }
 
   public getUserLastVisit(id) {
-    const usersLastVisit = this.getKeyIfExists("usersLastVisit");
-    const userLastVisit = usersLastVisit ? usersLastVisit.filter(user => user.id = id).pop() : null;
+    const usersLastVisit = this.getKeyIfExists('usersLastVisit');
+    const userLastVisit = usersLastVisit
+      ? usersLastVisit.filter(user => (user.id = id)).pop()
+      : null;
 
     return userLastVisit ? userLastVisit.visit : null;
   }
 
   public getLastVisitFromBrowser() {
-    return this.getKeyIfExists("lastVisit");
+    return this.getKeyIfExists('lastVisit');
   }
 
   public setLastVisitFromBrowser() {
-    this.setItem("lastVisit", this._utilsService.getFormatedDateWithTimeZoneOffset());
+    this.setItem(
+      'lastVisit',
+      this._utilsService.getFormatedDateWithTimeZoneOffset()
+    );
   }
 }

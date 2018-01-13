@@ -4,12 +4,18 @@ import { Subject } from 'rxjs/Subject';
 import { ConfigurationService } from './configuration.service';
 import { ArticlesHTTPService } from './atricles-http.service';
 import { UtilsService } from './utils.service';
+import { VisitedArticlesService } from './visited-articles.service';
 
 @Injectable()
 export class ArticlesService {
   public allArticles;
   public allArticlesWithText;
+  public topArticles = [];
+  public latestArticles = [];
+  public indexArticles = [];
+  public allArticlesFetched = false;
   public articlesAutocompleteEnitities = [];
+  public openPage;
 
   private _openArticle = new Subject();
   public openArticle$ = this._openArticle.asObservable();
@@ -41,31 +47,41 @@ export class ArticlesService {
   private _dislikeResponseStatus = new Subject();
   public dislikeResponseStatus$ = this._dislikeResponseStatus.asObservable();
 
+  private _sholudResortTags = new Subject();
+  public sholudResortTags$ = this._sholudResortTags.asObservable();
+
   constructor(
     private _articlesHTTPService: ArticlesHTTPService,
     private _configurationService: ConfigurationService,
     private _ngZone: NgZone,
-    private _utilsService: UtilsService
+    private _utilsService: UtilsService,
+    private _visitedArticlesService: VisitedArticlesService
   ) {
     this._configurationService.configurationStatusChange$.subscribe(() => {
       if (!this.allArticles) {
-        this._ngZone.runOutsideAngular(() =>
-          setTimeout(() => this.getAllArticles(), 600) //da li menjati
-        );
+        this._ngZone.runOutsideAngular(() => this.getAllArticles());
       }
     });
   }
 
   public getArticle(id) {
-      return this._articlesHTTPService.getArticle(id);
+    return this._articlesHTTPService.getArticle(id).subscribe(article => {
+      this.singleArticleFetched(article);
+      this._visitedArticlesService.addArticleToVisited(article.id);
+      this._sholudResortTags.next();
+    });
   }
 
   public getAllArticles() {
     this._articlesHTTPService.getAllArticles().subscribe(
-      articles => {
-        this.allArticles = articles;
+      response => {
+        this.allArticles = response.articles;
+        this.topArticles = response.topArticles;
+        this.latestArticles = response.latestArticles;
+        this.indexArticles = response.indexPageArticles;
         this.allArticlesStateChange(true);
         this.formatArticlesForAutoComplete();
+        this.allArticlesFetched = true;
       },
       error => console.log('Error: ', error)
     );
@@ -86,8 +102,63 @@ export class ArticlesService {
     return this._articlesHTTPService.getLatestArticles();
   }
 
-  public getArticlesForCategory(category) {
-    return this._articlesHTTPService.getArticlesForCategory(category);
+  public getArticlesForPage() {
+    console.log('OPEN PAGE', this.openPage);
+    switch (this.openPage) {
+      case 'top':
+        return this.allArticles
+          .filter(
+            article =>
+              this.topArticles.indexOf(article.id) > -1 &&
+              this._visitedArticlesService.getArticles().indexOf(article.id) ===
+                -1
+          )
+          .slice(0, 15);
+
+      case 'latest':
+        return this.allArticles
+          .filter(
+            article =>
+              this.latestArticles.indexOf(article.id) > -1 &&
+              this._visitedArticlesService.getArticles().indexOf(article.id) ===
+                -1
+          )
+          .slice(0, 15);
+
+      case 'index':
+        return this.allArticles
+          .filter(
+            article =>
+              this.indexArticles.indexOf(article.id) > -1 &&
+              this._visitedArticlesService.getArticles().indexOf(article.id) ===
+                -1
+          )
+          .slice(0, 11);
+
+      default:
+        return this._formatCategoryArticles(
+          this.allArticles.filter(article => article.category === this.openPage)
+        );
+    }
+  }
+
+  public mutateOpenPageState(page) {
+    this.openPage = page;
+  }
+
+  private _formatCategoryArticles(articles) {
+    const visitedArticles = [];
+    const categoryArticles = [];
+    const visitedArticlesMarkets = this._visitedArticlesService.getArticles();
+    articles.map(article => {
+      if (article && visitedArticlesMarkets.indexOf(article.id) === -1) {
+        categoryArticles.push(article);
+      } else if (article) {
+        visitedArticles.push(article);
+      }
+    });
+
+    return categoryArticles.concat(visitedArticles);
   }
 
   public getTopArticlesForCategory(category) {
@@ -135,10 +206,17 @@ export class ArticlesService {
   }
 
   public getArticlesByTagName(tag, limit = 200) {
+    const visitedArticles = [];
+    const visitedArticlesMarkets = this._visitedArticlesService.getArticles();
     let numOfArticlesReturned = 0;
     return this.allArticles.filter(article => {
-      if (article.tags.indexOf(tag) !== -1 && numOfArticlesReturned < limit) {
+      if (
+        article.tags.indexOf(tag) !== -1 &&
+        numOfArticlesReturned < limit &&
+        visitedArticlesMarkets.indexOf(article.id) === -1
+      ) {
         numOfArticlesReturned += 1;
+
         return true;
       }
 
@@ -183,10 +261,12 @@ export class ArticlesService {
       userId: userId
     };
 
-    this._articlesHTTPService.action(data, textId).subscribe(
-      response => this._likeResponseStatus.next(response),
-      error => console.log(error)
-    );
+    this._articlesHTTPService
+      .action(data, textId)
+      .subscribe(
+        response => this._likeResponseStatus.next(response),
+        error => console.log(error)
+      );
   }
 
   public disLike(textId, userId) {
@@ -195,10 +275,12 @@ export class ArticlesService {
       userId: userId
     };
 
-    this._articlesHTTPService.action(data, textId).subscribe(
-      reponse => this._dislikeResponseStatus.next(reponse),
-      error => console.log(error)
-    );
+    this._articlesHTTPService
+      .action(data, textId)
+      .subscribe(
+        reponse => this._dislikeResponseStatus.next(reponse),
+        error => console.log(error)
+      );
   }
 
   public comment(textId, userId, comment) {
@@ -208,7 +290,9 @@ export class ArticlesService {
       comment
     };
 
-    this._articlesHTTPService.action(data, textId).subscribe( response => console.log(response) );
+    this._articlesHTTPService
+      .action(data, textId)
+      .subscribe(response => console.log(response));
   }
 
   public getIndexPageArticles() {
@@ -231,5 +315,23 @@ export class ArticlesService {
     this._searchAutoCompleteEntitiesReady.next(
       this.articlesAutocompleteEnitities
     );
+  }
+
+  public getArticlesMarketsForHistory() {
+    const visitedArticlesMarkets = this._visitedArticlesService.getArticles();
+    const visitedArticles = [];
+
+    this.allArticles.map(article => {
+      if (visitedArticlesMarkets.indexOf(article.id) > -1) {
+        visitedArticles.push({
+          title: article.title,
+          link: `/tekstovi/${article.categoryUrlSlug}/${
+            article.article_title_url_slug
+          }`
+        });
+      }
+    });
+
+    return visitedArticles;
   }
 }

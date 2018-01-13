@@ -1,12 +1,17 @@
-import { Component, ChangeDetectorRef, OnInit, OnDestroy, NgZone } from '@angular/core';
-
+import {
+  Component,
+  ChangeDetectorRef,
+  OnInit,
+  OnDestroy,
+  NgZone
+} from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import * as diference from 'lodash/difference';
 
 import { ConfigurationService } from '../../../services/configuration.service';
 import { AuthService } from '../../../services/auth.service';
 import { ArticlesService } from '../../../services/articles.service';
 import { ReplacmentListService } from './services/replacment-list.service';
-//import { setTimeout } from 'timers';
 
 @Component({
   selector: 'left-sidebar-component',
@@ -35,6 +40,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     this._subscribeToAllArticlesFetchEvent();
     this._subscribeToTagReplacmentEvent();
     this._subscribeToUserLogInEvent();
+    this._subscribeToShouldResortSidebar();
   }
 
   ngOnDestroy() {
@@ -118,6 +124,16 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     );
   }
 
+  private _subscribeToShouldResortSidebar() {
+    this._subscriptions.push(
+      this._articlesService.sholudResortTags$.subscribe(() => {
+        console.log('next');
+        this._populateSidebar(true);
+        this._changeDetectorRef.detectChanges();
+      })
+    );
+  }
+
   public switchTagsInLists(
     newTag,
     newTagIndex,
@@ -146,20 +162,55 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _populateSidebar() {
+  private _populateSidebar(shouldRepopulate?) {
+    this._filteredArticles = [];
+    this.tags = [];
     this._tagsPriorityList.map(tag => {
       this.tags.push({
         name: tag,
         texts: this._articlesService.orderByTimeOfUpdate(
           this._articlesService
-            .getArticlesByTagName(tag, 15)
+            .getArticlesByTagName(tag, 10)
             .filter(article => this._isArticleAlreadyAssigned(article.id))
         )
       });
     });
-    
-    this.tagsInSidebar = this.tags.splice(0, 6);
-    this.tagsInReplacmentList = this.tags.splice(0, this.tags.length);
+
+    const emptyTags = [];
+    this.tags.forEach(tag => {
+      if (!tag.name) {
+        tag.name = 'OSTALI TEKSTOVI';
+      }
+      if (tag.texts.length === 0) {
+        emptyTags.push(tag.name);
+      }
+    });
+
+    emptyTags.forEach(tagName => {
+      const index = this.tags.findIndex(tag => tag.name === tagName);
+      if (index !== -1) {
+        this.tags.splice(index, 1);
+      }
+    });
+
+    if (!shouldRepopulate) {
+      this.tagsInSidebar = this.tags.splice(0, 6);
+      this.tagsInReplacmentList = this.tags.splice(0, this.tags.length);
+    } else {
+      this.tagsInSidebar = this.tagsInSidebar.map(tag => {
+        const foundedTag = this.tags.find(
+          singleTag => singleTag.name === tag.name
+        );
+        if (!foundedTag) {
+          return this.tagsInReplacmentList.pop();
+        }
+
+        return foundedTag;
+      });
+      this.tagsInReplacmentList.map(tag => {
+        return this.tags.find(singleTag => singleTag.name === tag.name);
+      });
+    }
   }
 
   private _isArticleAlreadyAssigned(id) {
@@ -179,7 +230,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       'tags_priority_list'
     );
   }
-  
+
   public initialiseUserTagsInLeftSidebar(id, tags) {
     console.log('Tags in sidebar is cnaging');
     this._replacmentListService.initialiseUserTagsInLeftSidebar(id, tags);

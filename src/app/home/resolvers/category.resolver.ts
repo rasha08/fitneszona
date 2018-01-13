@@ -21,13 +21,13 @@ export class CategoryResolver implements Resolve<any> {
   ): Observable<any> | Promise<any> | any {
     this._loaderSerice.show();
     let category = route.params.category;
+    category =
+      category === 'grupni-treninzi'
+        ? 'grupni'
+        : category === 'power liftting' ? 'power' : category;
+    this._articleService.mutateOpenPageState(category);
 
-    category = category === 'grupni-treninzi' ? 'grupni' : category;
-
-    return this._articleService
-      .getArticlesForCategory(category)
-      .subscribe(articles =>
-        this._articleService.ariclesFetchedForCategory(articles)
-      );
+    console.log('CATEGORY RESOLVER');
+    return true;
   }
 }

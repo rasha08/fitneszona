@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ChangeDetectorRef
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -45,10 +40,12 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _userDataService: UserDataService,
     private _modalService: ModalService
-  ) {}
+  ) {
+    this._subscribeToArticleFetchedEvent();
+  }
 
   ngOnInit() {
-    this._subscribeToArticleFetchedEvent();
+    console.log('INIT');
     this._subscribeToAuthStatusChange();
     this._subscribeToLikeResponseEvent();
     this._subscribeToDislikeResponseStatus();
@@ -63,18 +60,23 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
   private _subscribeToArticleFetchedEvent() {
     this._subscriptions.push(
       this._articlesService.fetchedSingleArticle$.subscribe(article => {
+        console.log('here');
+        this._detectChanges();
         if (article['status']) {
           this._location.back();
           return;
         }
-
+        console.log(article);
         this.article = this._transformHtml(article);
+        this._detectChanges();
         this._subscribeToArticleUpdateEvent();
         this._loaderService.hide();
         this._detectChanges();
         if (this._updateCouner === 0) {
           $('.tooltipped').tooltip({ delay: 50 });
         }
+        this._detectChanges();
+        console.log('done');
       })
     );
   }
@@ -89,8 +91,6 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
           Object.assign(this.article, JSON.parse(updateObject.payload));
           this._populateListOfLikes(this.article);
           this._populateListOfDislikes(this.article);
-        } else if (this._shouldUpdateArticle()) {
-          this.fetchArticleUpdate(this.article.id);
         }
 
         this._detectChanges();
@@ -110,25 +110,23 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
 
   private _subscribeToLikeResponseEvent() {
     this._articlesService.likeResponseStatus$.subscribe(
-      _ =>  this.isRequestPending = false
-    )
+      () => (this.isRequestPending = false)
+    );
   }
 
   private _subscribeToDislikeResponseStatus() {
     this._articlesService.dislikeResponseStatus$.subscribe(
-      _ => this.isRequestPending = false
+      () => (this.isRequestPending = false)
     );
   }
 
   private fetchArticleUpdate(articleId) {
-    this._articlesService.getArticle(articleId).subscribe(article => {
-      Object.assign(this.article, this._transformHtml(article));
-    });
+    this._articlesService.getArticle(articleId);
   }
 
   private _transformHtml(article: any) {
-    const imageIndex = article.text.indexOf('<p><img');
-    const imageEnd = article.text.indexOf('" /></p>');
+    const imageIndex = article.text.indexOf('<img');
+    const imageEnd = article.text.indexOf('" />');
 
     article['intro'] = article.text.slice(0, imageIndex);
     article.text = article.text.slice(imageEnd + 8, -1);
@@ -157,7 +155,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     if (this._user && this.isRequestPending === false) {
       this.isRequestPending = true;
       this._articlesService.like(this.article.id, this._user.id);
-    }else {
+    } else {
       this.openAlertWindows();
     }
   }
@@ -166,7 +164,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     if (this._user && this.isRequestPending === false) {
       this.isRequestPending = true;
       this._articlesService.disLike(this.article.id, this._user.id);
-    }else {
+    } else {
       this.openAlertWindows();
     }
   }
@@ -175,7 +173,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     if (this._user) {
       this.comentBoxOpen = !this.comentBoxOpen;
       this._detectChanges();
-    }else {
+    } else {
       this.openAlertWindows();
     }
   }
@@ -219,13 +217,14 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     }
   }
 
-  public openAlertWindows(){
-      const data = {
-        message: {
-        body: 'Morate biti ulogovani da biste mogli da komentarišete ili lajkujete članke',
+  public openAlertWindows() {
+    const data = {
+      message: {
+        body:
+          'Morate biti ulogovani da biste mogli da komentarišete ili lajkujete članke',
         title: 'Upozorenje'
-        }
-      };
+      }
+    };
 
     this._modalService.openModal({
       component: AlertComponent,

@@ -20,11 +20,8 @@ export class IndexPageResolver implements Resolve<any> {
     state: RouterStateSnapshot
   ): Observable<any> | Promise<any> | any {
     this._loaderSerice.show();
+    this._articleService.mutateOpenPageState('index');
 
-    return this._articleService
-      .getIndexPageArticles()
-      .subscribe(articles =>
-        this._articleService.ariclesFetchedForIndexPage(articles)
-      );
+    return true;
   }
 }

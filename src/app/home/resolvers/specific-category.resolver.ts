@@ -20,19 +20,8 @@ export class SpecificCategoryResolver implements Resolve<any> {
     state: RouterStateSnapshot
   ): Observable<any> | Promise<any> | any {
     this._loaderSerice.show();
-    const category = route.params.category;
-    if (route.data.type === 'latest') {
-      return this._articleService
-        .getLatestArticles()
-        .subscribe(articles =>
-          this._articleService.articlesFetchedForSpecificCategory(articles)
-       );
-    } else {
-      return this._articleService
-      .getTopArticles()
-      .subscribe(articles =>
-        this._articleService.articlesFetchedForSpecificCategory(articles)
-     );
-    }
+    this._articleService.mutateOpenPageState(route.data.type);
+    console.log('RESOLVER');
+    return true;
   }
 }

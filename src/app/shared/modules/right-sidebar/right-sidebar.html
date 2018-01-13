@@ -107,24 +107,12 @@
       </div>
       <div class="right-sidebar-tab history" [ngClass]="{active: !isRecomendedTabActive}">
         <div class="content">
-          <ul class="collection">
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
-            <li class="collection-item">Naslov i link do posecenog teksta</li>
+          <ul class="collection" *ngIf="historyArticles.length > 0">
+            <li class="collection-item" *ngFor="let article of historyArticles">
+              <a [routerLink]="article.url">{{article.title}}</a>
+            </li>
           </ul>
+          <h2 *ngIf="historyArticles.length === 0">Vasa Istorija je prazna!</h2>
         </div>
       </div>
     </div>

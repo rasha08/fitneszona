@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
@@ -27,7 +29,8 @@ export class HomeIndexComponent extends SpecificCategoriesComponent
     _changeDetectorRef: ChangeDetectorRef,
     _loaderService: LoaderService,
     _utilsService: UtilsService,
-    _configurationService: ConfigurationService
+    _configurationService: ConfigurationService,
+    _router: Router
   ) {
     super(
       _articlesService,
@@ -35,7 +38,8 @@ export class HomeIndexComponent extends SpecificCategoriesComponent
       _changeDetectorRef,
       _loaderService,
       _utilsService,
-      _configurationService
+      _configurationService,
+      _router
     );
   }
 
@@ -46,24 +50,6 @@ export class HomeIndexComponent extends SpecificCategoriesComponent
 
   ngOnDestroy() {
     super.ngOnDestroy();
-  }
-
-  protected _listenToArticlesFetched() {
-    if (this._isSubscribedToArticlesFetchEvent) {
-      this._organizeArticles();
-      return;
-    }
-
-    this._subscriptions.push(
-      this._articlesService.fetchedIndexPageArticles$.subscribe(articles => {
-        this._allArticles = articles;
-        this._organizeArticles();
-        this._loaderService.hide();
-        this._changeDetectorRef.detectChanges();
-      })
-    );
-
-    this._isSubscribedToArticlesFetchEvent = true;
   }
 
   private _listenForScrollEvent() {

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { LoaderService } from '../../services/loader.service';
 import { ArticlesService } from '../../services/articles.service';
+import { resolve } from 'q';
 
 @Injectable()
 export class SingleArticleResolver implements Resolve<any> {
@@ -21,8 +22,11 @@ export class SingleArticleResolver implements Resolve<any> {
   ): Observable<any> | Promise<any> | any {
     this._loaderSerice.show();
     const text = route.params.text;
-    return this._articleService
-      .getArticle(text)
-      .subscribe(article => this._articleService.singleArticleFetched(article));
+
+    console.log('RESOLVER');
+    this._articleService.getArticle(text);
+    console.log('RESOLVER DONE');
+
+    return true;
   }
 }

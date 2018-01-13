@@ -6,6 +6,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { ArticlesService } from '../../../services/articles.service';
 import { NotifyService } from '../../../services/notify.service';
@@ -29,7 +30,8 @@ export class CategoryComponent extends SpecificCategoriesComponent
     _changeDetectorRef: ChangeDetectorRef,
     _loaderService: LoaderService,
     _utilsService: UtilsService,
-    _configurationService: ConfigurationService
+    _configurationService: ConfigurationService,
+    _router: Router
   ) {
     super(
       _articlesService,
@@ -37,34 +39,19 @@ export class CategoryComponent extends SpecificCategoriesComponent
       _changeDetectorRef,
       _loaderService,
       _utilsService,
-      _configurationService
+      _configurationService,
+      _router
     );
   }
 
   ngOnInit() {
     super.ngOnInit();
+    console.log('CATEGORY INIT');
   }
 
   ngOnDestroy() {
+    console.log('DESTROY CATEGOTY');
     super.ngOnDestroy();
-  }
-
-  protected _listenToArticlesFetched() {
-    if (this._isSubscribedToArticlesFetchEvent) {
-      this._organizeArticles();
-      return;
-    }
-
-    this._subscriptions.push(
-      this._articlesService.fetchedCategoryArticles$.subscribe(articles => {
-        this._allArticles = articles;
-        this._organizeArticles();
-        this._loaderService.hide();
-        this._changeDetectorRef.detectChanges();
-      })
-    );
-
-    this._isSubscribedToArticlesFetchEvent = true;
   }
 
   protected _organizeArticles() {
@@ -81,5 +68,6 @@ export class CategoryComponent extends SpecificCategoriesComponent
     this.articles['main'] = this.articles[0];
     this.articles['featured'] = this.articles.slice(1, 4);
     this.articles['articles'] = this.articles.splice(4);
+    console.log(this.articles);
   }
 }
