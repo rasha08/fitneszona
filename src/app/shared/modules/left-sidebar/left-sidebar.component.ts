@@ -161,7 +161,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       console.log('User not loged in');
     }
   }
-
+  
   private _populateSidebar(shouldRepopulate?) {
     this._filteredArticles = [];
     this.tags = [];

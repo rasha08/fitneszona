@@ -82,6 +82,7 @@ export class ArticlesService {
         this.latestArticles = response.latestArticles;
         this.indexArticles = response.indexPageArticles;
         this.allArticlesStateChange(true);
+        console.log('allArticles fetched');
         this.formatArticlesForAutoComplete();
         this.allArticlesFetched = true;
         this.subscribeToAllArticlesChanges();
@@ -332,7 +333,6 @@ export class ArticlesService {
   public getArticlesMarketsForHistory() {
     const visitedArticlesMarkets = this._visitedArticlesService.getArticles();
     const visitedArticles = [];
-
     this.allArticles.map(article => {
       if (visitedArticlesMarkets.indexOf(article.id) > -1) {
         visitedArticles.push({

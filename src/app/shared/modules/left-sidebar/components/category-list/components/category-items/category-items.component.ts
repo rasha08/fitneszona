@@ -19,9 +19,7 @@ export class CategoryItemsComponent implements OnInit{
     private _condifurationService: ConfigurationService
   ) {}
 
-  ngOnInit(){
-
-  }
+  ngOnInit() {}
 
   toggleText(text) {
     if (this.openText === text) {

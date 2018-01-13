@@ -1,0 +1,12 @@
+<div class="content">
+    <div class="card horizontal" *ngFor="let article of articles">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>{{article.title}}</p>
+        </div>
+        <div class="card-action">
+          <a [routerLink]="openArticle(article.categoryUrlSlug,article.article_title_url_slug)">This is a link</a>
+        </div>
+      </div>
+    </div>
+</div>
