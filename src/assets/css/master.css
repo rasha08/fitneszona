@@ -1199,7 +1199,7 @@ h1 span {
   box-shadow: inset 5px 8px 8px black;
 }
 #bottom-menu-panel.open {
-  height: 55% !important;
+  height: 70% !important;
 }
 #bottom-menu-panel #close {
   position: absolute;
@@ -1434,4 +1434,13 @@ body > app-root > div > app-notifications > div > div:nth-child(10) {
   -moz-transition-delay: 2700ms;
   -o-transition-delay: 2700ms;
   -webkit-transition-delay: 2700ms;
+}
+
+.collapsible-body.bottom-menu {
+  position: absolute;
+  z-index: 999999999999999;
+  max-height: 56%;
+  overflow-y: scroll;
+  width: 48%;
+  overflow-x: hidden;
 }

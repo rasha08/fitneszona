@@ -82,14 +82,21 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     ) {
       this.userChosenCategories.push(category);
     } else {
-      const categoryIndex = this.userChosenTags.findIndex(
+      const categoryIndex = this.userChosenCategories.findIndex(
         categoryInArray => categoryInArray.name === category.name
       );
       this.userChosenCategories.splice(categoryIndex, 1);
     }
   }
 
+  public isCategorySelected(category) {
+    return this.userChosenCategories.find(
+        categoryInArray => category.name === categoryInArray.name
+      ) !== undefined;
+  }
+
   public addOrRemoveUserTags(tag) {
+    console.log(tag);
     if (
       this.userChosenTags.find(tagInArray => tag === tagInArray) === undefined
     ) {
@@ -100,12 +107,25 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  public isTagSelected(tag) {
+    return this.userChosenTags.indexOf(tag) > -1;
+  }
+
   public setUserTheme(theme) {
+    console.log(theme);
     this.userChosenTheme = theme;
+  }
+
+  public isThemeSelected(theme) {
+    return this.userChosenTheme === theme;
   }
 
   public setNumberOfTexts(number) {
     this.numberOfTextInLeftSidebar = number;
+  }
+
+  public isNumberOfTextInLeftSidebarSelected(number) {
+    return this.numberOfTextInLeftSidebar === number;
   }
 
   public getUserId() {

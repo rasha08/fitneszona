@@ -17,12 +17,11 @@
     </span>
   </h1>
   <div class="row col s12 m12 z-depth-5 article-text">
-    <div class="row">
+    <div class="row valign-wrapper">
+      <p class="flow-text col s12 m7 left" [innerHtml]="article.intro"></p>
       <div class="text-img col s12 m5 right ">
         <img class="z-depth-5 responsive-img" src="{{ article.image_url }}" alt="">
       </div>
-      <p class="flow-text col s12 m7 left" [innerHtml]="article.intro">
-      </p>
     </div>
     <div class="row col s12 m12">
       <p class="flow-text col s12 m12 center" [innerHtml]="article.text">

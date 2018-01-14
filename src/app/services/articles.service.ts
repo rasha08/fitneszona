@@ -80,7 +80,17 @@ export class ArticlesService {
 
   public getAllArticlesWithText() {
     this._articlesHTTPService.getAllArticlesWithText().subscribe(articles => {
-      this.allArticlesWithText = articles;
+      this.allArticlesWithText = articles.map(article => {
+        const articleShortMarket = this.allArticles.find(singleArticle => singleArticle.id === article.id);
+
+        return {
+          id: article.id,
+          text: article.text,
+          title: articleShortMarket.title,
+          imageUrl: articleShortMarket.thumb_image_url,
+          link: `/tekstovi/${articleShortMarket.categoryUrlSlug}/${articleShortMarket.article_title_url_slug}`
+        };
+      });
       this._allArticlesWithTextFetched.next(true);
     });
   }

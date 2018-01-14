@@ -26,8 +26,4 @@ export class SearchResultsComponent implements AfterContentChecked {
   public close() {
     this._modalService.closeModal();
   }
-
-  public getArticleUrl(text) {
-    return `/tekstovi/${text.categoryUrlSlug}/${text.article_title_url_slug}`;
-  }
 }

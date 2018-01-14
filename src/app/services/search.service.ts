@@ -29,16 +29,15 @@ export class SearchService {
         return articlesWithPhrase;
     }
 
-    public filterArticles(phrase, articles){
-        phrase = phrase.replace(/s/gi, '[šs]').replace(/c/gi,'[cćč]').replace(/z/gi,'[zž]');
-        const pattern = new RegExp(`\\b${phrase}\\b`, 'i');
+    public filterArticles(phrase, articles) {
+        const pattern = new RegExp(`\\b${this._formatStringForSearch(phrase)}\\b`, 'i');
         const result = [];
         const filteredArticles = [];
         for (const article of articles){
-            if (pattern.test(article.title)) {
+            if (pattern.test(this._formatStringForSearch(article.title))) {
                 article['foundIn'] = 'title';
                 result.push(article);
-            } else if (pattern.test(article.text)) {
+            } else if (pattern.test(this._formatStringForSearch(article.text))) {
                 article['foundIn'] = 'text';
                 result.push(article);
             }
@@ -54,6 +53,14 @@ export class SearchService {
         }else {
             return true;
         }
+    }
+    private _formatStringForSearch(text) {
+        return text.toLowerCase()
+            .replace(/š/g, 's')
+            .replace(/č/g, 'c')
+            .replace(/ć/g, 'c')
+            .replace(/ž/g, 'z')
+            .replace(/đ/g, 'dj');
     }
 
     public search(phrase) {
