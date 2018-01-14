@@ -18,23 +18,11 @@ export class ArticlesService {
   public articlesAutocompleteEnitities = [];
   public openPage;
 
-  private _openArticle = new Subject();
-  public openArticle$ = this._openArticle.asObservable();
-
   private _allArticlesFetched = new Subject();
   public allArticlesStateChange$ = this._allArticlesFetched.asObservable();
 
   private _allArticlesWithTextFetched = new Subject();
   public allArticlesWithTextStateChange$ = this._allArticlesWithTextFetched.asObservable();
-
-  private _fetchedCategoryArticles = new Subject();
-  public fetchedCategoryArticles$ = this._fetchedCategoryArticles.asObservable();
-
-  private _fetchedIndexPageArticles = new Subject();
-  public fetchedIndexPageArticles$ = this._fetchedIndexPageArticles.asObservable();
-
-  private _specificCategoryArticlesFetched = new Subject();
-  public specificCategoryArticlesFetched$ = this._specificCategoryArticlesFetched.asObservable();
 
   private _singleArticleFetched = new Subject();
   public fetchedSingleArticle$ = this._singleArticleFetched.asObservable();
@@ -86,7 +74,7 @@ export class ArticlesService {
         this.allArticlesFetched = true;
         this.subscribeToAllArticlesChanges();
       },
-      error => console.log('Error: ', error)
+      error => {}
     );
   }
 
@@ -115,7 +103,6 @@ export class ArticlesService {
   }
 
   public getArticlesForPage() {
-    console.log('OPEN PAGE', this.openPage);
     switch (this.openPage) {
       case 'top':
         return this.allArticles
@@ -173,46 +160,6 @@ export class ArticlesService {
     return categoryArticles.concat(visitedArticles);
   }
 
-  public getTopArticlesForCategory(category) {
-    this._articlesHTTPService
-      .getTopArticlesForCategory(category)
-      .subscribe(
-        articles => this.openArticle(articles),
-        error => console.log(error)
-      );
-  }
-
-  public getLatestArticlesForCategory(category) {
-    this._articlesHTTPService
-      .getLatestArticlesForCategory(category)
-      .subscribe(
-        articles => this.openArticle(articles),
-        error => console.log(error)
-      );
-  }
-
-  public getArticleCategoryAndTags(id) {
-    this._articlesHTTPService
-      .getArticleCategoryAndTags(id)
-      .subscribe(
-        articles => this.openArticle(articles),
-        error => console.log(error)
-      );
-  }
-
-  public getArticleByURLSlug(article_title_url_slug) {
-    this._articlesHTTPService
-      .getArticleByURLSlug(article_title_url_slug)
-      .subscribe(
-        article => this.openArticle(article),
-        error => console.log(error)
-      );
-  }
-
-  private openArticle(article) {
-    this._openArticle.next(article);
-  }
-
   private allArticlesStateChange(param) {
     this._allArticlesFetched.next(param);
   }
@@ -243,28 +190,8 @@ export class ArticlesService {
     );
   }
 
-  public ariclesFetchedForCategory(articles) {
-    this._fetchedCategoryArticles.next(articles);
-  }
-
-  public ariclesFetchedForIndexPage(articles) {
-    this._fetchedIndexPageArticles.next(articles);
-  }
-
-  public articlesFetchedForSpecificCategory(articles) {
-    this._specificCategoryArticlesFetched.next(articles);
-  }
-
   public singleArticleFetched(article) {
     this._singleArticleFetched.next(article);
-  }
-
-  public inceraseSeanTimes(textId) {
-    const data = {
-      action: 'setSeenTimes'
-    };
-
-    this._articlesHTTPService.action(data, textId);
   }
 
   public like(textId, userId) {
@@ -277,7 +204,7 @@ export class ArticlesService {
       .action(data, textId)
       .subscribe(
         response => this._likeResponseStatus.next(response),
-        error => console.log(error)
+        error => {}
       );
   }
 
@@ -291,7 +218,7 @@ export class ArticlesService {
       .action(data, textId)
       .subscribe(
         reponse => this._dislikeResponseStatus.next(reponse),
-        error => console.log(error)
+        error => {}
       );
   }
 
@@ -302,13 +229,7 @@ export class ArticlesService {
       comment
     };
 
-    this._articlesHTTPService
-      .action(data, textId)
-      .subscribe(response => console.log(response));
-  }
-
-  public getIndexPageArticles() {
-    return this._articlesHTTPService.getIndexPageArticles();
+    this._articlesHTTPService.action(data, textId).subscribe(response => {});
   }
 
   public formatArticlesForAutoComplete() {
@@ -353,7 +274,7 @@ export class ArticlesService {
       if (articles.length < 20) {
         if (
           !(this.topArticles.indexOf(article.id) !== -1) &&
-          !(this.indexArticles.indexOf(article.id)  !== -1) &&
+          !(this.indexArticles.indexOf(article.id) !== -1) &&
           !(this.latestArticles.indexOf(article.id) !== -1) &&
           !(articlesVisited.indexOf(article.id) !== -1)
         ) {

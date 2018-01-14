@@ -18,7 +18,7 @@ import { UtilsService } from '../../../services/utils.service';
   selector: 'specific-categories',
   templateUrl: './specific-categories.html'
 })
-export class SpecificCategoriesComponent {
+export class SpecificCategoriesComponent implements OnDestroy, OnInit {
   public articles = [];
   protected _allArticles;
   protected _activeCategories = [];
@@ -44,12 +44,10 @@ export class SpecificCategoriesComponent {
     }
 
     this._subscribeToRouteChange();
-    console.log('INIT');
   }
 
   ngOnDestroy() {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
-    console.log('DESTROY');
   }
 
   protected _subscribeToRouteChange() {

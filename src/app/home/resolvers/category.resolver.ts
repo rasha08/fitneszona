@@ -24,10 +24,9 @@ export class CategoryResolver implements Resolve<any> {
     category =
       category === 'grupni-treninzi'
         ? 'grupni'
-        : category === 'power liftting' ? 'power' : category;
+        : category === 'power lifting' ? 'power' : category;
     this._articleService.mutateOpenPageState(category);
 
-    console.log('CATEGORY RESOLVER');
     return true;
   }
 }

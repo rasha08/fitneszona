@@ -22,10 +22,7 @@ export class SingleArticleResolver implements Resolve<any> {
   ): Observable<any> | Promise<any> | any {
     this._loaderSerice.show();
     const text = route.params.text;
-
-    console.log('RESOLVER');
     this._articleService.getArticle(text);
-    console.log('RESOLVER DONE');
 
     return true;
   }

@@ -45,7 +45,6 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('INIT');
     this._subscribeToAuthStatusChange();
     this._subscribeToLikeResponseEvent();
     this._subscribeToDislikeResponseStatus();

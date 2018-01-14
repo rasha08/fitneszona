@@ -17,9 +17,7 @@ export class BottomMenuService {
   private _customerSupportStatusChange = new ReplaySubject();
   public customerSupportStatusChanges$ = this._customerSupportStatusChange.asObservable();
 
-  constructor(
-    private _userHTTPService: UserHTTPService
-  ){}
+  constructor(private _userHTTPService: UserHTTPService) {}
 
   public toggleBottomMenuStatus() {
     this._isBottomMenuOpen = !this._isBottomMenuOpen;
@@ -37,10 +35,11 @@ export class BottomMenuService {
   }
 
   public setUserConfiguration(configuration, id) {
-    this._userHTTPService.setUserConfiguration(configuration, id)
+    this._userHTTPService
+      .setUserConfiguration(configuration, id)
       .subscribe(
         response => console.log(response),
         error => console.log(error)
-      )
+      );
   }
 }

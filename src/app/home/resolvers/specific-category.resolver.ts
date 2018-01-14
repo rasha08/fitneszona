@@ -21,7 +21,7 @@ export class SpecificCategoryResolver implements Resolve<any> {
   ): Observable<any> | Promise<any> | any {
     this._loaderSerice.show();
     this._articleService.mutateOpenPageState(route.data.type);
-    console.log('RESOLVER');
+
     return true;
   }
 }

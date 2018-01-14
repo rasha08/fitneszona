@@ -16,7 +16,7 @@ export class UserRegistrationService {
       .registerUser(userObj)
       .subscribe(
         result => this.sendResponseToUserRegistration(result),
-        error => console.log(error)
+        error => {}
       );
   }
 

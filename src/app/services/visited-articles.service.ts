@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-
+import { UserDataService } from './user-data.service';
 @Injectable()
 export class VisitedArticlesService {
+  constructor(private _userDataService: UserDataService) {}
+
   public addArticleToSessionStorage(articleId) {
     let sessionStorageArticles = JSON.parse(
       sessionStorage.getItem('visitedArticles')
@@ -29,6 +31,9 @@ export class VisitedArticlesService {
   }
 
   public getArticles() {
+    if (this._userDataService.userLoggedIn) {
+      return this._userDataService.getUserVisitedTextsIds();
+    }
     return this.getSessionStorageArticles();
   }
 

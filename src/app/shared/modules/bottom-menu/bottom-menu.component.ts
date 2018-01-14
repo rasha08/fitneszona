@@ -44,17 +44,15 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  private _subscribeToConfigurationFetchEvent(){
+  private _subscribeToConfigurationFetchEvent() {
     this._subscriptions.push(
-      this._configurationService.configurationStatusChange$.subscribe(
-         _ =>  {
-           this.getAllCategories();
-           this.getAllTags();
-           this.getThemes();
-           this._changeDetectorRef.detectChanges();
-         }
-        )
-    )
+      this._configurationService.configurationStatusChange$.subscribe(_ => {
+        this.getAllCategories();
+        this.getAllTags();
+        this.getThemes();
+        this._changeDetectorRef.detectChanges();
+      })
+    );
   }
 
   ngAfterViewInit() {
@@ -90,9 +88,9 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public addOrRemoveUserTags(tag) {
-    if (this.userChosenTags.find(
-      (tagInArray) => tag === tagInArray
-    ) === undefined ) {
+    if (
+      this.userChosenTags.find(tagInArray => tag === tagInArray) === undefined
+    ) {
       this.userChosenTags.push(tag);
     } else {
       const tagIndex = this.userChosenTags.indexOf(tag);
@@ -119,10 +117,12 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public sendConfiguration() {
     const configuration = {
-      theme: this.userChosenTheme ,
-      categoriesInNavigation: this.userChosenCategories !== [] ? this.userChosenCategories : null,
+      theme: this.userChosenTheme,
+      categoriesInNavigation:
+        this.userChosenCategories !== [] ? this.userChosenCategories : null,
       numbersOfTextsInLeftSidebar: this.numberOfTextInLeftSidebar,
-      notificationOfThemes: this.userChosenTags !== [] ? this.userChosenTags : null
+      notificationOfThemes:
+        this.userChosenTags !== [] ? this.userChosenTags : null
     };
     const userId = this.getUserId();
     if (userId !== false) {
@@ -141,8 +141,7 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tags = this._configurationService.getParam('tags_priority_list');
   }
 
-  public getThemes(){
+  public getThemes() {
     this.themes = this._configurationService.getParam('validThemeOptions');
   }
-
 }
