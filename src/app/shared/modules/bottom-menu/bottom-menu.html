@@ -8,36 +8,46 @@
     </h4>
   </div>
   <div class="row">
-    <div class="input-field col s12 m6 option">
-      <select class="icons option">
-        <option value="" disabled selected>Izberite temu sajta</option>
-        <option class="circle">Svetla Tema</option>
-        <option class="circle">Mračna Tema</option>
-      </select>
-      <label>Izberite temu sajta</label>
-    </div>
-
     <div class="col s12 m6">
-      <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Drop Me!</a>
-      <ul id='dropdown1' class='dropdown-content'>
-        <li changeClass *ngFor="let tag of tags" (click)="addOrRemoveUserTags(tag)">
-          {{tag}}
-          <i class="material-icons">cancel</i>
+      <ul class="collapsible" data-collapsible="acordation">
+        <li>
+          <div class="collapsible-header">Izaberite teme za koje zelite da dobijate obavestenja</div>
+          <div class="collapsible-body">
+            <ul>
+            <li *ngFor="let tag of tags" (click)="addOrRemoveUserTags(tag)">
+              {{tag}}
+            </li>
+            </ul>
+          </div>
         </li>
       </ul>
     </div>
 
-    <div class="input-field col s12 m6">
-      <select multiple *ngFor="let category of categories">
-        <option disabled selected>Izaberite kategotije koje zelite u navigaciji</option>
-        <option>
-          Kategorija
-        </option>
-        <option value="1">Kategorija 1</option>
-      </select>
-      <label>Izaberite kategotije koje zelite u navigaciji</label>
-    </div>
-  </div>
+      <div class=" col s12 m4">
+        <ul class="collapsible" data-collapsible="accordion">
+          <li>
+            <div class="collapsible-header">Izaberite temu sajta</div>
+            <div class="collapsible-body">
+              <li *ngFor="let theme of themes" (click)="setUserTheme(theme)" >{{theme}}</li>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col s12 m6">
+          <ul class="collapsible" data-collapsible="acordation">
+            <li>
+              <div class="collapsible-header">Izaberite Kategorije</div>
+              <div class="collapsible-body">
+                <ul>
+                <li *ngFor="let category of categories" (click)="addOrRemoveUserCategories(category)">
+                  {{category.name}}
+                </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
   <div class="row">
     <div class="input-field col s12 m6">
       <select>
@@ -48,17 +58,6 @@
         <option>10</option>
       </select>
       <label>Broj prokazanih tekstova po jednoj opciji</label>
-    </div>
-
-    <div class="input-field col s12 m6">
-      <select multiple>
-        <option value="" disabled selected>
-          Izaberite teme za koje zelite da dobijate obaveštenja
-        </option>
-        <option *ngFor="let tag of tags"> {{tag}} </option>
-        <option value="2">Trening za Žene</option>
-      </select>
-      <label>Izaberite tame za koje zelite da dobijate obaveštenja</label>
     </div>
   </div>
   <div class="row center-align">

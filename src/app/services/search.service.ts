@@ -20,12 +20,12 @@ export class SearchService {
     ) { }
 
     public filterByTitle(phrase, articles, pattern){
-       let articlesWithPhrase =  articles.filter( (article) => pattern.test(article.title) );
+       const articlesWithPhrase =  articles.filter( (article) => pattern.test(article.title) );
        return articlesWithPhrase;
     }
 
     public filterByText(phrase, articles, pattern){
-        let articlesWithPhrase = articles.filter( (article) => pattern.test(article.text) );
+        const articlesWithPhrase = articles.filter( (article) => pattern.test(article.text) );
         return articlesWithPhrase;
     }
 

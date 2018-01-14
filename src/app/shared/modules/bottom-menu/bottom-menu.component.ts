@@ -18,7 +18,7 @@ declare const $: any;
   templateUrl: './bottom-menu.html'
 })
 export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
-  public isBottomMenuOpen = false;
+  public isBottomMenuOpen = true;
   private _subscriptions: Array<Subscription> = [];
   public numberOfTextInLeftSidebar = null;
   public userChosenTheme = null;
@@ -76,13 +76,20 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this._bottomMenuService.toggleBottomMenuStatus();
   }
 
-  public addToUserCategories(category) {
-    this.userChosenCategories.push(category);
+  public addOrRemoveUserCategories(category) {
+    if (this.userChosenCategories.find(
+        (categoryInArray) => category.name === categoryInArray.name)
+        === undefined
+      ) {
+      this.userChosenCategories.push(category);
+    } else {
+      const categoryIndex = this.userChosenTags.findIndex(
+        (categoryInArray) => categoryInArray.name === category.name );
+      this.userChosenCategories.splice(categoryIndex, 1);
+    }
   }
 
   public addOrRemoveUserTags(tag) {
-    // If tag not in array then add tag to array
-    // Else delete him from array
     if (this.userChosenTags.find(
       (tagInArray) => tag === tagInArray
     ) === undefined ) {
@@ -91,7 +98,6 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       const tagIndex = this.userChosenTags.indexOf(tag);
       this.userChosenTags.splice(tagIndex, 1);
     }
-    console.log(this.userChosenTags);
   }
 
   public setUserTheme(theme) {
@@ -99,12 +105,16 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public setNumberOfTexts(number) {
-    console.log(number);
     this.numberOfTextInLeftSidebar = number;
   }
 
   public getUserId() {
-    return this._authService.getUser()['id'] || false;
+    const user = this._authService.getUser();
+    if (user === undefined) {
+      return false;
+    } else {
+      return user['id'];
+    }
   }
 
   public sendConfiguration() {
@@ -115,8 +125,11 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       notificationOfThemes: this.userChosenTags !== [] ? this.userChosenTags : null
     };
     const userId = this.getUserId();
-    if (userId) {
+    if (userId !== false) {
       this._bottomMenuService.setUserConfiguration(JSON.stringify(configuration), userId);
+      console.log('Salje se na server');
+    }else {
+      console.log('Korisnik nije ulogovn');
     }
   }
 
