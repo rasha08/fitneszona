@@ -37,7 +37,7 @@ export class NotificationsComponent
   private _subscribeToUserStatusChange() {
     this._subscriptions.push(
       this._authService.authStatusChange$.subscribe(status => {
-        if (true) {
+        if (status) {
           this._notifyService
             .subscribeToUserChanges(
               this._authService.getUser()['subscriptionId']

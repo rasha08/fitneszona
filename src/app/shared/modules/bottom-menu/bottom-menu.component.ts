@@ -18,7 +18,7 @@ declare const $: any;
   templateUrl: './bottom-menu.html'
 })
 export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
-  public isBottomMenuOpen = true;
+  public isBottomMenuOpen = false;
   private _subscriptions: Array<Subscription> = [];
   public numberOfTextInLeftSidebar = null;
   public userChosenTheme = null;
@@ -75,14 +75,16 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public addOrRemoveUserCategories(category) {
-    if (this.userChosenCategories.find(
-        (categoryInArray) => category.name === categoryInArray.name)
-        === undefined
-      ) {
+    if (
+      this.userChosenCategories.find(
+        categoryInArray => category.name === categoryInArray.name
+      ) === undefined
+    ) {
       this.userChosenCategories.push(category);
     } else {
       const categoryIndex = this.userChosenTags.findIndex(
-        (categoryInArray) => categoryInArray.name === category.name );
+        categoryInArray => categoryInArray.name === category.name
+      );
       this.userChosenCategories.splice(categoryIndex, 1);
     }
   }
@@ -126,9 +128,12 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     const userId = this.getUserId();
     if (userId !== false) {
-      this._bottomMenuService.setUserConfiguration(JSON.stringify(configuration), userId);
+      this._bottomMenuService.setUserConfiguration(
+        JSON.stringify(configuration),
+        userId
+      );
       console.log('Salje se na server');
-    }else {
+    } else {
       console.log('Korisnik nije ulogovn');
     }
   }
