@@ -106,10 +106,11 @@ export class UserHTTPService {
   }
 
   public setUserConfiguration(configuration, id) {
-    return this._http.post(`${this.BASE_URL}/api/users/user-configuration/${id}/update-or-create`, configuration)
-      .map(
-        response => response.json(),
-        error => console.log(error)
-      );
+    return this._http
+      .post(
+        `${this.BASE_URL}/api/users/user-configuration/${id}/update-or-create`,
+        configuration
+      )
+      .map(response => response.json(), error => {});
   }
 }

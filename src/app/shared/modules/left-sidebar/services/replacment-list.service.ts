@@ -24,19 +24,13 @@ export class ReplacmentListService {
   public initialiseUserTagsInLeftSidebar(id, tags) {
     this._userHTTPService
       .initilaiseUserTagsInLeftSidebar(id, tags)
-      .subscribe(
-        response => console.log(response),
-        error => console.log(error)
-      );
+      .subscribe(response => {}, error => {});
   }
 
   public replaceUserTagInSidebar(id, tag, index) {
     this._userHTTPService
       .replaceUserTagInSidebar(id, tag, index)
-      .subscribe(
-        response => console.log(response),
-        error => console.log(error)
-      );
+      .subscribe(response => {}, error => {});
   }
 
   public notifyTagReplacment(newTag, oldTagIndex) {

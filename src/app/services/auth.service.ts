@@ -6,7 +6,6 @@ import { ResponseService } from './response.service';
 import { LocalStorageService } from './local-storage.service';
 import { ConfigurationService } from './configuration.service';
 import { NotifyService } from './notify.service';
-import { ArticlesService } from './articles.service';
 
 @Injectable()
 export class AuthService {
@@ -14,9 +13,12 @@ export class AuthService {
   private _user;
   private _updateCouner = 0;
   private _subscribed = false;
+  public isUserLoggedIn = false;
 
   private _authStatusChange = new Subject();
   public authStatusChange$ = this._authStatusChange.asObservable();
+  private _userDataChange = new Subject();
+  public userDataChange$ = this._userDataChange.asObservable();
 
   constructor(
     private _userHTTPService: UserHTTPService,
@@ -24,16 +26,17 @@ export class AuthService {
     private _localStorageService: LocalStorageService,
     private _ngZone: NgZone,
     private _configurationService: ConfigurationService,
-    private _notifyService: NotifyService,
-    //private _articlesService: ArticlesService
+    private _notifyService: NotifyService
   ) {
-   /* this._configurationService.configurationStatusChange$.subscribe(() => {
-      this._articlesService.allArticlesStateChange$.subscribe(() => {
-        if (!this._isCheckedIsUserLoggedIn) {
-          this.checkIfUserIsLoggedIn();
-        }
-      });
-    });*/
+    this._configurationService.configurationStatusChange$.subscribe(() => {
+      this._ngZone.runOutsideAngular(() =>
+        setTimeout(() => {
+          if (!this._isCheckedIsUserLoggedIn) {
+            this.checkIfUserIsLoggedIn();
+          }
+        }, 500)
+      );
+    });
   }
 
   public getUser() {
@@ -57,6 +60,7 @@ export class AuthService {
       response => {
         this._user = response;
         if (this._user && !this._user.status) {
+          this.isUserLoggedIn = true;
           this._changeAuthStatus(true);
           this._subscribeToUserDataChanges();
         }
@@ -73,6 +77,7 @@ export class AuthService {
     this._localStorageService.setUserLastVist(this._user);
     this._user = null;
     localStorage.removeItem('rememberUser');
+    this.isUserLoggedIn = false;
     this._changeAuthStatus(false);
     this._subscribed = false;
     this._updateCouner = 0;
@@ -118,15 +123,12 @@ export class AuthService {
     this._notifyService
       .subscribeToUserChanges(this._user.subscriptionId)
       .on('value', update => {
-        this._subscribed = true;
-        this._updateCouner += 1;
-        if (this._shouldUpdateUserData()) {
-          this._getUserData({ id: this._user.id });
+        let updateObj = update.val();
+        updateObj = JSON.parse(updateObj);
+        if (updateObj.payload) {
+          Object.assign(this._user, updateObj.payload);
+          this._userDataChange.next();
         }
       });
-  }
-
-  private _shouldUpdateUserData() {
-    return this._updateCouner > 1;
   }
 }

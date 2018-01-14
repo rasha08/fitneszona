@@ -20,7 +20,7 @@ export class ArticlesCounterService {
         response => {
           this.sendNumberOfNewArticlesToHeader(response);
         },
-        error => console.log(error)
+        error => {}
       );
   }
 

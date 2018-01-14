@@ -2,18 +2,25 @@ import { Injectable } from '@angular/core';
 
 import { UserHTTPService } from './user-http.service';
 import { AuthService } from './auth.service';
+import * as isEmpty from 'lodash/isEmpty';
 
 @Injectable()
 export class UserDataService {
-  _user;
+  private _user;
+  public userLoggedIn: any = false;
 
   constructor(
     private _userHttpService: UserHTTPService,
     private _authService: AuthService
   ) {
-    this._authService.authStatusChange$.subscribe(
-      _ => {console.log('Runned');this._user = this._getUser();}
-    )
+    this._authService.authStatusChange$.subscribe(status => {
+      this.userLoggedIn = status;
+      this._user = this._getUser();
+    });
+
+    this._authService.userDataChange$.subscribe(() => {
+      this._user = this._getUser();
+    });
   }
 
   public likeTag(tag, id) {
@@ -34,11 +41,11 @@ export class UserDataService {
     this._userHttpService.action(body, id);
   }
 
-  private _getUser(){
+  private _getUser() {
     return this._authService.getUser();
   }
 
-  public getUser(){
+  public getUser() {
     return this._user;
   }
 
@@ -48,9 +55,15 @@ export class UserDataService {
 
   public getUserVisitedCategories() {}
 
-  public getUserVisitedTags() {}
+  public getUserVisitedTextsIds() {
+    return this._user.visited_text_id ? this._user.visited_text_id : [];
+  }
 
-  public getUserVisitedTextsIds() {}
+  public getUserFavoriteTags() {
+    return this._user.favorite_tags && this._user.favorite_tags[0]
+      ? this._user.favorite_tags
+      : [];
+  }
 
   public predictTextsThatUserMightLike() {}
 }

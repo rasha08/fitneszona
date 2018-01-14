@@ -1,17 +1,17 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { NgForm, FormGroup } from "@angular/forms";
-import { Subscription } from "rxjs/Subscription"
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NgForm, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 
-import { ModalService } from "../../../services/modal.service";
-import { ValidatorService } from "../../../services/validator.service";
-import { AuthService } from "../.../../../../services/auth.service";
+import { ModalService } from '../../../services/modal.service';
+import { ValidatorService } from '../../../services/validator.service';
+import { AuthService } from '../.../../../../services/auth.service';
 import { ResponseService } from '../../../services/response.service';
 
-import { ResetPaswordComponent } from "../reset-password/reset-password";
+import { ResetPaswordComponent } from '../reset-password/reset-password';
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.html"
+  selector: 'app-login',
+  templateUrl: './login.html'
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public email;
@@ -62,9 +62,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public validate(param) {
-    if (param === "email") {
+    if (param === 'email') {
       this.isEmailValid = this._validtorService.isEmailValid(this.email);
-      console.log('validated param:')
     } else {
       this.isPasswordValid = this._validtorService.isPasswordValid(
         this.password

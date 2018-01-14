@@ -29,11 +29,11 @@ export class TopNavigationComponent implements OnInit {
 
   private _listenForUserStatusChange() {
     this._subscriptions.push(
-      this._authService.authStatusChange$.subscribe((notification) => {
-        if (notification === true){
-        this.user = this._authService.getUser();
-        this._changeDetectorRef.detectChanges();
-        }else {
+      this._authService.authStatusChange$.subscribe(notification => {
+        if (notification === true) {
+          this.user = this._authService.getUser();
+          this._changeDetectorRef.detectChanges();
+        } else {
           this.user = null;
         }
       }),
@@ -42,10 +42,9 @@ export class TopNavigationComponent implements OnInit {
           this.showLogIn = this._configurationService.getParam(
             'is_login_enabled'
           );
-          console.log(this.showLogIn);
           this._changeDetectorRef.detectChanges();
         },
-        error => console.log(error)
+        error => {}
       )
     );
   }

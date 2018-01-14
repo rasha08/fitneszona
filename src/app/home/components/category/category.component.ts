@@ -46,11 +46,9 @@ export class CategoryComponent extends SpecificCategoriesComponent
 
   ngOnInit() {
     super.ngOnInit();
-    console.log('CATEGORY INIT');
   }
 
   ngOnDestroy() {
-    console.log('DESTROY CATEGOTY');
     super.ngOnDestroy();
   }
 
@@ -68,6 +66,5 @@ export class CategoryComponent extends SpecificCategoriesComponent
     this.articles['main'] = this.articles[0];
     this.articles['featured'] = this.articles.slice(1, 4);
     this.articles['articles'] = this.articles.splice(4);
-    console.log(this.articles);
   }
 }

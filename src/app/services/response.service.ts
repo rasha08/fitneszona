@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { Subject } from "rxjs/Subject";
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
-import { AlertService } from "./alert.service";
+import { AlertService } from './alert.service';
 
 @Injectable()
 export class ResponseService {
@@ -15,58 +15,59 @@ export class ResponseService {
   public handleResponse(responseObject) {
     const status = responseObject.status;
     let message;
-    console.log("STATUS", status);
     switch (status) {
-      case "registration success":
+      case 'registration success':
         message = this._constructResponseMessage(
-          "succes",
-          "Dobrodošli",
-          "Uspešno ste se registrovali."
+          'succes',
+          'Dobrodošli',
+          'Uspešno ste se registrovali.'
         );
         break;
-      case "new password":
+      case 'new password':
         message = this._constructResponseMessage(
-          "succes",
-          "Uspešno ste resetovali Lozinku",
-          "Poštovani, na Vašu email adresu je poslata nova lozinka. Radi zaštite vaše privatnosti, poželjno je da odmah nakon prijavljivanja promenite lozinku. Hvala."
+          'succes',
+          'Uspešno ste resetovali Lozinku',
+          'Poštovani, na Vašu email adresu je poslata nova lozinka. Radi zaštite vaše privatnosti, poželjno je da odmah nakon prijavljivanja promenite lozinku. Hvala.'
         );
         break;
-      case "non existing user":
+      case 'non existing user':
         message = this._constructResponseMessage(
-          "error",
-          "Nepostojeći korisnik",
-          "Žao nam je, ali u na sajtu ne postoji korisnik sa datim kredencijalima."
-        );
-
-        this._shouldEmitStatus = true;
-        break;
-      case "wrong password":
-        message = this._constructResponseMessage(
-          "error",
-          "Pogrešna Lozinka",
-          "Žao nam je, uneli ste pogrešnu lozinku."
+          'error',
+          'Nepostojeći korisnik',
+          'Žao nam je, ali u na sajtu ne postoji korisnik sa datim kredencijalima.'
         );
 
         this._shouldEmitStatus = true;
         break;
-      case "login success":
-        message = this._constructResponseMessage("login success", "", "");
+      case 'wrong password':
+        message = this._constructResponseMessage(
+          'error',
+          'Pogrešna Lozinka',
+          'Žao nam je, uneli ste pogrešnu lozinku.'
+        );
 
         this._shouldEmitStatus = true;
         break;
-      case "registration success":
+      case 'login success':
+        message = this._constructResponseMessage('login success', '', '');
+
+        this._shouldEmitStatus = true;
+        break;
+      case 'registration success':
         message = this._constructResponseMessage(
-          "registration success",
-          "Uspešno ste se registrovali!",
-          "Poštovani, Vaš zahtev za registraciju je odobren. Možete se prijaviti na svoj nalog.");
+          'registration success',
+          'Uspešno ste se registrovali!',
+          'Poštovani, Vaš zahtev za registraciju je odobren. Možete se prijaviti na svoj nalog.'
+        );
 
         break;
-       case "user already registered":
+      case 'user already registered':
         message = this._constructResponseMessage(
-          "error",
-          "Nalog već postoji!",
-          "Poštovani, korisnik sa datom email adresom je već registrovan, molimo Vas proverite tačnost unete email adrese.");
-        
+          'error',
+          'Nalog već postoji!',
+          'Poštovani, korisnik sa datom email adresom je već registrovan, molimo Vas proverite tačnost unete email adrese.'
+        );
+
         this._shouldEmitStatus = true;
         break;
       default:

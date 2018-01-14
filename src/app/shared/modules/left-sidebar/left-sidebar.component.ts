@@ -12,6 +12,7 @@ import { ConfigurationService } from '../../../services/configuration.service';
 import { AuthService } from '../../../services/auth.service';
 import { ArticlesService } from '../../../services/articles.service';
 import { ReplacmentListService } from './services/replacment-list.service';
+import { UserDataService } from '../../../services/user-data.service';
 
 @Component({
   selector: 'left-sidebar-component',
@@ -32,7 +33,8 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _articlesService: ArticlesService,
     private _replacmentListService: ReplacmentListService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private _userDataService: UserDataService
   ) {}
 
   ngOnInit() {
@@ -98,27 +100,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   private _subscribeToUserLogInEvent() {
     this._subscriptions.push(
       this._authService.authStatusChange$.subscribe(isLoggedIn => {
-        if (!isLoggedIn) {
-          this._populateSidebar();
-          return;
-        }
-
-        this.tags = this.tagsInSidebar.concat(this.tagsInReplacmentList);
-        let userFavTags = this.getUserFavoriteTags();
-        if (userFavTags.length < 6) {
-          return;
-        }
-
-        this.tagsInSidebar = [];
-        this._tagsPriorityList.map(tag => {
-          let tagIndex = this.tags.findIndex(tagObj => tagObj.name === tag);
-          if (userFavTags.indexOf(tag) === -1) {
-            this.tagsInReplacmentList.push(this.tags[tagIndex]);
-          } else {
-            this.tagsInSidebar.push(this.tags[tagIndex]);
-          }
-        });
-
+        this._populateSidebar(true);
         this._changeDetectorRef.detectChanges();
       })
     );
@@ -127,7 +109,6 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   private _subscribeToShouldResortSidebar() {
     this._subscriptions.push(
       this._articlesService.sholudResortTags$.subscribe(() => {
-        console.log('next');
         this._populateSidebar(true);
         this._changeDetectorRef.detectChanges();
       })
@@ -150,18 +131,16 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   public setUserFavoriteTags(tag, index) {
     if (this.getUser()) {
       let id = this.getUserId();
-      let userFavTags = this.getUserFavoriteTags();
+      const userFavTags = this._userDataService.getUserFavoriteTags();
       if (userFavTags.length < 6) {
-        let tagNames = this.getNamesOfTagsInTagsList(this.tagsInSidebar);
+        const tagNames = this.getNamesOfTagsInTagsList(this.tagsInSidebar);
         this.initialiseUserTagsInLeftSidebar(id, tagNames);
       } else {
         this._replacmentListService.replaceUserTagInSidebar(id, tag, index);
       }
-    } else {
-      console.log('User not loged in');
     }
   }
-  
+
   private _populateSidebar(shouldRepopulate?) {
     this._filteredArticles = [];
     this.tags = [];
@@ -197,18 +176,42 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       this.tagsInSidebar = this.tags.splice(0, 6);
       this.tagsInReplacmentList = this.tags.splice(0, this.tags.length);
     } else {
-      this.tagsInSidebar = this.tagsInSidebar.map(tag => {
-        const foundedTag = this.tags.find(
-          singleTag => singleTag.name === tag.name
-        );
-        if (!foundedTag) {
-          return this.tagsInReplacmentList.pop();
-        }
+      if (
+        this._authService.isUserLoggedIn &&
+        this._userDataService.getUserFavoriteTags().length
+      ) {
+        this.tagsInSidebar = this._userDataService
+          .getUserFavoriteTags()
+          .map(tag => {
+            const foundedTag = this.tags.find(
+              singleTag => singleTag.name === tag
+            );
+            if (!foundedTag) {
+              return this.tagsInReplacmentList.pop();
+            }
 
-        return foundedTag;
-      });
+            return foundedTag;
+          });
+      } else {
+        this.tagsInSidebar = this.tagsInSidebar.map(tag => {
+          const foundedTag = this.tags.find(
+            singleTag => singleTag.name === tag.name
+          );
+          if (!foundedTag) {
+            return this.tagsInReplacmentList.pop();
+          }
+
+          return foundedTag;
+        });
+      }
+
       this.tagsInReplacmentList.map(tag => {
-        return this.tags.find(singleTag => singleTag.name === tag.name);
+        return this.tags.find(singleTag => {
+          if (singleTag && tag) {
+            return singleTag.name === tag.name;
+          }
+          return;
+        });
       });
     }
   }
@@ -232,12 +235,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   public initialiseUserTagsInLeftSidebar(id, tags) {
-    console.log('Tags in sidebar is cnaging');
     this._replacmentListService.initialiseUserTagsInLeftSidebar(id, tags);
-  }
-
-  getUserFavoriteTags() {
-    return this._authService.getUser().favorite_tags || false;
   }
 
   getUserId() {

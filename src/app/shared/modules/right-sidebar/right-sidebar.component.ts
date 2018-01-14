@@ -4,13 +4,11 @@ import { Subscription } from 'rxjs/Subscription';
 import { ArticlesService } from '../../../services/articles.service';
 import { VisitedArticlesService } from '../../../services/visited-articles.service';
 
-
-
 @Component({
   selector: 'app-right-sidebar',
   templateUrl: './right-sidebar.html'
 })
-export class RightSidebarComponent implements OnInit, OnDestroy{
+export class RightSidebarComponent implements OnInit, OnDestroy {
   public isSidebarOpen = false;
   public isRecomendedTabActive = true;
   public activeTab = 'recomended';
@@ -22,7 +20,7 @@ export class RightSidebarComponent implements OnInit, OnDestroy{
     private _articleService: ArticlesService,
     private _visitedArticlesService: VisitedArticlesService,
     private _changeDetectorRef: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit() {
     this._subscibeToAllArticlesFetchEvent();
@@ -30,7 +28,7 @@ export class RightSidebarComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
-    this._subscription.forEach( subscription => subscription.unsubscribe());
+    this._subscription.forEach(subscription => subscription.unsubscribe());
   }
 
   private _subscibeToAllArticlesFetchEvent() {
@@ -44,7 +42,6 @@ export class RightSidebarComponent implements OnInit, OnDestroy{
   private _subscibeToShouldRepoplulateSidebar() {
     this._articleService.sholudResortTags$.subscribe(() => {
       this.historyArticles = this._articleService.getArticlesMarketsForHistory();
-      console.log('Calling repopulate sidebar from shouldreplace');
       this.populateRightSidebar();
       this._changeDetectorRef.detectChanges();
     });
@@ -60,7 +57,6 @@ export class RightSidebarComponent implements OnInit, OnDestroy{
   }
 
   public populateRightSidebar() {
-   this.articles = this._articleService.getArticlesForRightSidebar();
+    this.articles = this._articleService.getArticlesForRightSidebar();
   }
-
 }
