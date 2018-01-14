@@ -30,13 +30,11 @@ export class SearchService {
     }
 
     public filterArticles(phrase, articles){
-        console.log(articles);
         phrase = phrase.replace(/s/gi, '[šs]').replace(/c/gi,'[cćč]').replace(/z/gi,'[zž]');
         const pattern = new RegExp(`\\b${phrase}\\b`, 'i');
-        console.log(pattern);
-        let result = [];
-        let filteredArticles = [];
-        for (let article of articles){
+        const result = [];
+        const filteredArticles = [];
+        for (const article of articles){
             if (pattern.test(article.title)) {
                 article['foundIn'] = 'title';
                 result.push(article);

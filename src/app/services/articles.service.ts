@@ -82,7 +82,6 @@ export class ArticlesService {
         this.latestArticles = response.latestArticles;
         this.indexArticles = response.indexPageArticles;
         this.allArticlesStateChange(true);
-        console.log('allArticles fetched');
         this.formatArticlesForAutoComplete();
         this.allArticlesFetched = true;
         this.subscribeToAllArticlesChanges();

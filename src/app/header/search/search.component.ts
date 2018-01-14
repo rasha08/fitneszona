@@ -19,7 +19,7 @@ export class SearchComponent implements OnDestroy, OnInit {
   private _sendToSearchService = new Subject();
   private _subscription: Subscription[] = [];
   public errorMessage;
-  public result: any;
+  public result;
   private _userLikedCategories = [];
   private _userLikedTags = [];
   private _userVisitedCtegories = [];

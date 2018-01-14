@@ -9,12 +9,9 @@
         </h4>
         <div class="row" *ngIf="results">
           <div class="card horizontal col s12 m5 z-depth-5" *ngFor="let article of data.results">
-            <div class="card-image">
-              <img [src]="article.image_url" class="responsive-img">
-            </div>
             <div class="card-stacked">
               <div class="card-content">
-                <p>{{ article.title }}</p>
+                <p>{{ article.text.slice(0,100) }}...</p>
               </div>
               <div class="card-action">
                 <a [routerLink]="getArticleUrl(article)" (click)="close()">otvori...</a>

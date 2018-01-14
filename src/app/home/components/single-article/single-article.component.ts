@@ -60,13 +60,11 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
   private _subscribeToArticleFetchedEvent() {
     this._subscriptions.push(
       this._articlesService.fetchedSingleArticle$.subscribe(article => {
-        console.log('here');
         this._detectChanges();
         if (article['status']) {
           this._location.back();
           return;
         }
-        console.log(article);
         this.article = this._transformHtml(article);
         this._detectChanges();
         this._subscribeToArticleUpdateEvent();
@@ -76,7 +74,6 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
           $('.tooltipped').tooltip({ delay: 50 });
         }
         this._detectChanges();
-        console.log('done');
       })
     );
   }
