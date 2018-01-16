@@ -83,10 +83,10 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userChosenCategories.push(category);
     } else {
       const categoryIndex = this.userChosenCategories.findIndex(
-        categoryInArray => categoryInArray.name === category.name
-      );
+        (categoryInArray) => categoryInArray.name === category.name);
       this.userChosenCategories.splice(categoryIndex, 1);
     }
+    console.log(this.userChosenCategories);
   }
 
   public isCategorySelected(category) {
@@ -105,6 +105,7 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       const tagIndex = this.userChosenTags.indexOf(tag);
       this.userChosenTags.splice(tagIndex, 1);
     }
+    console.log(this.userChosenTags);
   }
 
   public isTagSelected(tag) {
@@ -114,6 +115,7 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   public setUserTheme(theme) {
     console.log(theme);
     this.userChosenTheme = theme;
+    console.log(this.userChosenTheme);
   }
 
   public isThemeSelected(theme) {
@@ -122,6 +124,7 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public setNumberOfTexts(number) {
     this.numberOfTextInLeftSidebar = number;
+    console.log(this.numberOfTextInLeftSidebar);
   }
 
   public isNumberOfTextInLeftSidebarSelected(number) {
@@ -168,5 +171,23 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public getThemes() {
     this.themes = this._configurationService.getParam('validThemeOptions');
+  }
+
+  public isTagInArray(tag) {
+    return this.userChosenTags.indexOf(tag) !== -1 ? 'green' : 'red';
+  }
+
+  public isThemeChoosen(theme) {
+    return this.userChosenTheme === theme ? 'green' : 'red';
+  }
+
+  public isCategoryInArray(category) {
+    return this.userChosenCategories.findIndex(
+      categoryInArray => categoryInArray.name === category.name
+    ) !== -1 ? 'green' : 'red';
+  }
+
+  public isNumberOfArticlesChoosen(value) {
+    return this.numberOfTextInLeftSidebar === value ? 'green' : 'red';
   }
 }

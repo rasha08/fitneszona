@@ -74,6 +74,7 @@ export class AuthService {
     );
   }
   public logout() {
+    console.log(this._user);
     this._localStorageService.setUserLastVist(this._user);
     this._user = null;
     localStorage.removeItem('rememberUser');

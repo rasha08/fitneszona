@@ -65,5 +65,11 @@ export class UserDataService {
       : [];
   }
 
-  public predictTextsThatUserMightLike() {}
+  public getUserNotifications() {
+    return this._user.notifications && this._user.notifications !== [] ? this._user.notifications : [];
+  }
+
+  public predictTextsThatUserMightLike() {
+
+  }
 }

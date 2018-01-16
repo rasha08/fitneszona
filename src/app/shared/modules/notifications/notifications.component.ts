@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../../../services/auth.service';
 import { NotifyService } from '../../../services/notify.service';
+import { UserDataService } from '../../../services/user-data.service';
 declare const $: any;
 
 @Component({
@@ -20,9 +21,11 @@ export class NotificationsComponent
   private _updateCouner = 0;
   private _activeNotifications: Array<any> = [];
   private _subscriptions = [];
+  public notifications = [];
   constructor(
     private _authService: AuthService,
     private _notifyService: NotifyService,
+    private _userDataService: UserDataService,
     private _changeDetectorRef: ChangeDetectorRef
   ) {}
 
@@ -37,6 +40,7 @@ export class NotificationsComponent
   private _subscribeToUserStatusChange() {
     this._subscriptions.push(
       this._authService.authStatusChange$.subscribe(status => {
+        this.getNotifications(status);
         if (status) {
           this._notifyService
             .subscribeToUserChanges(
@@ -46,6 +50,7 @@ export class NotificationsComponent
               const updateObj = update.val();
               this._updateCouner += 1;
               if (this._shouldFetchNotifications(updateObj['type'])) {
+                console.log(updateObj['payload']);
               }
             });
         }
@@ -58,4 +63,26 @@ export class NotificationsComponent
   private _shouldFetchNotifications(type): boolean {
     return this._updateCouner > 1 && type === 'notification';
   }
+
+  closeNotification(notification) {
+    console.log(this.notifications)
+    const notificationIndex = this.notifications.findIndex(
+      (notificationInArray) => notification.id === notificationInArray.id
+    );
+    this.notifications.splice(notificationIndex, 1);
+    console.log(this.notifications);
+  }
+
+  isNotifications() {
+    return this.notifications.length > 0;
+  }
+
+  getNotifications(status) {
+    if (status === true) {
+      this.notifications = this._userDataService.getUserNotifications();
+    }else {
+      this.notifications = [];
+    }
+  }
+
 }
