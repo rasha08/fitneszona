@@ -23,15 +23,4 @@ export class NotifyService {
   public subscribeToAllArticlesChanges(id) {
     return database().ref(`/all_articles_fb/${id}`);
   }
-
-  public clearNotification(notificationId) {
-    const url = this.BASE_URL + `/api/notification/${notificationId}/seen-notification`;
-    console.log('url of notification', url);
-
-    this._http.get(url)
-      .subscribe(
-        response => console.log('Notification response:', response.text()),
-        error => console.log('Notificition error:', error)
-      )
-  }
 }

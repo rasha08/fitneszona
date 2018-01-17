@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { AuthService } from '../../../services/auth.service';
 import { NotifyService } from '../../../services/notify.service';
 import { UserDataService } from '../../../services/user-data.service';
+import { UserNotifyService } from '../../../services/user-notify.service';
 declare const $: any;
 
 @Component({
@@ -26,11 +27,13 @@ export class NotificationsComponent
     private _authService: AuthService,
     private _notifyService: NotifyService,
     private _userDataService: UserDataService,
+    private _userNotifyService: UserNotifyService,
     private _changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this._subscribeToUserStatusChange();
+    this._subscribeToUserNotificationChange();
   }
 
   ngOnDestroy() {
@@ -58,6 +61,17 @@ export class NotificationsComponent
     );
   }
 
+  private _subscribeToUserNotificationChange() {
+    this._subscriptions.push(
+      this._authService.userNotificationChange.subscribe(
+        notification => {
+          console.log(notification);
+          this.notifications.push(notification);
+        }
+      )
+    )
+  }
+
   ngAfterViewInit() {}
 
   private _shouldFetchNotifications(type): boolean {
@@ -68,7 +82,7 @@ export class NotificationsComponent
     const notificationIndex = this.notifications.findIndex(
       (notificationInArray) => notification.id === notificationInArray.id
     );
-    this._notifyService.clearNotification(notification.id);
+    this._userNotifyService.clearNotification(notification.id);
     this.notifications.splice(notificationIndex, 1);
   }
 
@@ -79,6 +93,7 @@ export class NotificationsComponent
   getNotifications(status) {
     if (status === true) {
       this.notifications = this._userDataService.getUserNotifications();
+      console.log(this.notifications);
     }else {
       this.notifications = [];
     }

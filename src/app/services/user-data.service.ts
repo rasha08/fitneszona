@@ -70,6 +70,13 @@ export class UserDataService {
   }
 
   public predictTextsThatUserMightLike() {
+  }
 
+  public getUserConfiguration() {
+    if (this._user !== undefined) {
+      return this._user.configuration;
+    }else {
+      return false;
+    }
   }
 }
