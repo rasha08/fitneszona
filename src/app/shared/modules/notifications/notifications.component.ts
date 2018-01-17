@@ -65,12 +65,11 @@ export class NotificationsComponent
   }
 
   closeNotification(notification) {
-    console.log(this.notifications)
     const notificationIndex = this.notifications.findIndex(
       (notificationInArray) => notification.id === notificationInArray.id
     );
+    this._notifyService.clearNotification(notification.id);
     this.notifications.splice(notificationIndex, 1);
-    console.log(this.notifications);
   }
 
   isNotifications() {
