@@ -1,11 +1,14 @@
 <div id="modal" class="modal bottom-sheet z-depth-5 lg">
+  <div class="modal-header">
+    <h2>Registracija Novog Korisnika</h2>
+  </div>
   <div class="modal-content">
     <div class="row">
-      <h4 *ngIf="message" class="error"> Korisnik vec postoji </h4>
+      <h5 *ngIf="message" class="error"> Korisnik vec postoji </h5>
       <div class="col s12">
         <div class="row">
           <div class="input-field col s6">
-            <i class="material-icons prefix" [ngClass]="{'error': !isFirstnameValid  }">Firstname</i>
+            <i class="material-icons prefix" [ngClass]="{'error': !isFirstnameValid  }">account</i>
             <input id="first_name" type="text" class="validate" value="firstname" [(ngModel)]="_userObj.firstName" (blur)="validate('firstname')">
             <label for="first_name">
               <span [ngClass]="{'error': !isEmailValid  }">
@@ -14,7 +17,7 @@
             </label>
           </div>
           <div class="input-field col s6">
-            <i class="material-icons prefix" [ngClass]="{'error': !isLastnameValid  }">Lastname</i>
+            <i class="material-icons prefix" [ngClass]="{'error': !isLastnameValid  }">account</i>
             <input id="last_name" type="text" class="validate" [(ngModel)]="_userObj.lastName" (blur)="validate('lastname')">
             <label for="last_name">
               <span [ngClass]="{'error': !isEmailValid  }">
@@ -25,7 +28,7 @@
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <i class="material-icons prefix" [ngClass]="{'error': !isPasswordValid  }">Password</i>
+            <i class="material-icons prefix" [ngClass]="{'error': !isPasswordValid  }">password</i>
             <input id="password" type="password" class="validate" [(ngModel)]="_userObj.password" (blur)="validate('password')">
             <label for="password">
               <span [ngClass]="{'error': !isEmailValid  }">

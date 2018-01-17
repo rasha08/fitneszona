@@ -22,14 +22,6 @@ export class ModalService {
 
     this._isOpen = true;
     this._openModal.next(modalData);
-    $('#modal').css({
-      '-webkit-transition': 'transform 0.8s ease-in-out !important',
-      '-moz-transition': 'transform 0.8s ease-in-out !important',
-      transition: 'transform 0.8s ease-in-out !important',
-      display: 'block',
-      transform: 'rotateX(270deg) translate3d(200%,100%, 25%) scaleX(1)'
-    });
-
     $('.application').addClass('disabled');
     this._ngZone.runOutsideAngular(() =>
       setTimeout(() => $('#modal').addClass('open'), 0)
