@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  AfterViewInit,
-  ChangeDetectorRef
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { BottomMenuService } from './services/bottom-menu.service';
@@ -12,13 +6,11 @@ import { AuthService } from '../../../services/auth.service';
 import { ConfigurationService } from '../../../services/configuration.service';
 import { UserDataService } from '../../../services/user-data.service';
 
-declare const $: any;
-
 @Component({
   selector: 'app-bottom-menu',
   templateUrl: './bottom-menu.html'
 })
-export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
+export class BottomMenuComponent implements OnInit, OnDestroy {
   public isBottomMenuOpen = false;
   private _subscriptions: Array<Subscription> = [];
   public numberOfTextInLeftSidebar = null;
@@ -63,21 +55,12 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       this._authService.authStatusChange$.subscribe(status => {
         if (status) {
           this.setCurrentUserConfiguration();
-          console.log(
-            this.userChosenTheme,
-            this.userChosenTags,
-            this.userChosenCategories,
-            this.numberOfTextInLeftSidebar
-          );
+          this._changeDetectorRef.detectChanges();
         } else {
           this.resetConfiguration();
         }
       })
     );
-  }
-
-  ngAfterViewInit() {
-    $('select').material_select();
   }
 
   private _listenForBottomMenuStatusChange() {
@@ -111,11 +94,11 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public isCategorySelected(category) {
-    return (
-      this.userChosenCategories.find(
-        categoryInArray => category.name === categoryInArray.name
-      ) !== undefined
-    );
+    return this.userChosenCategories
+      ? this.userChosenCategories.find(
+          categoryInArray => category.name === categoryInArray.name
+        ) !== undefined
+      : false;
   }
 
   public addOrRemoveUserTags(tag) {
@@ -130,7 +113,7 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public isTagSelected(tag) {
-    return this.userChosenTags.indexOf(tag) > -1;
+    return this.userChosenTags ? this.userChosenTags.indexOf(tag) > -1 : false;
   }
 
   public setUserTheme(theme) {
@@ -172,7 +155,6 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     const userId = this.getUserId();
     if (userId !== false) {
       this._bottomMenuService.setUserConfiguration(configuration, userId);
-      console.log('Salje se na server');
     } else {
     }
   }
@@ -211,20 +193,19 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public setCurrentUserConfiguration() {
     const userConfiguration = this._userDataService.getUserConfiguration();
-    if (userConfiguration !== false) {
-      if (userConfiguration.thema !== null) {
-        this.userChosenTheme = userConfiguration.thema;
-      }
-      if (userConfiguration.categories_in_navigation !== 'null') {
-        this.userChosenCategories = userConfiguration.configuration_in_navbar;
-      }
-      if (userConfiguration.number_of_texts_in_left_sidebar !== null) {
-        this.numberOfTextInLeftSidebar =
-          userConfiguration.number_of_texts_in_left_sidebar;
-      }
-      if (userConfiguration.noritification_for_themes !== 'null') {
-        this.userChosenTags = userConfiguration.noritification_for_themes;
-      }
+    if (userConfiguration) {
+      this.userChosenTheme = userConfiguration.thema
+        ? userConfiguration.thema
+        : null;
+      this.userChosenCategories = userConfiguration.categories_in_navigation
+        ? JSON.parse(userConfiguration.categories_in_navigation)
+        : [];
+      this.numberOfTextInLeftSidebar = userConfiguration.number_of_texts_in_left_sidebar
+        ? userConfiguration.number_of_texts_in_left_sidebar
+        : null;
+      this.userChosenTags = userConfiguration.noritification_for_themes
+        ? JSON.parse(userConfiguration.noritification_for_themes)
+        : [];
     }
   }
 

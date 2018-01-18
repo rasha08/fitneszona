@@ -66,16 +66,17 @@ export class UserDataService {
   }
 
   public getUserNotifications() {
-    return this._user.notifications && this._user.notifications !== [] ? this._user.notifications : [];
+    return this._user.notifications && this._user.notifications !== []
+      ? this._user.notifications
+      : [];
   }
 
-  public predictTextsThatUserMightLike() {
-  }
+  public predictTextsThatUserMightLike() {}
 
   public getUserConfiguration() {
-    if (this._user !== undefined) {
+    if (this._user) {
       return this._user.configuration;
-    }else {
+    } else {
       return false;
     }
   }

@@ -36,7 +36,7 @@ export class AuthService {
           if (!this._isCheckedIsUserLoggedIn) {
             this.checkIfUserIsLoggedIn();
           }
-        }, 500)
+        }, 1500)
       );
     });
   }
@@ -127,7 +127,11 @@ export class AuthService {
       .subscribeToUserChanges(this._user.subscriptionId)
       .on('value', update => {
         let updateObj = update.val();
-        updateObj = JSON.parse(JSON.parse(updateObj));
+        try {
+          updateObj = JSON.parse(updateObj);
+        } catch (e) {
+          console.info('Wrong JSON format');
+        }
         if (updateObj.type === 'notification') {
           this._userNotificationChange.next(updateObj.payload);
         } else if (updateObj.payload) {
