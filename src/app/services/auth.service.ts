@@ -126,12 +126,22 @@ export class AuthService {
     this._notifyService
       .subscribeToUserChanges(this._user.subscriptionId)
       .on('value', update => {
-        let updateObj = update.val();
-        try {
-          updateObj = JSON.parse(updateObj);
-        } catch (e) {
-          console.info('Wrong JSON format');
+        this._updateCouner += 1;
+        if (!this._shouldUpdate()) {
+          return;
         }
+
+        let updateObj = update.val();
+        let canParseJSON = true;
+
+        do {
+          try {
+            updateObj = JSON.parse(updateObj);
+          } catch (e) {
+            canParseJSON = false;
+          }
+        } while (canParseJSON);
+
         if (updateObj.type === 'notification') {
           this._userNotificationChange.next(updateObj.payload);
         } else if (updateObj.payload) {
@@ -139,5 +149,9 @@ export class AuthService {
           this._userDataChange.next();
         }
       });
+  }
+
+  private _shouldUpdate() {
+    return this._updateCouner > 1;
   }
 }
