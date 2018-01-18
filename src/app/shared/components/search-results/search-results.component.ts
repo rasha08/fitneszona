@@ -17,7 +17,7 @@ export class SearchResultsComponent implements AfterContentChecked {
 
   ngAfterContentChecked() {
     this.title = this.data.title;
-    if (Array.isArray(this.data.results)){
+    if (Array.isArray(this.data.results)) {
       this.results = true;
       this.message = false;
     }

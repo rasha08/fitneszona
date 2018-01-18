@@ -8,6 +8,7 @@ import { ArticlesService } from '../../services/articles.service';
 import { AuthService } from '../../services/auth.service';
 import { ModalService } from '../../services/modal.service';
 import { UtilsService } from '../../services/utils.service';
+import { UserDataService } from '../../services/user-data.service';
 
 import { SearchResultsComponent } from '../../shared/components/search-results/search-results.component';
 
@@ -29,14 +30,14 @@ export class SearchComponent implements OnDestroy, OnInit {
   public autocompleteResultsList = [];
   public searchPhrase = '';
 
-
   constructor(
     private _searchService: SearchService,
     private _articlesService: ArticlesService,
     private _authService: AuthService,
     private _modalService: ModalService,
     private _utilsService: UtilsService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private _userDataService: UserDataService
   ) {}
 
   ngOnInit() {
@@ -160,14 +161,14 @@ export class SearchComponent implements OnDestroy, OnInit {
     }
     if (
       this._userLikedTags.find(likedTag => {
-        return article.tags.split('|').find(tag => tag === likedTag);
+        return article.tags.find(tag => tag === likedTag);
       })
     ) {
       result += points[2];
     }
     if (
       this.userVisitedTags.find(visitedTag => {
-        return article.tags.split('|').find(tag => tag === visitedTag);
+        return article.tags.find(tag => tag === visitedTag);
       })
     ) {
       result += points[0];
@@ -180,19 +181,19 @@ export class SearchComponent implements OnDestroy, OnInit {
   }
 
   private _getUserLikedTags() {
-    return this._authService.getUser()['liked_tags'];
+    return this._userDataService.getUserLikedTags();
   }
 
   private _getUserLikedCategories() {
-    return this._authService.getUser()['liked_categories'];
+    return this._userDataService.getUserLikedCategories();
   }
 
   private _getUserVisitedCategories() {
-    return this._authService.getUser()['visited_categories'];
+    return this._userDataService.getUserVisitedCategories();
   }
 
   private _getUserVisitedTags() {
-    return this._authService.getUser()['visited_tags'];
+    return this._userDataService.getUserVisitedTags();
   }
 
   public resetAutoCompleteResults() {

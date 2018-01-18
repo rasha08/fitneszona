@@ -90,6 +90,7 @@ export class ArticlesService {
           text: article.text,
           title: articleShortMarket.title,
           imageUrl: articleShortMarket.thumb_image_url,
+          tags: articleShortMarket.tags,
           link: `/tekstovi/${articleShortMarket.categoryUrlSlug}/${
             articleShortMarket.article_title_url_slug
           }`

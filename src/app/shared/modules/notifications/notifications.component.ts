@@ -43,7 +43,6 @@ export class NotificationsComponent
   private _subscribeToUserNotificationChange() {
     this._subscriptions.push(
       this._authService.userNotificationChange.subscribe(notification => {
-        console.log(notification);
         this.notifications.push(notification);
         this._isNotificationActive = false;
         this._changeDetectorRef.detectChanges();
