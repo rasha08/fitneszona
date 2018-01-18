@@ -60,17 +60,20 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private _subscribeToUserLogInEvent() {
     this._subscriptions.push(
-      this._authService.authStatusChange$.subscribe(
-        status => {
-          if (status) {
-            this.setCurrentUserConfiguration();
-            console.log(this.userChosenTheme, this.userChosenTags, this.userChosenCategories, this.numberOfTextInLeftSidebar);
-          } else {
-            this.resetConfiguration();
-          }
+      this._authService.authStatusChange$.subscribe(status => {
+        if (status) {
+          this.setCurrentUserConfiguration();
+          console.log(
+            this.userChosenTheme,
+            this.userChosenTags,
+            this.userChosenCategories,
+            this.numberOfTextInLeftSidebar
+          );
+        } else {
+          this.resetConfiguration();
         }
-      )
-    )
+      })
+    );
   }
 
   ngAfterViewInit() {
@@ -101,7 +104,8 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userChosenCategories.push(category);
     } else {
       const categoryIndex = this.userChosenCategories.findIndex(
-        (categoryInArray) => categoryInArray.name === category.name);
+        categoryInArray => categoryInArray.name === category.name
+      );
       this.userChosenCategories.splice(categoryIndex, 1);
     }
   }
@@ -167,15 +171,8 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     const userId = this.getUserId();
     if (userId !== false) {
-<<<<<<< HEAD
       this._bottomMenuService.setUserConfiguration(configuration, userId);
       console.log('Salje se na server');
-=======
-      this._bottomMenuService.setUserConfiguration(
-        JSON.stringify(configuration),
-        userId
-      );
->>>>>>> master
     } else {
     }
   }
@@ -203,7 +200,9 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   public isCategoryInArray(category) {
     return this.userChosenCategories.findIndex(
       categoryInArray => categoryInArray.name === category.name
-    ) !== -1 ? 'green' : 'red';
+    ) !== -1
+      ? 'green'
+      : 'red';
   }
 
   public isNumberOfArticlesChoosen(value) {
@@ -220,7 +219,8 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
         this.userChosenCategories = userConfiguration.configuration_in_navbar;
       }
       if (userConfiguration.number_of_texts_in_left_sidebar !== null) {
-        this.numberOfTextInLeftSidebar = userConfiguration.number_of_texts_in_left_sidebar;
+        this.numberOfTextInLeftSidebar =
+          userConfiguration.number_of_texts_in_left_sidebar;
       }
       if (userConfiguration.noritification_for_themes !== 'null') {
         this.userChosenTags = userConfiguration.noritification_for_themes;
