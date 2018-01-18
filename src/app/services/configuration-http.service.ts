@@ -9,7 +9,6 @@ import "rxjs/add/operator/map";
 
 export class ConfigurationHTTPService {
     public BASE_URL: string = 'https://fitneszona.rs';
-    
     constructor(
         private _http: Http,
         private _ngZone: NgZone

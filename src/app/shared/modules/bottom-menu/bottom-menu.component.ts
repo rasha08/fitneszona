@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { BottomMenuService } from './services/bottom-menu.service';
 import { AuthService } from '../../../services/auth.service';
 import { ConfigurationService } from '../../../services/configuration.service';
+import { UserDataService } from '../../../services/user-data.service';
 
 declare const $: any;
 
@@ -32,12 +33,14 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     private _bottomMenuService: BottomMenuService,
     private _authService: AuthService,
     private _configurationService: ConfigurationService,
+    private _userDataService: UserDataService,
     private _changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this._listenForBottomMenuStatusChange();
     this._subscribeToConfigurationFetchEvent();
+    this._subscribeToUserLogInEvent();
   }
 
   ngOnDestroy() {
@@ -53,6 +56,21 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
         this._changeDetectorRef.detectChanges();
       })
     );
+  }
+
+  private _subscribeToUserLogInEvent() {
+    this._subscriptions.push(
+      this._authService.authStatusChange$.subscribe(
+        status => {
+          if (status) {
+            this.setCurrentUserConfiguration();
+            console.log(this.userChosenTheme, this.userChosenTags, this.userChosenCategories, this.numberOfTextInLeftSidebar);
+          } else {
+            this.resetConfiguration();
+          }
+        }
+      )
+    )
   }
 
   ngAfterViewInit() {
@@ -83,8 +101,7 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userChosenCategories.push(category);
     } else {
       const categoryIndex = this.userChosenCategories.findIndex(
-        categoryInArray => categoryInArray.name === category.name
-      );
+        (categoryInArray) => categoryInArray.name === category.name);
       this.userChosenCategories.splice(categoryIndex, 1);
     }
   }
@@ -98,7 +115,6 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public addOrRemoveUserTags(tag) {
-    console.log(tag);
     if (
       this.userChosenTags.find(tagInArray => tag === tagInArray) === undefined
     ) {
@@ -114,7 +130,6 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public setUserTheme(theme) {
-    console.log(theme);
     this.userChosenTheme = theme;
   }
 
@@ -152,10 +167,16 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     const userId = this.getUserId();
     if (userId !== false) {
+<<<<<<< HEAD
       this._bottomMenuService.setUserConfiguration(configuration, userId);
       console.log('Salje se na server');
+=======
+      this._bottomMenuService.setUserConfiguration(
+        JSON.stringify(configuration),
+        userId
+      );
+>>>>>>> master
     } else {
-      console.log('Korisnik nije ulogovn');
     }
   }
 
@@ -169,5 +190,48 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public getThemes() {
     this.themes = this._configurationService.getParam('validThemeOptions');
+  }
+
+  public isTagInArray(tag) {
+    return this.userChosenTags.indexOf(tag) !== -1 ? 'green' : 'red';
+  }
+
+  public isThemeChoosen(theme) {
+    return this.userChosenTheme === theme ? 'green' : 'red';
+  }
+
+  public isCategoryInArray(category) {
+    return this.userChosenCategories.findIndex(
+      categoryInArray => categoryInArray.name === category.name
+    ) !== -1 ? 'green' : 'red';
+  }
+
+  public isNumberOfArticlesChoosen(value) {
+    return this.numberOfTextInLeftSidebar === value ? 'green' : 'red';
+  }
+
+  public setCurrentUserConfiguration() {
+    const userConfiguration = this._userDataService.getUserConfiguration();
+    if (userConfiguration !== false) {
+      if (userConfiguration.thema !== null) {
+        this.userChosenTheme = userConfiguration.thema;
+      }
+      if (userConfiguration.categories_in_navigation !== 'null') {
+        this.userChosenCategories = userConfiguration.configuration_in_navbar;
+      }
+      if (userConfiguration.number_of_texts_in_left_sidebar !== null) {
+        this.numberOfTextInLeftSidebar = userConfiguration.number_of_texts_in_left_sidebar;
+      }
+      if (userConfiguration.noritification_for_themes !== 'null') {
+        this.userChosenTags = userConfiguration.noritification_for_themes;
+      }
+    }
+  }
+
+  public resetConfiguration() {
+    this.userChosenCategories = [];
+    this.userChosenTags = [];
+    this.numberOfTextInLeftSidebar = null;
+    this.userChosenTheme = null;
   }
 }

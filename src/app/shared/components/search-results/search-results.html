@@ -1,12 +1,10 @@
 <div id="modal" class="modal bottom-sheet scale-out z-depth-5 search">
+  <div class="modal-header">
+    <h2> {{ title }}:</h2>
+  </div>
   <div class="modal-content">
     <div class="row">
       <div class="col s12">
-        <h4>
-          <blockquote class=" z-depth-5">
-            {{ title }}:
-          </blockquote>
-        </h4>
         <div class="row" *ngIf="results">
           <div class="card horizontal col s12 m5 z-depth-5 valign-wrapper" *ngFor="let article of data.results">
             <div class="card-image col s4">
@@ -23,17 +21,18 @@
           </div>
         </div>
         <div class="row" *ngIf="message">
-            <div class="card horizontal col s12 m5 z-depth-5">
-              <div class="card-content">
-                {{data.results}}
-              </div>
+            <div class="no-results">
+              <h2>Žap nam je, ali trenutno ne postoji tekst koji sadrži dati parametar <br><br>
+              <i class="material-icons" id="sad">sentiment_dissatisfied</i>
+              </h2>
             </div>
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <a class="btn-floating btn-large waves-effect waves-light red darken-4 pulse" id="close" (click)="close()">
+    <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="close()">Zatvori</a>
+    <a class="btn-floating btn-large waves-effect waves-light" id="close" (click)="close()">
       <i class="large material-icons">close</i>
     </a>
   </div>

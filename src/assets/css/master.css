@@ -276,26 +276,57 @@ a.brand-logo {
   box-shadow: 3px 0px 5px gray;
 }
 
-#modal.open {
-  -webkit-transition: transform 2.5s ease-in-out 0.5 !important;
-  -moz-transition: transform 2.5s ease-in-out 0.5 !important;
-  transition: transform 2.5s ease-in-out 0.5 !important;
+#modal {
+  display: block;
+  width: 80%;
+  top: 10%;
+  background-color: #1e1e1e;
+  transform: translateY(-140%) translateX(10%);
+   -webkit-transition: transform .5s ease-in-out;
+  -moz-transition: transform .5s ease-in-out;
+  transition: transform .5s ease-in-out;
   z-index: 999999999;
-  box-shadow: 3px 7px 20px #ab0002;
-  transform: translateX(10%) rotateX(0deg) rotateZ(0deg);
-  max-height: 500px;
 }
 
-#modal {
-  width: 80%;
-  top: 150px;
-  background-color: rgba(255, 255, 255, 1);
-  transform: translateX(-240%) rotateX(184deg) rotateZ(4330deg);
-  background-image: url(http://icons.iconarchive.com/icons/double-j-design/origami-colored-pencil/256/red-user-icon.png);
-  background-size: contain;
-  background-position-x: 70%;
-  background-repeat: no-repeat;
-  position: absolute;
+#modal.open {
+  box-shadow: 250px 250px 320px 500px rgba(255, 255, 255, 0.5);
+  transform: translateX(10%) translateY(0%);
+  max-height: 500px;
+  position: fixed;
+}
+
+#modal.open .modal-footer {
+  position: fixed;
+  bottom: 0;
+  z-index: 999999999;
+}
+
+#modal.open .modal-header {
+  background-color: #ab0002;
+  color: snow !important;
+  position: fixed;
+  top: 0px;
+  height: 35px;
+  min-width: 100%;
+  z-index: 999999999;
+}
+
+#modal.open .modal-header h2 {
+  padding-top: 10px;
+  font-size: 15px;
+  text-align: center;;
+}
+
+#modal .modal-content {
+  padding-top: 50px;
+  max-height: 90%;
+  overflow-y: scroll;
+}
+
+#modal .open.smallest {
+  height: 250px !important;
+  top: 30%;
+  overflow: hidden
 }
 
 .light #modal.open {
@@ -310,14 +341,12 @@ a.brand-logo {
   background-image: url(/assets/images/wood_card.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: 3px 7px 20px darkolivegreen;
 }
 
 .metal #modal.open {
   background-image: url(/assets/images/metal-card.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: 3px 7px 20px gray;
 }
 
 .winter #modal.open {
@@ -333,11 +362,11 @@ a.brand-logo {
   background-image: linear-gradient(to bottom, #20204d, #1e1e1e);
 }
 
-.dark #modal.open h4 {
+.dark #modal.open h5 {
   color: #ab0002;
 }
 
-.nature #modal.open h4 {
+.nature #modal.open h5 {
   color: papayawhip;
 }
 
@@ -346,7 +375,7 @@ a.brand-logo {
   color: snow;
 }
 
-.dark #modal.open .modal-footer {
+.dark #modal.open .modal-footer, #modal.open .modal-header{
   background-image: -webkit-gradient(
     linear,
     left top,
@@ -360,7 +389,9 @@ a.brand-logo {
 }
 
 .nature #modal.open .modal-footer,
-.metal #modal.open .modal-footer {
+.metal #modal.open .modal-footer,
+.nature #modal.open .modal-header,
+.metal #modal.open .modal-header, {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
@@ -382,27 +413,30 @@ a.brand-logo {
 }
 
 #modal.alert {
-  background-image: url(http://www.fil.bg.ac.rs/mmd_27/mmd_2015/css/images/menu/photo.png);
+  height: 450px !important;
+  top:25% !important;
   background-size: contain;
   background-position-x: 130%;
   background-repeat: no-repeat;
   overflow: hidden;
+  overflow-y: scroll;
 }
+
+#modal.alert.mini {
+  top:20% !important;
+  height: 320px !important;
+}
+
+.dark #modal.alert p{
+  color: snow;
+}
+
 
 .error {
   color: firebrick;
-  box-shadow: 2px 3px snow;
   font-weight: bolder;
-  background: rgba(255, 255, 255, 0.88);
 }
 
-.metal .error {
-  color: firebrick;
-  box-shadow: 2px 3px gray;
-  font-weight: bolder;
-  background: rgba(0, 0, 0, 0.88);
-  padding: 1%;
-}
 
 .light .alert .flow-text {
   padding: 5%;
@@ -410,24 +444,8 @@ a.brand-logo {
   text-align: center;
 }
 
-.dark .error {
-  box-shadow: 2px 3px 20px #ab0002;
-  background: rgba(0, 0, 0, 0.6);
-}
 
-.winter .error {
-  box-shadow: 2px 3px 20px #ab0002;
-  background-image: -webkit-gradient(
-    linear,
-    left,
-    right,
-    from(#1e1e1e),
-    to(gray)
-  );
-  background-image: -webkit-linear-gradient(top, #1e1e1e, gray);
-  background-image: -moz-linear-gradient(top, #1e1e1e, gray);
-  background-image: linear-gradient(to bottom, #1e1e1e, gray);
-}
+
 
 .dark .card {
   background-image: -webkit-gradient(
@@ -906,6 +924,10 @@ h1 span {
   height: 450px;
 }
 
+#specific .card .card-image{
+  overflow: hidden;
+}
+
 .collapsible-body.open {
   box-shadow: 2px 3px 5px gray;
   transform: translateX(-1%);
@@ -917,8 +939,8 @@ h1 span {
 }
 
 .home .card.big .card-image {
-  max-height: 320px;
-  overflow-y: hidden;
+  max-height: 270px;
+  overflow: hidden;
 }
 
 .home .card.horizontal {
@@ -931,7 +953,7 @@ h1 span {
 }
 
 #category .card.big .card-image {
-  max-height: 380px;
+  max-height: 300px;
   overflow-y: hidden;
 }
 
@@ -941,9 +963,20 @@ h1 span {
 }
 
 #modal.search {
-  max-height: 720px !important;
+  top: 3.5% !important;
+  min-height: 90% !important;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+.dark #modal.search h2{
+  color: snow;
+  text-align: center;
+}
+
+.dark #sad {
+  font-size: 180px !important;
+  color: snow !important;
 }
 
 #modal.search .card {
@@ -955,9 +988,10 @@ h1 span {
 
 #modal.search #close {
   position: fixed;
-  top: -10px;
-  left: -10px;
+  top: -18px;
+  left: -13px;
   z-index: 999999999;
+  background-color: transparent !important;
 }
 
 #right-sidebar,

@@ -19,6 +19,8 @@ export class AuthService {
   public authStatusChange$ = this._authStatusChange.asObservable();
   private _userDataChange = new Subject();
   public userDataChange$ = this._userDataChange.asObservable();
+  private _userNotificationChange = new Subject();
+  public userNotificationChange = this._userNotificationChange.asObservable();
 
   constructor(
     private _userHTTPService: UserHTTPService,
@@ -74,6 +76,7 @@ export class AuthService {
     );
   }
   public logout() {
+    console.log(this._user);
     this._localStorageService.setUserLastVist(this._user);
     this._user = null;
     localStorage.removeItem('rememberUser');
@@ -124,8 +127,10 @@ export class AuthService {
       .subscribeToUserChanges(this._user.subscriptionId)
       .on('value', update => {
         let updateObj = update.val();
-        updateObj = JSON.parse(updateObj);
-        if (updateObj.payload) {
+        updateObj = JSON.parse(JSON.parse(updateObj));
+        if (updateObj.type === 'notification') {
+          this._userNotificationChange.next(updateObj.payload);
+        } else if (updateObj.payload) {
           Object.assign(this._user, updateObj.payload);
           this._userDataChange.next();
         }
