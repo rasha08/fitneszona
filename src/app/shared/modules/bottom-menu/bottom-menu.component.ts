@@ -107,9 +107,11 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public isCategorySelected(category) {
-    return this.userChosenCategories.find(
+    return (
+      this.userChosenCategories.find(
         categoryInArray => category.name === categoryInArray.name
-      ) !== undefined;
+      ) !== undefined
+    );
   }
 
   public addOrRemoveUserTags(tag) {
@@ -154,19 +156,26 @@ export class BottomMenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public sendConfiguration() {
     const configuration = {
-      theme: this.userChosenTheme,
+      thema: this.userChosenTheme,
       categoriesInNavigation:
-        this.userChosenCategories !== [] ? this.userChosenCategories : null,
+        this.userChosenCategories !== []
+          ? this.userChosenCategories.map(category => category.category)
+          : null,
       numbersOfTextsInLeftSidebar: this.numberOfTextInLeftSidebar,
       notificationOfThemes:
         this.userChosenTags !== [] ? this.userChosenTags : null
     };
     const userId = this.getUserId();
     if (userId !== false) {
+<<<<<<< HEAD
+      this._bottomMenuService.setUserConfiguration(configuration, userId);
+      console.log('Salje se na server');
+=======
       this._bottomMenuService.setUserConfiguration(
         JSON.stringify(configuration),
         userId
       );
+>>>>>>> master
     } else {
     }
   }
