@@ -49,33 +49,52 @@ export class UserDataService {
     return this._user;
   }
 
-  public getUserLikedTags() {}
+  public getUserLikedTags() {
+    return this._user && this._user.liked_tags[0] ? this._user.liked_tags : [];
+  }
 
-  public getUserLikedCategories() {}
+  public getUserVisitedTags() {
+    return this._user && this._user.visited_tags[0]
+      ? this._user.visited_tags
+      : [];
+  }
 
-  public getUserVisitedCategories() {}
+  public getUserLikedCategories() {
+    return this._user && this._user.liked_categories[0]
+      ? this._user.liked_categories
+      : [];
+  }
+
+  public getUserVisitedCategories() {
+    return this._user && this._user.visited_categories[0]
+      ? this._user.visited_categories
+      : [];
+  }
 
   public getUserVisitedTextsIds() {
-    return this._user.visited_text_id ? this._user.visited_text_id : [];
+    return this._user && this._user.visited_text_id
+      ? this._user.visited_text_id
+      : [];
   }
 
   public getUserFavoriteTags() {
-    return this._user.favorite_tags && this._user.favorite_tags[0]
+    return this._user && this._user.favorite_tags && this._user.favorite_tags[0]
       ? this._user.favorite_tags
       : [];
   }
 
   public getUserNotifications() {
-    return this._user.notifications && this._user.notifications !== [] ? this._user.notifications : [];
+    return this._user.notifications && this._user.notifications !== []
+      ? this._user.notifications
+      : [];
   }
 
-  public predictTextsThatUserMightLike() {
-  }
+  public predictTextsThatUserMightLike() {}
 
   public getUserConfiguration() {
-    if (this._user !== undefined) {
+    if (this._user) {
       return this._user.configuration;
-    }else {
+    } else {
       return false;
     }
   }

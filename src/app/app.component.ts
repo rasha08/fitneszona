@@ -15,6 +15,7 @@ import { LocalStorageService } from './services/local-storage.service';
 import { ArticlesService } from './services/articles.service';
 import { ConfigurationService } from './services/configuration.service';
 import { BottomMenuService } from './shared/modules/bottom-menu/services/bottom-menu.service';
+import { UserConfigurationService } from './services/user-configuration.service';
 
 @Component({
   selector: 'app-root',
@@ -37,7 +38,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private _articlesService: ArticlesService,
     private _configurationService: ConfigurationService,
     private _bottomMenuService: BottomMenuService,
-    private _router: Router
+    private _router: Router,
+    private _userConfigurationService: UserConfigurationService
   ) {
     this._configurationService.getConfiguration();
   }
@@ -46,6 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this._listenForModalOpenCloseEvents();
     this._listenForConfigurationChange();
     this._listenForRouteChange();
+    this._listenForUserconfigurationChange();
   }
 
   public ngOnDestroy() {
@@ -76,6 +79,18 @@ export class AppComponent implements OnInit, OnDestroy {
         window.scrollTo(0, 0);
       }
     });
+  }
+
+  private _listenForUserconfigurationChange() {
+    this._userConfigurationService.userConfigurationChange$.subscribe(
+      status => {
+        if (status && this._userConfigurationService.getUserTheme()) {
+          this.theme = this._userConfigurationService.getUserTheme();
+        } else {
+          this.theme = this._configurationService.getParam('theme');
+        }
+      }
+    );
   }
 
   private _createModal(modalData) {

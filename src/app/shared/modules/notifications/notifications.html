@@ -1,12 +1,11 @@
-<div class="notification col s10 m5" [ngClass]="{ active: isNotifications()}" >
-  <div class="card horizontal" *ngFor="let notification of notifications" 
-  [routerLink]="notification.url" (click)="closeNotification(notification)" >
-  <span *ngIf="notification.seen === '0'">
-    <h5>{{notification.title}}</h5>
-    <div class="card-stacked">
-      <div class="card-content" [innerHtml]="notification.notification">
+<div class="notification col s10 m5" [ngClass]="{active: isNotifications()}">
+  <div class="card horizontal" *ngFor="let notification of notifications" [routerLink]="notification.url" (click)="closeNotification(notification)">
+    <span *ngIf="notification.seen === '0'">
+      <h5>{{notification.title}}</h5>
+      <div class="card-stacked">
+        <div class="card-content" [innerHtml]="notification.notification">
+        </div>
       </div>
-    </div>
-  </span>
+    </span>
   </div>
 </div>

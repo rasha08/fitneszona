@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
 import { database } from 'firebase';
-import { Http } from '@angular/http';
 
 @Injectable()
 export class NotifyService {
-  private BASE_URL = 'https://fitneszona.rs';
-  constructor(
-    private _http: Http
-  ) {}
   public subscribeToConfigurationChanges(id) {
     return database().ref(`/configurationsfb/${id}`);
   }
@@ -18,6 +13,10 @@ export class NotifyService {
 
   public subscribeToUserChanges(id) {
     return database().ref(`/usersfb/${id}/update`);
+  }
+
+  public subscribeToUserConfigurationChanges(id) {
+    return database().ref(`/userconfigurationfb/${id}/update`);
   }
 
   public subscribeToAllArticlesChanges(id) {

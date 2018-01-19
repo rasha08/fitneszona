@@ -26,9 +26,7 @@ export class UtilsService {
     }
 
     return `${currentDate.getFullYear()}-${currentDate.getMonth() +
-      1}-${currentDate.getDate()} ${
-      hour
-    }:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+      1}-${currentDate.getDate()} ${hour}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
   }
 
   public getArticleUrl(category, article) {
@@ -36,7 +34,8 @@ export class UtilsService {
   }
 
   public formatStringForSearch(string) {
-    return string.toLowerCase()
+    return string
+      .toLowerCase()
       .replace(/š/g, 's')
       .replace(/č/g, 'c')
       .replace(/ć/g, 'c')
@@ -44,4 +43,13 @@ export class UtilsService {
       .replace(/đ/g, 'dj');
   }
 
+  public parseDeepJSON(updateObj) {
+    [1, 2, 3, 4].forEach(() => {
+      try {
+        updateObj = JSON.parse(updateObj);
+      } catch (e) {}
+    });
+
+    return updateObj;
+  }
 }

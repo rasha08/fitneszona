@@ -6,6 +6,7 @@ import { ResponseService } from './response.service';
 import { LocalStorageService } from './local-storage.service';
 import { ConfigurationService } from './configuration.service';
 import { NotifyService } from './notify.service';
+import { UtilsService } from './utils.service';
 
 @Injectable()
 export class AuthService {
@@ -28,7 +29,8 @@ export class AuthService {
     private _localStorageService: LocalStorageService,
     private _ngZone: NgZone,
     private _configurationService: ConfigurationService,
-    private _notifyService: NotifyService
+    private _notifyService: NotifyService,
+    private _utilsService: UtilsService
   ) {
     this._configurationService.configurationStatusChange$.subscribe(() => {
       this._ngZone.runOutsideAngular(() =>
@@ -36,7 +38,7 @@ export class AuthService {
           if (!this._isCheckedIsUserLoggedIn) {
             this.checkIfUserIsLoggedIn();
           }
-        }, 500)
+        }, 1500)
       );
     });
   }
@@ -126,8 +128,14 @@ export class AuthService {
     this._notifyService
       .subscribeToUserChanges(this._user.subscriptionId)
       .on('value', update => {
+        this._updateCouner += 1;
+        if (!this._shouldUpdate()) {
+          return;
+        }
+
         let updateObj = update.val();
-        updateObj = JSON.parse(JSON.parse(updateObj));
+        updateObj = this._utilsService.parseDeepJSON(updateObj);
+
         if (updateObj.type === 'notification') {
           this._userNotificationChange.next(updateObj.payload);
         } else if (updateObj.payload) {
@@ -135,5 +143,14 @@ export class AuthService {
           this._userDataChange.next();
         }
       });
+  }
+
+  private _shouldUpdate() {
+    return this._updateCouner > 1;
+  }
+
+  public updateUserConfiguration(configurationObject) {
+    Object.assign(this._user.configuration, configurationObject);
+    console.log(this._user.configuration);
   }
 }

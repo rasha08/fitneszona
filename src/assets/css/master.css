@@ -282,9 +282,9 @@ a.brand-logo {
   top: 10%;
   background-color: #1e1e1e;
   transform: translateY(-140%) translateX(10%);
-   -webkit-transition: transform .5s ease-in-out;
-  -moz-transition: transform .5s ease-in-out;
-  transition: transform .5s ease-in-out;
+  -webkit-transition: transform 0.5s ease-in-out;
+  -moz-transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
   z-index: 999999999;
 }
 
@@ -314,19 +314,19 @@ a.brand-logo {
 #modal.open .modal-header h2 {
   padding-top: 10px;
   font-size: 15px;
-  text-align: center;;
+  text-align: center;
 }
 
 #modal .modal-content {
   padding-top: 50px;
   max-height: 90%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 #modal .open.smallest {
   height: 250px !important;
   top: 30%;
-  overflow: hidden
+  overflow: hidden;
 }
 
 .light #modal.open {
@@ -375,7 +375,8 @@ a.brand-logo {
   color: snow;
 }
 
-.dark #modal.open .modal-footer, #modal.open .modal-header{
+.dark #modal.open .modal-footer,
+#modal.open .modal-header {
   background-image: -webkit-gradient(
     linear,
     left top,
@@ -391,7 +392,7 @@ a.brand-logo {
 .nature #modal.open .modal-footer,
 .metal #modal.open .modal-footer,
 .nature #modal.open .modal-header,
-.metal #modal.open .modal-header, {
+.metal #modal.open .modal-header {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
@@ -414,38 +415,32 @@ a.brand-logo {
 
 #modal.alert {
   height: 450px !important;
-  top:25% !important;
+  top: 25% !important;
   background-size: contain;
   background-position-x: 130%;
   background-repeat: no-repeat;
   overflow: hidden;
-  overflow-y: scroll;
 }
 
 #modal.alert.mini {
-  top:20% !important;
+  top: 20% !important;
   height: 320px !important;
 }
 
-.dark #modal.alert p{
+.dark #modal.alert p {
   color: snow;
 }
-
 
 .error {
   color: firebrick;
   font-weight: bolder;
 }
 
-
 .light .alert .flow-text {
   padding: 5%;
   background: rgba(255, 255, 255, 0.8);
   text-align: center;
 }
-
-
-
 
 .dark .card {
   background-image: -webkit-gradient(
@@ -924,7 +919,7 @@ h1 span {
   height: 450px;
 }
 
-#specific .card .card-image{
+#specific .card .card-image {
   overflow: hidden;
 }
 
@@ -965,11 +960,11 @@ h1 span {
 #modal.search {
   top: 3.5% !important;
   min-height: 90% !important;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
-.dark #modal.search h2{
+.dark #modal.search h2 {
   color: snow;
   text-align: center;
 }
@@ -1376,17 +1371,17 @@ h1 span {
   color: papayawhip;
 }
 .notification .card {
-  position: absolute;
+  position: fixed;
   right: 20px;
   z-index: -99999999999999;
   bottom: 0px;
   max-width: 620px;
   min-width: 300px;
-  width: 35vw;
-  height: 120px;
+  width: 50vw;
   opacity: 0;
-  box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.2);
+  box-shadow: 20px 30px 200px 100px gray;
   border: 2px solid #ab0002;
+  padding: 1%;
   transition-property: opacity, bottom, box-shadow;
   -moz-transition-property: opacity, bottom, box-shadow;
   -o-transition-property: opacity, bottom, box-shadow;
@@ -1402,12 +1397,28 @@ h1 span {
   overflow-y: hidden;
   background-color: rgba(0, 0, 0, 0.88);
   background-image: none !important;
+  color: snow !important;
+}
+.notification .card img {
+  max-height: 100px;
+  width: 120px;
+  align-self: flex-start;
+  left: 0 !important;
+  position: absolute;
+}
+.notification .card p {
+  margin-left: 120px;
+  text-align: justify;
+}
+.notification .card p.only-text {
+  margin-left: 20px;
+  text-align: justify;
 }
 .notification.active .card {
-  bottom: 80vh;
+  bottom: calc(65vh + 2vw);
   z-index: 99999999999999;
   opacity: 1;
-  box-shadow: 5px 8px 10px 13px rgba(255, 255, 255, 0.8);
+  box-shadow: 1px 2px 1px 1px darkgray;
 }
 body > app-root > div > app-notifications > div > div:nth-child(1) {
   transition-delay: 0ms;
@@ -1469,7 +1480,6 @@ body > app-root > div > app-notifications > div > div:nth-child(10) {
   -o-transition-delay: 2700ms;
   -webkit-transition-delay: 2700ms;
 }
-
 .collapsible-body.bottom-menu {
   position: absolute;
   z-index: 999999999999999;

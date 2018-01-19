@@ -106,6 +106,7 @@ export class UserHTTPService {
   }
 
   public setUserConfiguration(configuration, id) {
+    console.log(configuration);
     return this._http
       .post(
         `${this.BASE_URL}/api/users/user-configuration/${id}/update-or-create`,
