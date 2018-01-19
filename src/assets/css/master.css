@@ -1371,17 +1371,17 @@ h1 span {
   color: papayawhip;
 }
 .notification .card {
-  position: absolute;
+  position: fixed;
   right: 20px;
   z-index: -99999999999999;
   bottom: 0px;
   max-width: 620px;
   min-width: 300px;
-  width: 35vw;
-  height: 120px;
+  width: 50vw;
   opacity: 0;
-  box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.2);
+  box-shadow: 20px 30px 200px 100px gray;
   border: 2px solid #ab0002;
+  padding: 1%;
   transition-property: opacity, bottom, box-shadow;
   -moz-transition-property: opacity, bottom, box-shadow;
   -o-transition-property: opacity, bottom, box-shadow;
@@ -1397,12 +1397,28 @@ h1 span {
   overflow-y: hidden;
   background-color: rgba(0, 0, 0, 0.88);
   background-image: none !important;
+  color: snow !important;
+}
+.notification .card img {
+  max-height: 100px;
+  width: 120px;
+  align-self: flex-start;
+  left: 0 !important;
+  position: absolute;
+}
+.notification .card p {
+  margin-left: 120px;
+  text-align: justify;
+}
+.notification .card p.only-text {
+  margin-left: 20px;
+  text-align: justify;
 }
 .notification.active .card {
-  bottom: 80vh;
+  bottom: calc(65vh + 2vw);
   z-index: 99999999999999;
   opacity: 1;
-  box-shadow: 5px 8px 10px 13px rgba(255, 255, 255, 0.8);
+  box-shadow: 1px 2px 1px 1px darkgray;
 }
 body > app-root > div > app-notifications > div > div:nth-child(1) {
   transition-delay: 0ms;

@@ -36,6 +36,7 @@ import { LoaderService } from './services/loader.service';
 import { VisitedArticlesService } from './services/visited-articles.service';
 import { MenuAnimationService } from './services/menus-animation.service';
 import { UserNotifyService } from './services/user-notify.service';
+import { UserConfigurationService } from './services/user-configuration.service';
 
 /* ENTRY COMPONENTS */
 import { LoginComponent } from './shared/components/login/login.component';
@@ -86,7 +87,8 @@ import { appRoutes } from './app.routing';
     LoaderService,
     VisitedArticlesService,
     MenuAnimationService,
-    UserNotifyService
+    UserNotifyService,
+    UserConfigurationService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

@@ -6,6 +6,7 @@ import { ResponseService } from './response.service';
 import { LocalStorageService } from './local-storage.service';
 import { ConfigurationService } from './configuration.service';
 import { NotifyService } from './notify.service';
+import { UtilsService } from './utils.service';
 
 @Injectable()
 export class AuthService {
@@ -28,7 +29,8 @@ export class AuthService {
     private _localStorageService: LocalStorageService,
     private _ngZone: NgZone,
     private _configurationService: ConfigurationService,
-    private _notifyService: NotifyService
+    private _notifyService: NotifyService,
+    private _utilsService: UtilsService
   ) {
     this._configurationService.configurationStatusChange$.subscribe(() => {
       this._ngZone.runOutsideAngular(() =>
@@ -132,15 +134,7 @@ export class AuthService {
         }
 
         let updateObj = update.val();
-        let canParseJSON = true;
-
-        do {
-          try {
-            updateObj = JSON.parse(updateObj);
-          } catch (e) {
-            canParseJSON = false;
-          }
-        } while (canParseJSON);
+        updateObj = this._utilsService.parseDeepJSON(updateObj);
 
         if (updateObj.type === 'notification') {
           this._userNotificationChange.next(updateObj.payload);
@@ -153,5 +147,10 @@ export class AuthService {
 
   private _shouldUpdate() {
     return this._updateCouner > 1;
+  }
+
+  public updateUserConfiguration(configurationObject) {
+    Object.assign(this._user.configuration, configurationObject);
+    console.log(this._user.configuration);
   }
 }

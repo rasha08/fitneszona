@@ -144,13 +144,15 @@ export class BottomMenuComponent implements OnInit, OnDestroy {
   public sendConfiguration() {
     const configuration = {
       thema: this.userChosenTheme,
-      categoriesInNavigation:
-        this.userChosenCategories !== []
-          ? this.userChosenCategories.map(category => category.category)
-          : null,
+      categoriesInNavigation: this.userChosenCategories
+        ? this.userChosenCategories
+            .map(category => category.category)
+            .filter(category => (category ? true : false))
+        : null,
       numbersOfTextsInLeftSidebar: this.numberOfTextInLeftSidebar,
-      notificationOfThemes:
-        this.userChosenTags !== [] ? this.userChosenTags : null
+      notificationOfThemes: this.userChosenTags
+        ? this.userChosenTags.filter(tag => (tag ? true : false))
+        : null
     };
     const userId = this.getUserId();
     if (userId !== false) {
@@ -200,6 +202,7 @@ export class BottomMenuComponent implements OnInit, OnDestroy {
       this.userChosenCategories = userConfiguration.categories_in_navigation
         ? JSON.parse(userConfiguration.categories_in_navigation)
         : [];
+      console.log(this.userChosenCategories);
       this.numberOfTextInLeftSidebar = userConfiguration.number_of_texts_in_left_sidebar
         ? userConfiguration.number_of_texts_in_left_sidebar
         : null;
