@@ -811,6 +811,16 @@ h1 span {
   z-index: 9999999;
 }
 
+#bottom-menu-panel > div:nth-child(2) > ul {
+  margin-left: 5vw;
+  border: none !important;
+  box-shadow: 0px 0px 0px #1e1e1e;
+}
+#bottom-menu-panel > div:nth-child(2) > ul > li {
+  margin: 20px !important;
+  min-height: 70px;
+}
+
 .fixed-action-btn.toolbar {
   position: fixed;
   left: 20px;
@@ -1485,6 +1495,6 @@ body > app-root > div > app-notifications > div > div:nth-child(10) {
   z-index: 999999999999999;
   max-height: 56%;
   overflow-y: scroll;
-  width: 48%;
+  min-width: 40%;
   overflow-x: hidden;
 }

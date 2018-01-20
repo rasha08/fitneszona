@@ -9,97 +9,81 @@
   </div>
 
   <div class="row">
-      <ul class="collapsible col s12 m6" data-collapsible="accordion">
-          <li>
-            <div class="collapsible-header">
-              Izaberite teme za koje želite da dobijete obaveštenja
-            </div>
-            <div class="collapsible-body bottom-menu">
-                <ul>
-                  <li *ngFor="let tag of tags">
-                    <input type="checkbox" id="test-{{tag}}" value="tag" [checked]="isTagSelected(tag)" (change)="addOrRemoveUserTags(tag)"/>
-                    <label for="test-{{tag}}">{{tag}}</label>
-                  </li>
-                </ul>
-            </div>
-          </li>
-          <li>
-            <div class="collapsible-header">
-              Izaberite temu sajta
-            </div>
-            <div class="collapsible-body bottom-menu">
-                <ul>
-                  <li *ngFor="let theme of themes">
-                    <input name="group2" type="radio" id="test-{{theme}}" value="{{theme}}" [checked]="isThemeSelected(theme)" (change)="setUserTheme(theme)"/>
-                    <label for="test-{{theme}}">{{theme}}</label>
-                  </li>
-                </ul>
-            </div>
-          </li>
-          <li>
-            <div class="collapsible-header">
-              Izaberite kategorije u gornjem meniju
-            </div>
-            <div class="collapsible-body bottom-menu">
-                <ul>
-                  <li *ngFor="let category of categories" (click)="addOrRemoveUserCategories(category)">
-                    <input type="checkbox"
-                      id="test-{{category.name}}"
-                      (change)="addOrRemoveUserCategories(category)"
-                      [checked]="isCategorySelected(category)"/>
-                    <label for="test-{{category.name}}">{{category.name}}</label>
-                  </li>
-                </ul>
-            </div>
-          </li>
-          <li>
-              <div class="collapsible-header">
-                Izaberite broj tekstova koji će biti prikazani u levom meniju
-              </div>
-              <div class="collapsible-body bottom-menu">
-                  <ul>
-                  <li>
-                    <input name="group1"
-                          type="radio"
-                          id="test1"
-                          value="2"
-                          [checked]="isNumberOfTextInLeftSidebarSelected(2)"
-                          (change)="setNumberOfTexts(2)" />
-                    <label for="test1">2</label>
-                  </li>
-                  <li>
-                    <input name="group1"
-                          type="radio"
-                          id="test2"
-                          value="5"
-                          [checked]="isNumberOfTextInLeftSidebarSelected(5)"
-                          (change)="setNumberOfTexts(5)" />
-                    <label for="test2">5</label>
-                  </li>
-                  <li>
-                    <input
-                      name="group1"
-                      type="radio"
-                      id="test3"
-                      value="7"
-                      [checked]="isNumberOfTextInLeftSidebarSelected(7)"
-                      (change)="setNumberOfTexts(7)" />
-                    <label for="test3">7</label>
-                  </li>
-                  <li>
-                    <input
-                      name="group1"
-                      type="radio"
-                      id="test4"
-                      value="10"
-                      [checked]="isNumberOfTextInLeftSidebarSelected(10)"
-                      (change)="setNumberOfTexts(10)"/>
-                    <label for="test4">10</label>
-                  </li>
-                </ul>
-              </div>
+    <ul class="collapsible col s12 m12" data-collapsible="accordion">
+
+      <li class="col s12 m5">
+        <div class="collapsible-header">
+          Izaberite teme za koje želite da dobijete obaveštenja
+        </div>
+        <div class="collapsible-body bottom-menu">
+          <ul>
+            <li *ngFor="let tag of tags">
+              <input type="checkbox" id="test-{{tag}}" value="tag" [checked]="isTagSelected(tag)" (change)="addOrRemoveUserTags(tag)" />
+              <label for="test-{{tag}}">{{tag}}</label>
             </li>
-        </ul>
+          </ul>
+        </div>
+      </li>
+      <li class="col s12 m5">
+        <div class="collapsible-header">
+          Izaberite temu sajta
+        </div>
+        <div class="collapsible-body bottom-menu">
+          <ul>
+            <li *ngFor="let theme of themes">
+              <input name="group2" type="radio" id="test-{{theme}}" value="{{theme}}" [checked]="isThemeSelected(theme)" (change)="setUserTheme(theme)"
+              />
+              <label for="test-{{theme}}">{{theme}}</label>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="col s12 m5">
+        <div class="collapsible-header">
+          Izaberite kategorije u gornjem meniju
+        </div>
+        <div class="collapsible-body bottom-menu">
+          <ul>
+            <li *ngFor="let category of categories" (click)="addOrRemoveUserCategories(category)">
+              <input type="checkbox" id="test-{{category.name}}" (change)="addOrRemoveUserCategories(category)" [checked]="isCategorySelected(category)"
+              />
+              <label for="test-{{category.name}}">{{category.name}}</label>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="col s12 m5">
+        <div class="collapsible-header">
+          Izaberite broj tekstova koji će biti prikazani u levom meniju
+        </div>
+        <div class="collapsible-body bottom-menu">
+          <ul>
+            <li>
+              <input name="group1" type="radio" id="test1" value="2" [checked]="isNumberOfTextInLeftSidebarSelected(2)" (change)="setNumberOfTexts(2)"
+              />
+              <label for="test1">2</label>
+            </li>
+            <li>
+              <input name="group1" type="radio" id="test2" value="5" [checked]="isNumberOfTextInLeftSidebarSelected(5)" (change)="setNumberOfTexts(5)"
+              />
+              <label for="test2">5</label>
+            </li>
+            <li>
+              <input name="group1" type="radio" id="test3" value="7" [checked]="isNumberOfTextInLeftSidebarSelected(7)" (change)="setNumberOfTexts(7)"
+              />
+              <label for="test3">7</label>
+            </li>
+            <li>
+              <input name="group1" type="radio" id="test4" value="10" [checked]="isNumberOfTextInLeftSidebarSelected(10)" (change)="setNumberOfTexts(10)"
+              />
+              <label for="test4">10</label>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+    </ul>
   </div>
   <div class="row center-align">
     <a class="btn-floating btn-large waves-effect waves-light green darken-4 z-depth-5" (click)="sendConfiguration()">
