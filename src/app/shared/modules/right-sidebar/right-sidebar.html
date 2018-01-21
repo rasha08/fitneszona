@@ -1,6 +1,6 @@
 <div id="right-sidebar" class="col s11 m4 l3" [ngClass]="{open: isSidebarOpen}">
   <button id="right-sidebar-trigger" class="waves-effect waves-light valign-wrapper" (click)="toggleSidebar()">
-    <i class="material-icons valign-wrapper">{{ !isSidebarOpen ? 'chevron_left' : 'chevron_right' }} chevron_left</i>
+    <i class="material-icons valign-wrapper">{{ !isSidebarOpen ? 'chevron_left' : 'chevron_right' }}</i>
   </button>
   <div class="row tab">
     <div class="sidebar-tab">
@@ -13,14 +13,14 @@
       <hr>
       <div class="recomended right-sidebar-tab" [ngClass]="{active: isRecomendedTabActive}">
         <div class="content">
-          <app-user-recomended-tab [articles]="articles" ></app-user-recomended-tab>
+          <app-user-recomended-tab [articles]="articles"></app-user-recomended-tab>
         </div>
       </div>
       <div class="right-sidebar-tab history" [ngClass]="{active: !isRecomendedTabActive}">
         <div class="content">
           <ul class="collection" *ngIf="historyArticles.length > 0">
             <li class="collection-item" *ngFor="let article of historyArticles">
-              <a [routerLink]="article.url">{{article.title}}</a>
+              <a [routerLink]="article.link">{{article.title}}</a>
             </li>
           </ul>
           <h2 *ngIf="historyArticles.length === 0">Vasa Istorija je prazna!</h2>

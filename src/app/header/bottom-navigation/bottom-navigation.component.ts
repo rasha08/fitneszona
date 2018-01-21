@@ -3,7 +3,8 @@ import {
   OnInit,
   OnDestroy,
   ChangeDetectorRef,
-  NgZone
+  NgZone,
+  Input
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -19,6 +20,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './bottom-navigation.html'
 })
 export class BottomNavigationComponent implements OnInit, OnDestroy {
+  @Input() isOpen: any;
   public error;
   public activeCategories;
   public categoriesWithNewArticles;

@@ -4,5 +4,10 @@ import { Component } from '@angular/core';
   selector: 'app-header-component',
   templateUrl: './header.component.html'
 })
+export class HeaderComponent {
+  public isOpen = false;
 
-export class HeaderComponent { }
+  public toggleNavigation() {
+    this.isOpen = !this.isOpen;
+  }
+}

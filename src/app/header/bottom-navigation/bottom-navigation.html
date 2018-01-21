@@ -1,4 +1,4 @@
-<div class="nav-content">
+<div class="nav-content" [ngClass]="{open: isOpen}">
   <div class="tabs tabs-transparent">
     <li class="tab" *ngFor="let category of activeCategories">
       <a routerLink="tekstovi/{{category.urlSlug}}" routerLinkActive="selected"> {{ category.name }}

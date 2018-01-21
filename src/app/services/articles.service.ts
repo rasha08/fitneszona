@@ -55,11 +55,14 @@ export class ArticlesService {
   }
 
   public getArticle(id) {
-    return this._articlesHTTPService.getArticle(id).subscribe(article => {
-      this.singleArticleFetched(article);
-      this._visitedArticlesService.addArticleToVisited(article.id);
-      this._sholudResortTags.next();
-    });
+    return this._articlesHTTPService.getArticle(id).subscribe(
+      article => {
+        this.singleArticleFetched(article);
+        this._visitedArticlesService.addArticleToVisited(article.id);
+        this._sholudResortTags.next();
+      },
+      error => setTimeout(this.getArticle(id), 1000)
+    );
   }
 
   public getAllArticles() {
@@ -268,7 +271,8 @@ export class ArticlesService {
   public getArticlesMarketsForHistory() {
     const visitedArticlesMarkets = this._visitedArticlesService.getArticles();
     const visitedArticles = [];
-    this.allArticles.map(article => {
+    const articles = this.allArticles ? this.allArticles : [];
+    articles.map(article => {
       if (visitedArticlesMarkets.indexOf(article.id) > -1) {
         visitedArticles.push({
           title: article.title,

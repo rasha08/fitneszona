@@ -1,10 +1,8 @@
-<li *ngFor="let text of texts.slice(0,numberOfArticles)" class="collection-item category-text" [ngClass]="{open: isTextOpen(text)}" (click)="toggleText(text)">
-    <div>
-      <b>{{text.title}}
-        <a class="secondary-content">
-            <i class="material-icons">send</i>
-        </a>
-       </b>
-     <category-item-details-component [text]="text"></category-item-details-component>
-    </div>
+<li *ngFor="let text of texts.slice(0,numberOfArticles)" class="collection-item category-text valign-wrapper row col s12"
+    [ngClass]="{open: isTextOpen(text)}" (click)="toggleText(text)">
+    <h3 class="col s10 "> {{text.title}} </h3>
+    <a class="secondary-content col s2 ">
+        <i class="material-icons ">send</i>
+    </a>
+    <category-item-details-component [text]="text "></category-item-details-component>
 </li>

@@ -15,6 +15,7 @@ export class TopNavigationComponent implements OnInit {
   public user;
   public showLogIn;
   private _subscriptions: Array<Subscription> = [];
+  public isOpen = false;
 
   constructor(
     private _authService: AuthService,
@@ -65,5 +66,7 @@ export class TopNavigationComponent implements OnInit {
     this._authService.logout();
   }
 
-  public openRegisterModal() {}
+  public toggleAccountMenu() {
+    this.isOpen = !this.isOpen;
+  }
 }

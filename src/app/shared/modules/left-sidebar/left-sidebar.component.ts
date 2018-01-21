@@ -26,6 +26,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   public numberOfArticlesByTag = 0;
   private _tagsPriorityList = [];
   private _filteredArticles = [];
+  public isLeftSidebarOpen = false;
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -252,5 +253,9 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       names.push(tag.name);
     }
     return names;
+  }
+
+  public toggleSidebar() {
+    this.isLeftSidebarOpen = !this.isLeftSidebarOpen;
   }
 }

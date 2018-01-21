@@ -1,9 +1,9 @@
-<li>
+<span>
     <a class="row">
         <input #searchBox id="search" type="text" class="validate" placeholder="pretraži..." [(ngModel)]="searchPhrase" value="searchPhrase"
             (keyup.enter)="formatUserInput($event, searchBox.value)" (keyup)="autoComplete()" autocomplete="off">
     </a>
-</li>
+</span>
 <ul id="search-autocomplete" class="collection" *ngIf="autocompleteResultsList?.length">
     <li *ngFor="let article of autocompleteResultsList" class="collection-item">
         <a (click)="resetAutoCompleteResults()" [routerLink]="article.link">

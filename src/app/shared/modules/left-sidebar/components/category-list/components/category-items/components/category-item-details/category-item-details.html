@@ -1,15 +1,13 @@
-<div class="col s12 m12 text-details">
-    <div class="card horizontal">
-        <div class="card-image">
-            <img src="{{ text.thumb_image_url }}">
+<div class="col s12 m12 text-details valign-wrapper">
+    <div class="row valign-wrapper">
+        <div class="card-image col s5">
+            <img src="{{ text.thumb_image_url }}" class="responsive-img">
         </div>
-        <div class="card-stacked">
-            <div class="card-content">
-                <p>{{text.description.slice(0, 100)}}...</p>
-            </div>
-            <div class="card-action">
-                <a [routerLink]="getTextUrl(text)">otvori</a>
-            </div>
+        <div class="card-stacked col s7">
+            <p>{{text.description.slice(0, 50)}}...</p>
         </div>
+    </div>
+    <div class="card-action col s10">
+        <a [routerLink]="getTextUrl(text)" class="right">otvori</a>
     </div>
 </div>

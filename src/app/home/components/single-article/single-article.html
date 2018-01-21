@@ -1,21 +1,22 @@
 <div *ngIf="article" id="single-article">
-  <h1 class="z-depth-5 center-align">
+
+  <h1 class="z-depth-5 center">
     {{ article.title }}
-    <span class="right">
-      <span>
-        <i class="material-icons">visibility</i>
-        <small>{{ article.seen_times }}</small>
-      </span>
-      <span class="tooltipped" data-position="bottom" data-delay="50" [attr.data-tooltip]="listOfLikes">
-        <i class="material-icons">sentiment_very_satisfied</i>
-        <small>{{ article.number_of_likes }}</small>
-      </span>
-      <span class="tooltipped" data-position="bottom" data-delay="50" [attr.data-tooltip]="listOfDislikes">
-        <i class="material-icons">sentiment_very_dissatisfied</i>
-        <small>{{ article.number_of_dislikes }}</small>
-      </span>
-    </span>
   </h1>
+  <span class="center row col s12">
+    <span class="counter">
+      <i class="material-icons">visibility</i>
+      <small>{{ article.seen_times }}</small>
+    </span>
+    <span class="tooltipped counter" data-position="bottom" data-delay="50" [attr.data-tooltip]="listOfLikes">
+      <i class="material-icons">sentiment_very_satisfied</i>
+      <small>{{ article.number_of_likes }}</small>
+    </span>
+    <span class="tooltipped counter" data-position="bottom" data-delay="50" [attr.data-tooltip]="listOfDislikes">
+      <i class="material-icons">sentiment_very_dissatisfied</i>
+      <small>{{ article.number_of_dislikes }}</small>
+    </span>
+  </span>
   <div class="row col s12 m12 z-depth-5 article-text">
     <p class="flow-text col s12" [innerHtml]="article.intro"></p>
     <div class="text-img col s12 center">
@@ -26,34 +27,27 @@
       </p>
     </div>
   </div>
-  <div class="text-button-action valign-wrapper">
-    <div class="fixed-action-btn horizontal pulse">
-      <a class="btn-floating btn-large red darken-4 pulse">
-        <i class="large material-icons">thumbs_up_down</i>
+  <div id="social-buttons" class="col s12">
+    <span>
+      <a class="btn-floating red darken-4" (click)="like()">
+        <i class="material-icons">sentiment_satisfied</i>
       </a>
-      <ul>
-        <li>
-          <a class="btn-floating red darken-4">
-            <i class="material-icons" (click)="like()">sentiment_satisfied</i>
-          </a>
-        </li>
-        <li>
-          <a class="btn-floating red darken-4">
-            <i class="material-icons" (click)="disLike()">sentiment_very_dissatisfied</i>
-          </a>
-        </li>
-        <li>
-          <a class="btn-floating red darken-4">
-            <i class="material-icons" (click)="openCommentBox()">comment</i>
-          </a>
-        </li>
-        <li>
-          <a class="btn-floating red darken-4">
-            <i class="material-icons">share</i>
-          </a>
-        </li>
-      </ul>
-    </div>
+    </span>
+    <span>
+      <a class="btn-floating red darken-4" (click)="disLike()">
+        <i class="material-icons">sentiment_very_dissatisfied</i>
+      </a>
+    </span>
+    <span>
+      <a class="btn-floating red darken-4" (click)="openCommentBox()">
+        <i class="material-icons">comment</i>
+      </a>
+    </span>
+    <span>
+      <a class="btn-floating red darken-4">
+        <i class="material-icons">share</i>
+      </a>
+    </span>
   </div>
 
   <div class="row tags right-align col m12" *ngIf="article.tags">

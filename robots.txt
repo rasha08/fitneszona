@@ -1,0 +1,36 @@
+User-agent: *Allow: /
+Allow: /sitemap.htm
+Sitemap:
+http://www.fitneszona.rs/sitemap.xml
+Allow: /ror.htmSitemap: http://www.fitneszona.rs/ror.xml
+Allow: /sitemap1.htmSitemap: http://www.fitneszona.rs/sitemap1.xml
+Allow: /bing/sitemap.htm
+http://fitneszona.rs/bing/sitemap.xml
+Allow: /bing/ror.htm
+http://fitneszona.rs/bing/ror.xml
+Allow: /bing/sitemap.htm
+http://fitneszona.rs/bing/sitemap.html
+Allow: /images_sitemap.htm
+http://fitneszona.rs/images_sitemap.xml
+Allow: /images_sitemap.htm
+http://fitneszona.rs/images_sitemap.xml
+Allow: /myRSSFeed.htm
+http://fitneszona.rs/myRSSFeed.xml
+Allow: /novosti/sitemap.htm
+http://fitneszona.rs/novosti/sitemap.xml
+Allow: /novosti/ror.htm
+http://fitneszona.rs/novosti/ror.xml
+Allow: /novosti/urllist.htm
+http://fitneszona.rs/novosti/urllist.txt
+Allow: /fitnescentri/sitemap.htm
+http://fitneszona.rs/fitnescentri/sitemap.xml
+Allow: /fitnescentri/ror.htm
+http://fitneszona.rs/fitnescentri/ror.xml
+Allow: /fitnescentri/urllist.htm
+http://fitneszona.rs/fitnescentri/urllist.txt
+Allow: /licnitreneri/sitemap.htm
+http://fitneszona.rs/licnitreneri/sitemap.xml
+Allow: /licnitreneri/ror.htm
+http://fitneszona.rs/licnitreneri/ror.xml
+Allow: /licnitreneri/urllist.htm
+http://fitneszona.rs/licnitreneri/urllist.txt
