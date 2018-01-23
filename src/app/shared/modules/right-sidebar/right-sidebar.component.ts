@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ArticlesService } from '../../../services/articles.service';
 import { VisitedArticlesService } from '../../../services/visited-articles.service';
+import { AppAnimationService } from '../../../services/app.animation.service';
 
 @Component({
   selector: 'app-right-sidebar',
@@ -19,12 +20,14 @@ export class RightSidebarComponent implements OnInit, OnDestroy {
   constructor(
     private _articleService: ArticlesService,
     private _visitedArticlesService: VisitedArticlesService,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _appAnimationService: AppAnimationService
   ) {}
 
   ngOnInit() {
     this._subscibeToAllArticlesFetchEvent();
     this._subscibeToShouldRepoplulateSidebar();
+    this._subscribeToAppAnimationEvents();
   }
 
   ngOnDestroy() {
@@ -43,6 +46,21 @@ export class RightSidebarComponent implements OnInit, OnDestroy {
     this._articleService.sholudResortTags$.subscribe(() => {
       this.historyArticles = this._articleService.getArticlesMarketsForHistory();
       this.populateRightSidebar();
+      this._changeDetectorRef.detectChanges();
+    });
+  }
+
+  private _subscribeToAppAnimationEvents() {
+    this._appAnimationService.closeMenus$.subscribe(() => {
+      this.isSidebarOpen = false;
+    });
+
+    this._appAnimationService.toggleLeftSideBar$.subscribe(() => {
+      this.isSidebarOpen = false;
+    });
+
+    this._appAnimationService.toggleRightSideBar$.subscribe(() => {
+      this.toggleSidebar();
       this._changeDetectorRef.detectChanges();
     });
   }

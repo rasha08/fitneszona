@@ -150,7 +150,7 @@ export class ArticlesService {
               this._visitedArticlesService.getArticles().indexOf(article.id) ===
                 -1
           )
-          .slice(0, 11);
+          .slice(0, 16);
 
       default:
         return this._formatCategoryArticles(

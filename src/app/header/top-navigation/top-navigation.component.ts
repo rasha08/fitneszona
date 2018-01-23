@@ -6,6 +6,7 @@ import { RegistrationComponent } from '../../shared/components/registration/regi
 import { AuthService } from '../../services/auth.service';
 import { ModalService } from '../../services/modal.service';
 import { ConfigurationService } from '../../services/configuration.service';
+import { AppAnimationService } from '../../services/app.animation.service';
 
 @Component({
   selector: 'app-top-navigation',
@@ -21,11 +22,13 @@ export class TopNavigationComponent implements OnInit {
     private _authService: AuthService,
     private _modalService: ModalService,
     private _configurationService: ConfigurationService,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _appAnimationService: AppAnimationService
   ) {}
 
   ngOnInit() {
     this._listenForUserStatusChange();
+    this._subscribeToCloseMenusEvent();
   }
 
   private _listenForUserStatusChange() {
@@ -50,13 +53,21 @@ export class TopNavigationComponent implements OnInit {
     );
   }
 
+  private _subscribeToCloseMenusEvent() {
+    this._appAnimationService.closeMenus$.subscribe(() => {
+      this.isOpen = false;
+    });
+  }
+
   public openLoginModal() {
+    this.toggleAccountMenu();
     this._modalService.openModal({
       component: LoginComponent
     });
   }
 
   public openRegistrationModal() {
+    this.toggleAccountMenu();
     this._modalService.openModal({
       component: RegistrationComponent
     });
@@ -64,6 +75,7 @@ export class TopNavigationComponent implements OnInit {
 
   public logout() {
     this._authService.logout();
+    this.toggleAccountMenu();
   }
 
   public toggleAccountMenu() {

@@ -191,6 +191,10 @@ li.tab a {
   padding: 0 1.3vw !important;
 }
 
+.header ul.right {
+  transform: translateX(-60px);
+}
+
 .dark #single-article h1,
 .dark #single-article .article-text,
 .dark #single-article #commentBox,
@@ -730,6 +734,12 @@ body {
   z-index: 9999999;
 }
 
+.card-action {
+  position: fixed;
+  bottom: 0;
+  z-index: 99;
+}
+
 .nature
   #left-sidebar
   .collection.open
@@ -999,7 +1009,7 @@ li.tab a.selected {
 }
 
 .home .card.big .card-image {
-  max-height: 270px;
+  max-height: 50%;
   overflow: hidden;
 }
 
@@ -1061,7 +1071,7 @@ li.tab a.selected {
   height: 65vh;
   border: 1px solid #ab0002;
   box-shadow: 3px 4px 8px #ab0002;
-  position: absolute;
+  position: fixed;
   z-index: 999;
   top: 150px;
   right: 0px;
@@ -1395,6 +1405,7 @@ li.tab a.selected {
   overflow: hidden !important;
   opacity: 0;
   z-index: -999999;
+  right: 0px;
 }
 #customer-support.open {
   max-height: 100%;
@@ -1572,8 +1583,7 @@ body > app-root > div > app-notifications > div > div:nth-child(10) {
 }
 #left-sidebar {
   min-width: 240px;
-  max-width: 500px;
-  width: calc(16% + 6.5vw) !important;
+  max-width: 75vw;
   top: 150px;
 }
 #main-presenter {
@@ -1596,10 +1606,11 @@ body > app-root > div > app-notifications > div > div:nth-child(10) {
   margin-left: 5%;
 }
 #social-buttons span a.btn-floating {
-  transform: scale(2) !important;
+  transform: scale(1.3) !important;
+  opacity: 0.6;
 }
 #social-buttons span.selected a.btn-floating {
-  transform: scale(2.3);
+  transform: scale(1.8);
 }
 h1 {
   font-size: calc(20px + 2vw);
@@ -1609,6 +1620,14 @@ h1 {
 }
 .avatar {
   display: none;
+}
+#bottom-menu-list {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+.fixed-action-btn {
+  margin-bottom: -25px !important;
+  width: 100vw !important;
+  margin-left: -2vw;
 }
 @media all and (max-width: 1000px) {
   #loader img {
@@ -1705,10 +1724,10 @@ h1 {
   }
   #left-sidebar {
     z-index: 99999;
-    transform: translate(-102%);
-    -webkit-transition: transform 0.5s ease-in-out;
-    -moz-transition: transform.5s ease-in-out;
-    transition: transform 0.5s ease-in-out;
+    transform: translate(-108%);
+    -webkit-transition: transform 0.35s ease-in-out;
+    -moz-transition: transform 0.35s ease-in-out;
+    transition: transform 0.35s ease-in-out;
   }
   #replacment-list {
     top: 0;
@@ -1755,9 +1774,12 @@ h1 {
     padding-bottom: 10px;
   }
   #right-sidebar,
+  #right-sidebar .tab,
   #left-sidebar {
-    top: 120px;
-    width: 400px !important;
+    top: 85px;
+    min-height: 250px;
+    width: 100vw !important;
+    height: calc(100vh - 120px);
   }
   #right-sidebar-trigger {
     left: -66px;
@@ -1772,10 +1794,10 @@ h1 {
     margin-left: 40px;
   }
   #social-buttons span a.btn-floating {
-    transform: scale(1.2) !important;
+    transform: scale(1) !important;
   }
   #social-buttons span.selected a.btn-floating {
-    transform: scale(1.4);
+    transform: scale(1.2);
   }
 }
 @media screen and (max-width: 450px) {
@@ -1806,9 +1828,15 @@ h1 {
     transform: translate(-104%);
   }
   #right-sidebar,
+  #right-sidebar .tab,
   #left-sidebar {
-    top: 120px;
-    width: 290px !important;
+    top: 100px;
+    width: 100vw;
+    height: calc(100vh - 160px);
+  }
+  #right-sidebar {
+    position: fixed;
+    z-index: 999;
   }
   #right-sidebar-trigger {
     left: -66px;
@@ -1831,8 +1859,8 @@ h1 {
   }
   #main-presenter {
     margin-top: 105px;
-    width: 90%;
-    margin-left: 20px;
+    width: 97vw;
+    margin-left: 8px;
   }
   .counter {
     margin-right: 10px;
@@ -1859,5 +1887,8 @@ h1 {
   }
   #start-loader h1 {
     transform: translateX(5%);
+  }
+  .fixed-action-btn {
+    transform: translateX(-3vw);
   }
 }

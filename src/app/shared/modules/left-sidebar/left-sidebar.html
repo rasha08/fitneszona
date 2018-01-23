@@ -2,7 +2,4 @@
   <category-list-component *ngIf="tagsInSidebar" [tags]="tagsInSidebar" [numberOfArticlesByTag]="numberOfArticlesByTag"></category-list-component>
 
   <replacment-list-component [tags]="tagsInReplacmentList" *ngIf="tagsInReplacmentList"></replacment-list-component>
-  <button id="left-sidebar-trigger" class="waves-effect waves-light valign-wrapper" (click)="toggleSidebar()">
-    <i class="material-icons valign-wrapper">{{ !isLeftSidebarOpen ? 'chevron_right' : 'chevron_left'}}</i>
-  </button>
 </div>

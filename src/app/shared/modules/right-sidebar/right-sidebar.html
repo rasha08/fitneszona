@@ -1,15 +1,15 @@
 <div id="right-sidebar" class="col s11 m4 l3" [ngClass]="{open: isSidebarOpen}">
-  <button id="right-sidebar-trigger" class="waves-effect waves-light valign-wrapper" (click)="toggleSidebar()">
-    <i class="material-icons valign-wrapper">{{ !isSidebarOpen ? 'chevron_left' : 'chevron_right' }}</i>
-  </button>
   <div class="row tab">
     <div class="sidebar-tab">
-      <div class="tab-title col s6" [ngClass]="{active: isRecomendedTabActive}" (click)="activateTab('recomended')">
-        <h5>Preporučeno</h5>
+      <div class="sidebar-header">
+        <div class="tab-title col s6" [ngClass]="{active: isRecomendedTabActive}" (click)="activateTab('recomended')">
+          <h5>Preporučeno</h5>
+        </div>
+        <div class="tab-title col s6" [ngClass]="{active: !isRecomendedTabActive}" (click)="activateTab('history')">
+          <h5>Aktivnost</h5>
+        </div>
       </div>
-      <div class="tab-title col s6" [ngClass]="{active: !isRecomendedTabActive}" (click)="activateTab('history')">
-        <h5>Aktivnost</h5>
-      </div>
+
       <hr>
       <div class="recomended right-sidebar-tab" [ngClass]="{active: isRecomendedTabActive}">
         <div class="content">

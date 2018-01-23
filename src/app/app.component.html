@@ -4,19 +4,17 @@
   <div class="application">
     <app-header-component></app-header-component>
     <router-outlet></router-outlet>
-    <div class="fixed-action-btn toolbar">
-      <a class="btn-floating btn-large red darken-4 bottom-menu-button">
-        <i class="large material-icons">menu</i>
-      </a>
-      <ul>
+    <div class="fixed-action-btn toolbar active">
+      <ul id="bottom-menu-list">
+
+        <li class="waves-effect waves-light" *ngIf="isMobile" (click)="toggleLeftSidebar()">
+          <a>
+            <i class="material-icons">chevron_right</i>
+          </a>
+        </li>
         <li class="waves-effect waves-light ">
           <a routerLink="/">
             <i class="material-icons">home</i>
-          </a>
-        </li>
-        <li class="waves-effect waves-light" (click)="toggleCustomerSuport()">
-          <a>
-            <i class="material-icons">chat</i>
           </a>
         </li>
         <li class="waves-effect waves-light" (click)="toggleBotomMenu()">
@@ -24,15 +22,15 @@
             <i class="material-icons">settings</i>
           </a>
         </li>
-        <li class="waves-effect waves-light">
+        <li class="waves-effect waves-light" (click)="toggleCustomerSuport()">
           <a>
-            <i class="material-icons">fitness_center</i>
+            <i class="material-icons">chat</i>
           </a>
         </li>
 
-        <li class="waves-effect waves-light">
+        <li class="waves-effect waves-light" (click)="toggleRightSidebar()">
           <a>
-            <i class="material-icons">email</i>
+            <i class="material-icons">chevron_left</i>
           </a>
         </li>
       </ul>

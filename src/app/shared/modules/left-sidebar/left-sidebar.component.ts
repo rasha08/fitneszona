@@ -13,6 +13,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ArticlesService } from '../../../services/articles.service';
 import { ReplacmentListService } from './services/replacment-list.service';
 import { UserDataService } from '../../../services/user-data.service';
+import { AppAnimationService } from '../../../services/app.animation.service';
 
 @Component({
   selector: 'left-sidebar-component',
@@ -35,7 +36,8 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     private _articlesService: ArticlesService,
     private _replacmentListService: ReplacmentListService,
     private _ngZone: NgZone,
-    private _userDataService: UserDataService
+    private _userDataService: UserDataService,
+    private _appAnimationService: AppAnimationService
   ) {}
 
   ngOnInit() {
@@ -44,6 +46,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     this._subscribeToTagReplacmentEvent();
     this._subscribeToUserLogInEvent();
     this._subscribeToShouldResortSidebar();
+    this._subscribeToAppAnimationEvents();
   }
 
   ngOnDestroy() {
@@ -114,6 +117,25 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
         this._changeDetectorRef.detectChanges();
       })
     );
+  }
+
+  private _subscribeToAppAnimationEvents() {
+    this._appAnimationService.closeMenus$.subscribe(() => {
+      this.isLeftSidebarOpen = false;
+    });
+
+    this._appAnimationService.closeMenus$.subscribe(() => {
+      this.isLeftSidebarOpen = false;
+    });
+    this._appAnimationService.toggleLeftSideBar$.subscribe(() => {
+      this.toggleSidebar();
+      this._changeDetectorRef.detectChanges();
+    });
+    this._appAnimationService.toggleRightSideBar$.subscribe(() => {
+      this.toggleSidebar();
+      this.isLeftSidebarOpen = false;
+      this._changeDetectorRef.detectChanges();
+    });
   }
 
   public switchTagsInLists(
@@ -257,5 +279,6 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
 
   public toggleSidebar() {
     this.isLeftSidebarOpen = !this.isLeftSidebarOpen;
+    this._changeDetectorRef.detectChanges();
   }
 }

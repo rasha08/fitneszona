@@ -83,8 +83,11 @@ export class HomeIndexComponent extends SpecificCategoriesComponent
   }
 
   private _loadMoreIfNeeded() {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      if (this._nuberOfVisibleArticles < 20) {
+    if (
+      window.innerHeight + window.scrollY >=
+      document.body.offsetHeight - 100
+    ) {
+      if (this._nuberOfVisibleArticles < 17) {
         this._nuberOfVisibleArticles += 3;
         this._showRestOfArticles();
         this._changeDetectorRef.detectChanges();
