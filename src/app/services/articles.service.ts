@@ -6,6 +6,7 @@ import { ArticlesHTTPService } from './atricles-http.service';
 import { UtilsService } from './utils.service';
 import { VisitedArticlesService } from './visited-articles.service';
 import { NotifyService } from './notify.service';
+import { SeoRulesService } from './seo-rules.service';
 
 @Injectable()
 export class ArticlesService {
@@ -45,7 +46,8 @@ export class ArticlesService {
     private _ngZone: NgZone,
     private _utilsService: UtilsService,
     private _visitedArticlesService: VisitedArticlesService,
-    private _notifyService: NotifyService
+    private _notifyService: NotifyService,
+    private _seoRulesService: SeoRulesService
   ) {
     this._configurationService.configurationStatusChange$.subscribe(() => {
       if (!this.allArticles) {
@@ -55,8 +57,14 @@ export class ArticlesService {
   }
 
   public getArticle(id) {
+    if (this.allArticles) {
+      this._seoRulesService.setSeoTagsForArticle(
+        this.allArticles.find(article => article.article_title_url_slug === id)
+      );
+    }
     return this._articlesHTTPService.getArticle(id).subscribe(
       article => {
+        this._seoRulesService.setSeoTagsForArticle(article);
         this.singleArticleFetched(article);
         this._visitedArticlesService.addArticleToVisited(article.id);
         this._sholudResortTags.next();
@@ -121,9 +129,10 @@ export class ArticlesService {
   }
 
   public getArticlesForPage() {
+    let articles;
     switch (this.openPage) {
       case 'top':
-        return this.allArticles
+        articles = this.allArticles
           .filter(
             article =>
               this.topArticles.indexOf(article.id) > -1 &&
@@ -131,9 +140,12 @@ export class ArticlesService {
                 -1
           )
           .slice(0, 15);
+        this._seoRulesService.setSeoTagsForPage('top', articles);
+
+        return articles;
 
       case 'latest':
-        return this.allArticles
+        articles = this.allArticles
           .filter(
             article =>
               this.latestArticles.indexOf(article.id) > -1 &&
@@ -141,9 +153,12 @@ export class ArticlesService {
                 -1
           )
           .slice(0, 15);
+        this._seoRulesService.setSeoTagsForPage('latest', articles);
+
+        return articles;
 
       case 'index':
-        return this.allArticles
+        articles = this.allArticles
           .filter(
             article =>
               this.indexArticles.indexOf(article.id) > -1 &&
@@ -151,11 +166,17 @@ export class ArticlesService {
                 -1
           )
           .slice(0, 16);
+        this._seoRulesService.setSeoTagsForPage('index', articles);
+
+        return articles;
 
       default:
-        return this._formatCategoryArticles(
+        articles = this._formatCategoryArticles(
           this.allArticles.filter(article => article.category === this.openPage)
         );
+        this._seoRulesService.setSeoTagsForPage(this.openPage, articles);
+
+        return articles;
     }
   }
 

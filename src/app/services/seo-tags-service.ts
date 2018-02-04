@@ -51,6 +51,8 @@ export class SeoTagsService {
     $('html')
       .find('script[type="application/ld+json"]')
       .remove();
+
+    this.metaTagsHtmlElements = [];
   }
 
   public setMetaTitleTag(title) {
@@ -85,7 +87,7 @@ export class SeoTagsService {
           "@type": "LocalBusiness",
           "url": "${url}",
           "logo": "http://fitneszona.rs/logo.png",
-          "hasMap": "https://www.google.rs/maps/place/Fountain+at+Nikole+Pa%C5%A1i%C4%87a+Square,+%D0%91%D0%B5%D0%BE%D0%B3%D1%80%D0%B0%D0%B4/@44.8121573,20.4602976,16.56z/data=!4m5!3m4!1s0x475a7aae4b4beeff:0xd39acadc8245a05e!8m2!3d44.8125267!4d20.4631134",
+          "hasMap": "https://www.google.rs/maps/dir/45.2647067,19.6717758/Fitnes+Zona,+18%2F045+Bulevar+Despota+Stefana,+%D0%9D%D0%BE%D0%B2%D0%B8+%D0%A1%D0%B0%D0%B4+21000/@45.2364276,19.7668762,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x475b101bc8c88cad:0xce856bf3b8425f77!2m2!1d19.836916!2d45.236449",
           "email": "mailto:fitneszona.mail(at)mail.com",
           "address": {
             "@type": "PostalAddress",
@@ -112,7 +114,7 @@ export class SeoTagsService {
             "https://business.google.com/b/103717055901834795087/",
             "http://fitneszona.blogspot.rs/"]
           "image": "https://fitneszona.rs/images/profilna.jpg",
-          "priceRange" : "$5 - $15",
+          "priceRange" : "$0 - $0",
         }
       </script>
     `);

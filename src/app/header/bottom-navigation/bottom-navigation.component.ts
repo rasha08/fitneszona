@@ -14,6 +14,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { ArticlesCounterService } from '../../services/articles-counter.service';
 import { UtilsService } from '../../services/utils.service';
 import { AuthService } from '../../services/auth.service';
+import {} from '../../services/app.animation.service';
 
 @Component({
   selector: 'app-bottom-navigation',

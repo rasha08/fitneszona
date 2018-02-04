@@ -5,8 +5,8 @@
     <div class="collapsible-body">
       <ul class="collapsible" data-collapsible="accordion">
         <li *ngFor="let article of category.articles">
-          <div class="collapsible-header" (click)="selectArticle(article.id)">
-            <i class="material-icons">filter_drama</i>{{ article.title }}</div>
+          <h2 class="collapsible-header" (click)="selectArticle(article.id)">
+            <i class="material-icons">filter_drama</i>{{ article.title }}</h2>
           <div class="collapsible-body" [ngClass]="{open: isArticleSelected(article.id)}">
             <span>{{ article.description }}</span>
             <hr>

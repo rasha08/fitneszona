@@ -60,14 +60,14 @@ export class TopNavigationComponent implements OnInit {
   }
 
   public openLoginModal() {
-    this.toggleAccountMenu();
+    this._appAnimationService.closeMenuBars();
     this._modalService.openModal({
       component: LoginComponent
     });
   }
 
   public openRegistrationModal() {
-    this.toggleAccountMenu();
+    this._appAnimationService.closeMenuBars();
     this._modalService.openModal({
       component: RegistrationComponent
     });

@@ -100,6 +100,7 @@ export class AuthService {
       if (rememberMe) {
         localStorage.setItem('rememberUser', this._user.id);
       }
+      this.isUserLoggedIn = true;
       this._changeAuthStatus(true);
       this._responseService.handleResponse({ status: 'login success' });
       this._subscribeToUserDataChanges();

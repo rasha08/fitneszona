@@ -22,5 +22,8 @@ export class HeaderComponent implements OnInit {
 
   public toggleNavigation() {
     this.isOpen = !this.isOpen;
+    if (!this.isOpen) {
+      this._appAnimationService.closeMenuBars();
+    }
   }
 }

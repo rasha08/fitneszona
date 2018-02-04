@@ -5,8 +5,7 @@ import { NotifyService } from '../../../services/notify.service';
 import { LoaderService } from '../../../services/loader.service';
 import { ConfigurationService } from '../../../services/configuration.service';
 import { UtilsService } from '../../../services/utils.service';
-
-import * as _ from 'lodash';
+import { SeoRulesService } from '../../../services/seo-rules.service';
 
 declare const $;
 
@@ -27,11 +26,16 @@ export class AllArticlesComponent implements OnInit {
     private _loaderService: LoaderService,
     private _configurationService: ConfigurationService,
     private _utilsService: UtilsService,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _seoRulesService: SeoRulesService
   ) {}
   ngOnInit() {
     if (this._articlesService.allArticles) {
       this.groupArticlesByCategory();
+      this._seoRulesService.setSeoTagsForPage(
+        'all',
+        this.articles.slice(0, 50)
+      );
     }
 
     this._subscribeToAllArticlesFetchedEvent();
@@ -41,6 +45,10 @@ export class AllArticlesComponent implements OnInit {
   private _subscribeToAllArticlesFetchedEvent() {
     this._articlesService.allArticlesStateChange$.subscribe(() => {
       this.groupArticlesByCategory();
+      this._seoRulesService.setSeoTagsForPage(
+        'all',
+        this.articles.slice(0, 50)
+      );
     });
   }
 

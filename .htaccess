@@ -27,6 +27,11 @@ RewriteRule ^/?$ "http\:\/\/fitneszona\.rs\/" [R=301,L]
         RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} !^/api/(.*)$
+    RewriteCond %{REQUEST_URI} !^/articles/(.*)$
+    RewriteCond %{REQUEST_URI} !^/users/(.*)$  
+    RewriteCond %{REQUEST_URI} !^/articles$
+    RewriteCond %{REQUEST_URI} !^/users$  
+    RewriteCond %{REQUEST_URI} !^/configuration/(.*)$        
     RewriteRule (.*) index.html [L]
 
     # Redirect Trailing Slashes If Not A Folder...

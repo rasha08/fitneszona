@@ -6,18 +6,18 @@
           <img class="activator" [src]="articles.main.image_url" class="responsive-img">
         </div>
         <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">{{ articles.main.title }}
+          <h2 class="card-title activator grey-text text-darken-4">{{ articles.main.title }}
             <i class="material-icons right">more_vert</i>
-          </span>
+          </h2>
           <p>
             <a [routerLink]="getArticleUrl(articles.main)">
               otvori...</a>
           </p>
         </div>
         <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">{{ articles.main.title }}
+          <h2 class="card-title grey-text text-darken-4">{{ articles.main.title }}
             <i class="material-icons right">close</i>
-          </span>
+          </h2>
           <p>{{ articles.main.description }}...</p>
         </div>
       </div>
@@ -31,7 +31,7 @@
         </div>
         <div class="card-stacked">
           <div class="card-content">
-            <p>{{ article.title }}</p>
+            <h3>{{ article.title }}</h3>
           </div>
           <div class="card-action">
             <a [routerLink]="getArticleUrl(article)">otvori...</a>
@@ -43,8 +43,8 @@
   <div class="col s12 m12" *ngIf="articles.articles">
     <ul class="collapsible popout" data-collapsible="accordion">
       <li *ngFor="let article of articles.articles">
-        <div class="collapsible-header" (click)="selectArticle(article.id)">
-          <i class="material-icons">filter_drama</i>{{ article.title }}</div>
+        <h3 class="collapsible-header" (click)="selectArticle(article.id)">
+          <i class="material-icons">filter_drama</i>{{ article.title }}</h3>
         <div class="collapsible-body" [ngClass]="{open: isArticleSelected(article.id)}">
           <span>{{ article.description }}</span>
           <hr>

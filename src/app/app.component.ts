@@ -8,7 +8,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { ModalService } from './services/modal.service';
@@ -18,6 +18,13 @@ import { ConfigurationService } from './services/configuration.service';
 import { BottomMenuService } from './shared/modules/bottom-menu/services/bottom-menu.service';
 import { UserConfigurationService } from './services/user-configuration.service';
 import { AppAnimationService } from './services/app.animation.service';
+import { SeoTagsService } from './services/seo-tags-service';
+import { AuthService } from './services/auth.service';
+
+import { AlertComponent } from './shared/components/alert/alert';
+import { LoginComponent } from './shared/components/login/login.component';
+
+declare const ga: any;
 
 @Component({
   selector: 'app-root',
@@ -43,7 +50,9 @@ export class AppComponent implements OnInit, OnDestroy {
     private _bottomMenuService: BottomMenuService,
     private _router: Router,
     private _userConfigurationService: UserConfigurationService,
-    private _appAnimationService: AppAnimationService
+    private _appAnimationService: AppAnimationService,
+    private _seoTagsService: SeoTagsService,
+    private _authService: AuthService
   ) {
     this._configurationService.getConfiguration();
   }
@@ -84,7 +93,11 @@ export class AppComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         this._appAnimationService.closeMenuBars();
         window.scrollTo(0, 0);
+      } else if (event instanceof NavigationStart) {
+        this._seoTagsService.clearMetaTags();
       }
+
+      ga('send', 'pageview', event['url']);
     });
   }
 
@@ -145,15 +158,21 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public toggleBotomMenu() {
+    if (!this._authService.isUserLoggedIn) {
+      this.openAlertWindows();
+
+      return;
+    }
+    this._appAnimationService.closeMenuBars();
     this._bottomMenuService.toggleBottomMenuStatus();
   }
 
   public toggleCustomerSuport() {
     this._bottomMenuService.toggleCustomerSupportStatus();
+    this._appAnimationService.closeMenuBars();
   }
 
   public checkResolution() {
-    console.log('CHECK');
     if (window && window.innerWidth < 1000) {
       this.isMobile = true;
     } else {
@@ -166,5 +185,18 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   public toggleLeftSidebar() {
     this._appAnimationService.toggleLeftSideBar();
+  }
+
+  public openAlertWindows() {
+    this._modalService.openModal({
+      component: AlertComponent,
+      data: {
+        message: {
+          body:
+            'Morate biti ulogovani da biste mogli da konfigurišete aplikaciju',
+          title: 'Obaveštenje'
+        }
+      }
+    });
   }
 }

@@ -38,6 +38,8 @@ import { MenuAnimationService } from './services/menus-animation.service';
 import { UserNotifyService } from './services/user-notify.service';
 import { UserConfigurationService } from './services/user-configuration.service';
 import { AppAnimationService } from './services/app.animation.service';
+import { SeoTagsService } from './services/seo-tags-service';
+import { SeoRulesService } from './services/seo-rules.service';
 
 /* ENTRY COMPONENTS */
 import { LoginComponent } from './shared/components/login/login.component';
@@ -90,7 +92,9 @@ import { appRoutes } from './app.routing';
     MenuAnimationService,
     UserNotifyService,
     UserConfigurationService,
-    AppAnimationService
+    AppAnimationService,
+    SeoTagsService,
+    SeoRulesService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

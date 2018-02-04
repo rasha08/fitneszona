@@ -472,6 +472,10 @@ li.tab a {
   color: snow;
 }
 
+.metal #modal.open input {
+  color: snow;
+}
+
 #modal.alert {
   height: 450px !important;
   top: 25% !important;
@@ -730,14 +734,14 @@ body {
   .text-details
   .card-action {
   position: fixed;
-  bottom: 0;
-  z-index: 9999999;
+  bottom: 0px;
+  z-index: 999;
 }
 
 .card-action {
   position: fixed;
-  bottom: 0;
-  z-index: 99;
+  bottom: 0px;
+  z-index: 999;
 }
 
 .nature
@@ -839,10 +843,10 @@ li.tab a.selected {
   box-shadow: inset 2px 3px 20px rgba(255, 255, 255, 0.6);
 }
 
-.card.horizontal .card-stacked .card-content p {
-  max-height: calc(10vh - 10px);
+.card.horizontal .card-stacked .card-content {
   overflow-y: hidden;
   font-size: 12px;
+  color: snow;
 }
 
 .row.horisontal-scroll {
@@ -936,7 +940,7 @@ li.tab a.selected {
 #loader {
   background-color: rgba(255, 255, 255, 0.8);
   background-image: none;
-  z-index: 999999999999999999;
+  z-index: 9999999999999999999999999 !important;
 }
 
 #loader img {
@@ -1584,6 +1588,7 @@ body > app-root > div > app-notifications > div > div:nth-child(10) {
 #left-sidebar {
   min-width: 240px;
   max-width: 75vw;
+  width: 22%;
   top: 150px;
 }
 #main-presenter {
@@ -1615,7 +1620,7 @@ body > app-root > div > app-notifications > div > div:nth-child(10) {
 h1 {
   font-size: calc(20px + 2vw);
 }
-#left-sidebar-trigger {
+fixed-action-btn #left-sidebar-trigger {
   display: none;
 }
 .avatar {
@@ -1628,8 +1633,16 @@ h1 {
   margin-bottom: -25px !important;
   width: 100vw !important;
   margin-left: -2vw;
+  z-index: 99999999999 !important;
 }
-@media all and (max-width: 1000px) {
+h2.collapsible-header,
+h3.collapsible-header,
+h2.card-title,
+.card-content h3 {
+  font-size: 1rem;
+  margin-top: 0%;
+}
+@media all and (max-width: 1023px) {
   #loader img {
     position: absolute;
     top: 30%;
@@ -1709,13 +1722,7 @@ h1 {
     right: 15px;
   }
   #left-sidebar-trigger {
-    position: absolute;
-    left: 101%;
-    top: 3px;
-    display: block;
-    min-height: 420px;
-    max-height: 720px;
-    height: 65vh;
+    display: none;
   }
   #left-sidebar.open {
     position: absolute;
@@ -1731,11 +1738,13 @@ h1 {
   }
   #replacment-list {
     top: 0;
-    width: auto !important;
+    width: 100% !important;
     height: 720px;
+    position: absolute;
   }
   #replacment-list.open {
-    transform: translateX(0%) rotateX(0deg) rotateZ(0deg);
+    transform: translateX(15%) rotateX(0deg) rotateZ(0deg);
+    overflow-x: visible !important;
   }
   #bottom-menu-panel > div:nth-child(2) > ul {
     margin-left: auto !important;
@@ -1779,7 +1788,7 @@ h1 {
     top: 85px;
     min-height: 250px;
     width: 100vw !important;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 120px) !important;
   }
   #right-sidebar-trigger {
     left: -66px;
@@ -1834,9 +1843,13 @@ h1 {
     width: 100vw;
     height: calc(100vh - 160px);
   }
-  #right-sidebar {
+  #right-sidebar,
+  #left-sidebar,
+  #left-sidebar.open {
     position: fixed;
     z-index: 999;
+    bottom: 75px;
+    overflow-y: scroll;
   }
   #right-sidebar-trigger {
     left: -66px;
@@ -1848,14 +1861,20 @@ h1 {
   #social-buttons {
     position: fixed;
     bottom: 80px;
-    margin-left: 2%;
+    margin-left: -12%;
     z-index: 999;
   }
+  #social-buttons span {
+    text-align: left;
+    width: 60% !important;
+    display: block;
+    margin-top: 5%;
+  }
   #social-buttons span a.btn-floating {
-    transform: scale(1.1) !important;
+    transform: scale(0.9) !important;
   }
   #social-buttons span.selected a.btn-floating {
-    transform: scale(1.35);
+    transform: scale(1.1);
   }
   #main-presenter {
     margin-top: 105px;
@@ -1890,5 +1909,8 @@ h1 {
   }
   .fixed-action-btn {
     transform: translateX(-3vw);
+  }
+  .header ul.right.open {
+    right: 0px !important;
   }
 }
