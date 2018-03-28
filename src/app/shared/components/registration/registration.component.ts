@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { UserRegistrationService } from '../../../services/user-registration.service';
 import { ValidatorService } from '../../../services/validator.service';
 import { ModalService } from '../../../services/modal.service';
+import { ResponseService } from '../../../services/response.service';
 
-import { ResponseStatusInterface } from '../../../models/registration-response';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.html'
@@ -25,21 +25,30 @@ export class RegistrationComponent {
   public message;
   public successMessage;
   public errorMessage;
-  public apiServiceRespone: Subscription;
   public rememberUser: boolean;
+  public isFormValid = true;
+  public authStatusError;
 
   constructor(
     private _userRegistrationService: UserRegistrationService,
     private _validatorService: ValidatorService,
-    private _modalService: ModalService
+    private _modalService: ModalService,
+    private _responseService: ResponseService
   ) {}
 
   ngOnInit() {
-    this._subscription = this._userRegistrationService.response$.subscribe(
-      response => {
-        this.message = response;
-      },
-      error => (this.errorMessage = error)
+    this._subscription = this._responseService.authActionResponseStatus$.subscribe(
+      status => {
+        if (status['type'] === 'login success') {
+          this.closeModal();
+
+          return;
+        }
+
+        this.errorMessage = status['title'];
+        this.authStatusError = status['body'];
+        this.isFormValid = false;
+      }
     );
   }
 
@@ -83,17 +92,9 @@ export class RegistrationComponent {
   }
 
   checkIfUserInputIsValid() {
-    let firstname, lastname, email, password;
-    firstname = this._validatorService.isNameOrLastNameValid(
-      this._userObj.firstName
+    return (
+      this.isFirstnameValid && this.isLastnameValid && this.isPasswordValid
     );
-    lastname = this._validatorService.isNameOrLastNameValid(
-      this._userObj.lastName
-    );
-    email = this._validatorService.isEmailValid(this._userObj.email);
-    password = this._validatorService.isPasswordValid(this._userObj.password);
-
-    return Boolean(firstname && lastname && email && password);
   }
 
   public closeModal() {

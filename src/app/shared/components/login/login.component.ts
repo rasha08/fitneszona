@@ -88,9 +88,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private _isSubmitValid() {
-    return (
-      this.isEmailValid && this.isPasswordValid && this.email && this.password
-    );
+    return this.isPasswordValid && this.email && this.password;
   }
 
   public openForgotPassword() {

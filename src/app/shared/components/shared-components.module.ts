@@ -10,6 +10,7 @@ import { AlertComponent } from './alert/alert';
 import { LoaderComponent } from './loader/loader.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { CustomerSupportComponent } from './customer-support/customer-support.component';
+import { PromoBannerComponent } from './promo-banner/promo-banner.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, RouterModule],
@@ -20,7 +21,8 @@ import { CustomerSupportComponent } from './customer-support/customer-support.co
     AlertComponent,
     LoaderComponent,
     SearchResultsComponent,
-    CustomerSupportComponent
+    CustomerSupportComponent,
+    PromoBannerComponent
   ],
   exports: [
     RegistrationComponent,
@@ -29,7 +31,8 @@ import { CustomerSupportComponent } from './customer-support/customer-support.co
     AlertComponent,
     LoaderComponent,
     SearchResultsComponent,
-    CustomerSupportComponent
+    CustomerSupportComponent,
+    PromoBannerComponent
   ],
   providers: []
 })

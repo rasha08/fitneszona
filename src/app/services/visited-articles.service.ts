@@ -6,14 +6,14 @@ export class VisitedArticlesService {
 
   public addArticleToSessionStorage(articleId) {
     let sessionStorageArticles = JSON.parse(
-      sessionStorage.getItem('visitedArticles')
+      localStorage.getItem('visitedArticles')
     );
     sessionStorageArticles = sessionStorageArticles
       ? sessionStorageArticles
       : [];
     if (sessionStorageArticles.indexOf(articleId) === -1) {
       sessionStorageArticles.push(articleId);
-      sessionStorage.setItem(
+      localStorage.setItem(
         'visitedArticles',
         JSON.stringify(sessionStorageArticles)
       );
@@ -22,7 +22,7 @@ export class VisitedArticlesService {
 
   public getSessionStorageArticles() {
     let sessionStorageArticles = JSON.parse(
-      sessionStorage.getItem('visitedArticles')
+      localStorage.getItem('visitedArticles')
     );
 
     return (sessionStorageArticles = sessionStorageArticles

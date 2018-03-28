@@ -1,12 +1,10 @@
-import { Injectable } from "@angular/core";
-import { Subject } from "rxjs/Subject";
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class ValidatorService {
   public isEmailValid(email) {
-    const regEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-    return regEx.test(email);
+    return !/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email);
   }
 
   public isPasswordValid(password) {

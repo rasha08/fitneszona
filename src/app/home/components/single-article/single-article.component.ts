@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  NgZone
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -39,7 +45,8 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     private _changeDetectorRef: ChangeDetectorRef,
     private _authService: AuthService,
     private _userDataService: UserDataService,
-    private _modalService: ModalService
+    private _modalService: ModalService,
+    private _ngZone: NgZone
   ) {
     this._subscribeToArticleFetchedEvent();
   }
@@ -59,20 +66,22 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
   private _subscribeToArticleFetchedEvent() {
     this._subscriptions.push(
       this._articlesService.fetchedSingleArticle$.subscribe(article => {
-        this._detectChanges();
-        if (article['status']) {
-          this._location.back();
-          return;
-        }
-        this.article = this._transformHtml(article);
-        this._detectChanges();
-        this._subscribeToArticleUpdateEvent();
-        this._loaderService.hide();
-        this._detectChanges();
-        if (this._updateCouner === 0) {
-          $('.tooltipped').tooltip({ delay: 50 });
-        }
-        this._detectChanges();
+        this._ngZone.run(() => {
+          this._detectChanges();
+          if (article['status']) {
+            this._location.back();
+            return;
+          }
+          this.article = this._transformHtml(article);
+          this._detectChanges();
+          this._subscribeToArticleUpdateEvent();
+          this._loaderService.hide();
+          this._detectChanges();
+          if (this._updateCouner === 0) {
+            $('.tooltipped').tooltip({ delay: 50 });
+          }
+          this._detectChanges();
+        });
       })
     );
   }

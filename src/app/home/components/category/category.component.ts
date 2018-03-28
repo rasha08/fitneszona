@@ -3,7 +3,8 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  NgZone
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Router, NavigationEnd } from '@angular/router';
@@ -31,7 +32,8 @@ export class CategoryComponent extends SpecificCategoriesComponent
     _loaderService: LoaderService,
     _utilsService: UtilsService,
     _configurationService: ConfigurationService,
-    _router: Router
+    _router: Router,
+    _ngZone: NgZone
   ) {
     super(
       _articlesService,
@@ -40,7 +42,8 @@ export class CategoryComponent extends SpecificCategoriesComponent
       _loaderService,
       _utilsService,
       _configurationService,
-      _router
+      _router,
+      _ngZone
     );
   }
 

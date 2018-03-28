@@ -3,7 +3,7 @@
     <div class="col s12 m6">
       <div class="card big">
         <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator" [src]="articles.main.image_url" class="responsive-img">
+          <img class="activator" [src]="articles.main.image_url" class="responsive-img" alt="fitnes zona">
         </div>
         <div class="card-content">
           <h2 class="card-title activator grey-text text-darken-4">{{ articles.main.title }}
@@ -27,7 +27,7 @@
     <div *ngFor="let article of articles.featured" class="col s12 m5">
       <div class="card horizontal">
         <div class="card-image">
-          <img [src]="article.image_url" class="responsive-img">
+          <img [src]="article.image_url" class="responsive-img" alt="fitnes zona">
         </div>
         <div class="card-stacked">
           <div class="card-content">

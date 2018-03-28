@@ -3,7 +3,8 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  NgZone
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Router, NavigationEnd } from '@angular/router';
@@ -33,7 +34,8 @@ export class SpecificCategoriesComponent implements OnDestroy, OnInit {
     protected _loaderService: LoaderService,
     protected _utilsService: UtilsService,
     protected _configurationService: ConfigurationService,
-    protected _router: Router
+    protected _router: Router,
+    protected _ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -63,7 +65,9 @@ export class SpecificCategoriesComponent implements OnDestroy, OnInit {
   protected subscribeToAllArticlesFetchedEvent() {
     this._subscriptions.push(
       this._articlesService.allArticlesStateChange$.subscribe(() => {
-        this.setArticlesForPage();
+        this._ngZone.run(() => {
+          this.setArticlesForPage();
+        });
       })
     );
 

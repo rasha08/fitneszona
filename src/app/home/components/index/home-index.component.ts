@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  NgZone
+} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -30,7 +36,8 @@ export class HomeIndexComponent extends SpecificCategoriesComponent
     _loaderService: LoaderService,
     _utilsService: UtilsService,
     _configurationService: ConfigurationService,
-    _router: Router
+    _router: Router,
+    _ngZone: NgZone
   ) {
     super(
       _articlesService,
@@ -39,7 +46,8 @@ export class HomeIndexComponent extends SpecificCategoriesComponent
       _loaderService,
       _utilsService,
       _configurationService,
-      _router
+      _router,
+      _ngZone
     );
   }
 

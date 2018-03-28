@@ -18,6 +18,17 @@ RewriteRule .* ? [F,L]
 RewriteCond %{HTTP_HOST} ^www\.fitneszona\.rs$
 RewriteRule ^/?$ "http\:\/\/fitneszona\.rs\/" [R=301,L]
 
+RedirectMatch "^licnitreneri" "https://fitneszona.rs/"
+RedirectMatch "licnitreneri/(.*)$" "https://fitneszona.rs"
+RedirectMatch "^fitnescentri" "https://fitneszona.rs"
+RedirectMatch "fitnescentri/(.*)$" "https://fitneszona.rs"
+RedirectMatch "^sportskiklubovi" "https://fitneszona.rs"
+RedirectMatch "sportskiklubovi/(.*)$" "https://fitneszona.rs"
+RedirectMatch "^zdravahrana" "https://fitneszona.rs/ishrana"
+RedirectMatch "zdravahrana/(.*)$" "https://fitneszona.rs/ishrana"
+RedirectMatch "^novosti" "https://fitneszona.rs/"
+
+
 
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
@@ -47,6 +58,7 @@ RewriteRule ^/?$ "http\:\/\/fitneszona\.rs\/" [R=301,L]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ /api/public/index.php [L]
 
+    
 
     
 </IfModule>

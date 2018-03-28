@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  NgZone
+} from '@angular/core';
 
 import { ArticlesService } from '../../../services/articles.service';
 import { NotifyService } from '../../../services/notify.service';
@@ -27,7 +33,8 @@ export class AllArticlesComponent implements OnInit {
     private _configurationService: ConfigurationService,
     private _utilsService: UtilsService,
     private _changeDetectorRef: ChangeDetectorRef,
-    private _seoRulesService: SeoRulesService
+    private _seoRulesService: SeoRulesService,
+    private _ngZone: NgZone
   ) {}
   ngOnInit() {
     if (this._articlesService.allArticles) {
@@ -44,11 +51,13 @@ export class AllArticlesComponent implements OnInit {
 
   private _subscribeToAllArticlesFetchedEvent() {
     this._articlesService.allArticlesStateChange$.subscribe(() => {
-      this.groupArticlesByCategory();
-      this._seoRulesService.setSeoTagsForPage(
-        'all',
-        this.articles.slice(0, 50)
-      );
+      this._ngZone.run(() => {
+        this.groupArticlesByCategory();
+        this._seoRulesService.setSeoTagsForPage(
+          'all',
+          this.articles.slice(0, 50)
+        );
+      });
     });
   }
 

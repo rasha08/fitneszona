@@ -14,7 +14,7 @@
         <div class="row">
           <div class="input-field col offset-2 s10">
             <i class="material-icons prefix" [ngClass]="{'error': !isEmailValid  }">email</i>
-            <input id="icon_prefix" type="email" class="validate" [(ngModel)]="email" (blur)="validate('email')" value="email">
+            <input id="icon_prefix" type="email" class="validate" [(ngModel)]="email" value="email">
             <label for="icon_prefix">
               <span [ngClass]="{'error': !isEmailValid  }">
                 {{ isEmailValid ? 'Vasa Email Adresa:' : 'Unesite Validnu Email Adresu!' }}

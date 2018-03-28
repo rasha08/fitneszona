@@ -3,24 +3,21 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { UserHTTPService } from './user-http.service';
-import { ResponseStatusInterface } from '../models/registration-response';
+import { ResponseService } from './response.service';
+
 @Injectable()
 export class UserRegistrationService {
-  private response = new Subject();
-  public response$ = this.response.asObservable();
-
-  constructor(private _userHTTPService: UserHTTPService) {}
+  constructor(
+    private _userHTTPService: UserHTTPService,
+    private _responseService: ResponseService
+  ) {}
 
   registerUser(userObj) {
     this._userHTTPService
       .registerUser(userObj)
       .subscribe(
-        result => this.sendResponseToUserRegistration(result),
+        result => this._responseService.handleResponse(result),
         error => {}
       );
-  }
-
-  sendResponseToUserRegistration(response) {
-    this.response.next(response);
   }
 }
