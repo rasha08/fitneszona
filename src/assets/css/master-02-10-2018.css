@@ -244,6 +244,10 @@ li.tab a {
   );
 }
 
+#main-presenter {
+  padding-bottom: 50px !important;
+}
+
 .nature #single-article h1,
 .nature #single-article .article-text,
 .nature #single-article #commentBox,
