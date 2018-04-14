@@ -86,7 +86,7 @@ export class SearchComponent implements OnDestroy, OnInit {
     this._subscription.push(
       this._articlesService.allArticlesStateChange$.subscribe(() =>
         this._ngZone.runOutsideAngular(() =>
-          setTimeout(() => this.getAllArticles(), 3500)
+          setTimeout(() => this.getAllArticles(), 500)
         )
       )
     );

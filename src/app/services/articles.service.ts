@@ -49,7 +49,7 @@ export class ArticlesService {
     private _notifyService: NotifyService,
     private _seoRulesService: SeoRulesService
   ) {
-    this._configurationService.configurationStatusChange$.subscribe(() => {
+      this._configurationService.configurationStatusChange$.subscribe(() => {
       if (!this.allArticles) {
         this._ngZone.runOutsideAngular(() => this.getAllArticles());
       }
@@ -204,6 +204,10 @@ export class ArticlesService {
   }
 
   public getArticlesByTagName(tag, limit = 200) {
+    if (!this.allArticles || !this.allArticles.length) {
+      return [];
+    }
+
     const visitedArticles = [];
     const visitedArticlesMarkets = this._visitedArticlesService.getArticles();
     let numOfArticlesReturned = 0;
@@ -308,6 +312,10 @@ export class ArticlesService {
   }
 
   public getArticlesForRightSidebar() {
+    if (!this.allArticles || !this.allArticles.length) {
+      return;
+    }
+
     const articles = [];
     const articlesVisited = this._visitedArticlesService.getArticles();
     for (const article of this.allArticles) {
@@ -325,5 +333,9 @@ export class ArticlesService {
       }
     }
     return articles;
+  }
+
+  public increeseArticleSeenTimes(id) {
+    this._articlesHTTPService.increeseArticleSeenTimes(id);
   }
 }

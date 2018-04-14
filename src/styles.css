@@ -352,7 +352,7 @@ li.tab a {
   -webkit-transition: transform 0.5s ease-in-out;
   -moz-transition: transform 0.5s ease-in-out;
   transition: transform 0.5s ease-in-out;
-  z-index: 9999999999999999999999999999999;
+  z-index: 9999999999999;
 }
 
 #modal.open {
@@ -1607,7 +1607,7 @@ body > app-root > div > app-notifications > div > div:nth-child(10) {
 .header {
   min-width: 100vw !important;
   padding-right: 1%;
-  z-index: 555555;
+  z-index: 999999;
 }
 #social-buttons {
   position: fixed;
@@ -1861,7 +1861,8 @@ h2.card-title,
     transform: scale(1.2);
   }
 }
-@media screen and (max-width: 450px) {
+
+@media screen and (max-width: 660px) {
   a.brand-logo {
     font-size: 35px;
     margin-left: 50%;

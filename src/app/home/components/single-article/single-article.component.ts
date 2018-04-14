@@ -72,6 +72,8 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
             this._location.back();
             return;
           }
+          article['seen_times'] = '-'
+          this._articlesService.increeseArticleSeenTimes(article['id']);
           this.article = this._transformHtml(article);
           this._detectChanges();
           this._subscribeToArticleUpdateEvent();

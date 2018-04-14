@@ -11,7 +11,7 @@ import {} from 'module';
 export class ArticlesHTTPService {
   private BASE_URL = 'https://fitneszona.rs';
   constructor(
-    private _http: Http, 
+    private _http: Http,
     private _ngZone: NgZone,
     private _userDataService: UserDataService
   ) {}
@@ -262,6 +262,40 @@ export class ArticlesHTTPService {
       );
   }
 
+  public increeseArticleSeenTimes(id) {
+    let url = `${this.BASE_URL}/api/increase-seen-times/${id}`;
+    return this._http
+      .get(url)
+      .map(
+        result => {},
+        error =>
+          this._ngZone.runOutsideAngular(() =>
+            setTimeout(() => {
+              this.getArticleCategoryAndTags(id);
+            }, 800)
+          )
+      ).subscribe(() => {
+        this.addTextToVisited(id);
+      });
+  }
+
+  private addTextToVisited(id) {
+    if (this.getUserId()) {
+      let url = `${this.BASE_URL}/api/single-article-stats/${id}?uid=${this.getUserId()}`;
+      return this._http
+        .get(url)
+        .map(
+          result => {},
+          error =>
+            this._ngZone.runOutsideAngular(() =>
+              setTimeout(() => {
+                this.getArticleCategoryAndTags(id);
+              }, 800)
+            )
+        ).subscribe(() => {})
+    }
+  }
+
   getUserId(){
     let user = this._userDataService.getUser() || false;
     if (user) {
@@ -269,4 +303,6 @@ export class ArticlesHTTPService {
     }
     return false;
   }
+
+
 }
